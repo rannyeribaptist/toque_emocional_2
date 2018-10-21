@@ -35,10 +35,24 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+# acceptance tests framework
+gem 'capybara'
+# more intuitive rails console
+gem 'pry-rails', :group => :development
+# rails syntax checker
+gem 'rubocop', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # for unit tests
+  gem 'rspec-rails', '~> 3.8'
+end
+
+group :test do
+  # for better unit tests
+  gem 'shoulda-matchers', '4.0.0.rc1'
+  gem 'rails-controller-testing' # If you are using Rails 5.x
 end
 
 group :development do
