@@ -55,6 +55,9 @@ gem 'devise'
 gem 'carrierwave', '~> 1.0'
 gem 'rmagick'
 
+# Font Awesome icons
+gem 'font-awesome-sass', '~> 5.4.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -75,6 +78,11 @@ group :development do
   # Spring speeds up development by keeping your application running in the background
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # Live reload when view files are modified
+  gem 'guard-livereload', '~> 2.5', require: false
+  gem 'guard'
+  gem 'guard-zeus'
+  gem 'rack-livereload'
 end
 
 
