@@ -1,1 +1,30 @@
-%h1.animated.fadeIn Hello World
+#particles-js
+.particles-content.display-evenly.text-center.text-center--text-white
+  .limiter
+    = image_tag("logo-white.png", class: "logo-default")
+
+    .action
+      %h1.title.title--small
+        %strong Motivação e comportamento de alto desempenho escolar é nossa especialidade!
+        %br
+        %strong Se você quer isso para seus alunos e filhos
+
+    .action__clean
+      .inline
+        .inline__element.inline__element--30.text-center
+          %h2.title.title--small.title--thin Descubra quem nós somos
+        .inline__element.inline__element--20
+          %hr.vertical
+        .inline__element.inline__element--30.text-center
+          %a.fancy-link{:href => slide_show_url}
+            %h2.title.title--small.title--thin Descubra as emoções e sentimentos
+
+
+-# particles.js
+%script{:src => "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"}
+
+:javascript
+  /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+  particlesJS.load('particles-js', '#{asset_path "particles.json"}', function() {
+    console.log('callback - particles.js config loaded');
+  });

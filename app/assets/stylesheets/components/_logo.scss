@@ -1,0 +1,7 @@
+@import "variables";
+
+.logo-default {
+  width: 80%;
+
+  @include small-up { width: 400px }
+}

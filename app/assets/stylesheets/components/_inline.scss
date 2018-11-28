@@ -1,0 +1,12 @@
+.inline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__element {
+    &--10 { width: 10% }
+    &--20 { width: 20% }
+    &--30 { width: 30% }
+    &--90 { width: 90% }
+  }
+}

@@ -1,3 +1,9 @@
+// Colors
+$yellow: #FFEC48;
+$blue: #60A6E0;
+$grey: #606062;
+$red: #F25957;
+
 // Breakpoints
 @mixin extra-small {
   @media (max-width: 400px) { @content; }

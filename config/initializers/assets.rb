@@ -15,4 +15,14 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 Rails.application.config.assets.precompile += %w(
                                                 theme.scss
+
+                                                logo.png
+                                                logo-white.png
+                                                logo-black.png
+                                                brain.png
+                                                brain-white.png
+                                                brain-black.png
+                                                name.png
+                                                name-white.png
+                                                name-black.png
                                                 )

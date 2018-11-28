@@ -48,6 +48,8 @@ gem 'rubocop', require: false
 gem "haml-rails", "~> 1.0"
 # Simple form rails helper
 gem 'simple_form'
+# particles.js
+# gem 'rails-assets-particles.js'
 
 # Flexible authentication solution for Rails with Warden.
 gem 'devise'
