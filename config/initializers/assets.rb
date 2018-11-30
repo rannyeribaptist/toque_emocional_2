@@ -15,7 +15,9 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 Rails.application.config.assets.precompile += %w(
                                                 theme.scss
+                                                )
 
+Rails.application.config.assets.precompile += %w(
                                                 logo.png
                                                 logo-white.png
                                                 logo-black.png
@@ -25,4 +27,9 @@ Rails.application.config.assets.precompile += %w(
                                                 name.png
                                                 name-white.png
                                                 name-black.png
-                                                )
+
+                                                joy.png
+                                                angry.png
+                                                sadness.png
+                                                scary.png
+                                              )
