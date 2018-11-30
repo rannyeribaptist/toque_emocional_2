@@ -32,4 +32,7 @@ Rails.application.config.assets.precompile += %w(
                                                 angry.png
                                                 sadness.png
                                                 scary.png
+
+                                                Lilyan.png
+                                                Ellyson.png
                                               )
