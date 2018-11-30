@@ -14,10 +14,28 @@
   .section__content.text-center
     %h1.title.title--thin Nosso Time
 
-    .advanced-inline
-      %img{src: "https://via.placeholder.com/400x400"}
+    .advanced-inline{style: "justify-content: center; align-items: center"}
+      .flip-container.flip-with-margin{:ontouchstart => "this.classList.toggle('hover');"}
+        .flipper
+          .front
+            = image_tag('Lilyan.png', class: 'about-picture', "data-toggle" => "1")
+          .back
+            %p Lillyan Lemos
+            %small Psicóloga pela Unifavip Devry. Arteterapeuta pelo Pomar - Rio de Janeiro
+            %br
+            %small Especialista em desenvolvimento infato-juvenil e da família
+            %br
+            %small Mestre em Psicologia da Educação pela UFCG. Doutoranda em Psicologia Clínica pela Universidade de Brasília
+
       %br
-      %img{src: "https://via.placeholder.com/400x400"}
+
+      .flip-container{:ontouchstart => "this.classList.toggle('hover');"}
+        .flipper
+          .front
+            = image_tag('Ellyson.png', class: 'about-picture', "data-toggle" => "2")
+          .back
+            %p Ellyson Freitas
+            %p NeuroCoach especialista em inteligência emocional
 
     %br
 

@@ -3,6 +3,7 @@
 .display-evenly {
   @include breakpoint("small-up") {
     height: -webkit-fill-available;
+    height: -moz-available;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
