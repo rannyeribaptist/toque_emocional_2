@@ -1,14 +1,11 @@
 @import "variables";
 
 .section {
-  @import "colors";
   text-align: center;
 
-
-  &--content {
+  &__content {
     padding: 30px;
-
-    @include limiter;
+    @include breakpoint("limiter");
   }
 
   &--footer { position: relative }

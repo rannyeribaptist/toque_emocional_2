@@ -13,6 +13,8 @@
 @import "components/fancy-list";
 @import "components/slide";
 @import "components/section";
+@import "components/colors";
+@import "components/text-colors";
 
 body {
   margin: 0;
@@ -39,7 +41,7 @@ body {
 }
 
 .limiter {
-  @include limiter;
+  @include breakpoint("limiter");
 }
 
 .vertical {

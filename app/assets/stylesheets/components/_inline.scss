@@ -5,14 +5,14 @@
   justify-content: center;
   align-items: center;
 
-  @include small-only {flex-direction: column};
+  @include breakpoint("small-only") {flex-direction: column};
 }
 
 .advanced-inline {
   display: flex;
   flex-direction: column;
 
-  @include small-up{
+  @include breakpoint("small-up") {
     flex-direction: row;
     width: 100%;
     justify-content: space-around;

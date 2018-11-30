@@ -1,7 +1,7 @@
 @import "variables";
 
 .display-evenly {
-  @include small-up {
+  @include breakpoint("small-up") {
     height: -webkit-fill-available;
     display: flex;
     flex-direction: column;

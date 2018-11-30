@@ -4,7 +4,7 @@
   width: 100%;
   height: 100%;
 
-  @include small-up { width: 400px }
+  @include breakpoint("small-up") { width: 400px }
 
   &--small { width: 100px }
 }

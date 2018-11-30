@@ -10,7 +10,7 @@
 
   &__logo {
     width: 50px;
-    @include small-up { float: left }
+    @include breakpoint("small-up") { float: left }
   }
 
   &__pages {
@@ -18,7 +18,7 @@
     bottom: 0;
     margin-bottom: 10px;
 
-    @include medium {
+    @include breakpoint("medium") {
       position: unset;
       display: flex;
       flex-direction: column;
@@ -30,7 +30,7 @@
   &__image {
     max-width: 100%;
 
-    @include small-up {
+    @include breakpoint("small-up") {
       max-width: 50%;
       margin: 0 5% 0 2%;
 
@@ -46,7 +46,7 @@
     align-items: center;
     position: relative;
 
-    @include limiter;
+    @include breakpoint("limiter");
   }
 
   &__group {
@@ -59,7 +59,7 @@
       align-items: center;
       flex-direction: column;
 
-      @include medium { flex-direction: row; };
+      @include breakpoint("medium") { flex-direction: row; };
     }
   }
 

@@ -1,8 +1,6 @@
-@import "variables";
-
-&--yellow {background-color: $yellow}
-&--blue {background-color: $blue}
-&--grey {background-color: $grey}
-&--red {background-color: $red}
-&--white {background-color: white}
-&--black {background-color: black}
+.bg-yellow {background-color: #FFEC48}
+.bg-blue {background-color: #60A6E0}
+.bg-grey {background-color: #606062}
+.bg-red {background-color: #F25957}
+.bg-white {background-color: white}
+.bg-black {background-color: black}

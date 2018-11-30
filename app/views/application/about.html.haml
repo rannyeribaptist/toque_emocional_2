@@ -1,5 +1,5 @@
-.section.section--white
-  .section--content.text-center.display-evenly
+.section
+  .section__content.text-center.display-evenly
     = image_tag('brain', class: 'logo-default logo-default--small')
 
     %h1.title.title--large.title--thin Sobre Nós
@@ -10,8 +10,8 @@
 
     %a.fancy-link.title--thin{href: "#team"} Conheça nosso time
 
-.section.section--yellow#team
-  .section--content.text-center
+.section.bg-yellow#team
+  .section__content.text-center
     %h1.title.title--thin Nosso Time
 
     .advanced-inline
@@ -23,8 +23,8 @@
 
     %a.fancy-link.title--thin{href: "#footer"} Entre em contato
 
-.section.section--footer.section--grey#footer
-  .section--content
+.section.section--footer.bg-grey#footer
+  .section__content
     .advanced-inline
       = image_tag('logo-white', class: "logo-default")
 

@@ -5,30 +5,37 @@ $grey: #606062;
 $red: #F25957;
 
 // Breakpoints
-@mixin extra-small {
-  @media (max-width: 400px) { @content; }
-}
-@mixin small-height {
-  @media (max-height: 500px) { @content; }
-}
-@mixin small-only {
-  @media (max-width: 599px) { @content; }
-}
-@mixin small-up {
-  @media (min-width: 600px) { @content; }
-}
-@mixin medium {
-  @media (min-width: 900px) { @content; }
-}
-@mixin large {
-  @media (min-width: 1200px) { @content; }
-}
-@mixin extra-large {
-  @media (min-width: 1800px) { @content; }
-}
+@mixin breakpoint($value) {
+  @if $value == extra-small {
+    @media (max-width: 400px) { @content; }
+  }
 
-// Limiters for 4K resolutions
-@mixin limiter {
-  max-width: 1700px;
-  margin: 0 auto;
+  @else if $value == small-height {
+    @media (max-height: 500px) { @content; }
+  }
+
+  @else if $value == small-only {
+    @media (max-width: 599px) { @content; }
+  }
+
+  @else if $value == small-up {
+    @media (min-width: 600px) { @content; }
+  }
+
+  @else if $value == small-height {
+    @media (min-width: 900px) { @content; }
+  }
+
+  @else if $value == small-height {
+    @media (min-width: 1200px) { @content; }
+  }
+
+  @else if $value == small-height {
+    @media (min-width: 1800px) { @content; }
+  }
+
+  @else if $value == limiter {
+    max-width: 1700px;
+    margin: 0 auto;
+  }
 }
