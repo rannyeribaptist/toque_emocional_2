@@ -6,4 +6,7 @@ class ApplicationController < ActionController::Base
 
   def slides
   end
+
+  def about
+  end
 end

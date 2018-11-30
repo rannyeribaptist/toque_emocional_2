@@ -1,0 +1,51 @@
+.section.section--white
+  .section--content.text-center.display-evenly
+    = image_tag('brain', class: 'logo-default logo-default--small')
+
+    %h1.title.title--large.title--thin Sobre Nós
+
+    %h2.title.title--thin O Toque Emocional é um sistema de ensino. Somos especialistas em desmotivação escolar e problemas de comportamento. Nossa matéria complementa o currículo dos alunos pelo Brasil a fora. Acreditamos que o ensino da  Inteligência Emocional é parte indispensável no desenvolvimento de indivíduos verdadeiramente livres e felizes.
+
+    %br
+
+    %a.fancy-link.title--thin{href: "#team"} Conheça nosso time
+
+.section.section--yellow#team
+  .section--content.text-center
+    %h1.title.title--thin Nosso Time
+
+    .advanced-inline
+      %img{src: "https://via.placeholder.com/400x400"}
+      %br
+      %img{src: "https://via.placeholder.com/400x400"}
+
+    %br
+
+    %a.fancy-link.title--thin{href: "#footer"} Entre em contato
+
+.section.section--footer.section--grey#footer
+  .section--content
+    .advanced-inline
+      = image_tag('logo-white', class: "logo-default")
+
+      %div{style: "text-align: left; color: white"}
+        %h3.title.title--small.title--thin CONTATO
+
+        %ul.fancy-list
+          %li= icon('fab', 'whatsapp', '(81) 9 9999-9999')
+          %li= icon('fas', 'envelope', 'falecom@toqueemocional.com.br')
+          %li= icon('fas', 'map-marker-alt', 'Av. Agamenon Magalhães, 123. Caruaru - Pernambuco')
+      %div{style: "text-align: left; color: white"}
+        %h3.title.title--small.title--thin SOCIAL
+
+        %ul.fancy-list
+          %li= icon('fab', 'facebook', ("#{link_to 'Facebook', 'https://facebook.com/toqueemocional', class: 'fancy-link fancy-link--white'}").html_safe)
+          %li= icon('fab', 'instagram', ("#{link_to 'Instagram', 'https://instagram.com/toqueemocional', class: 'fancy-link fancy-link--white'}").html_safe)
+          %li= icon('fab', 'youtube', ("#{link_to 'Youtube', 'https://youtube.com/toqueemocional', class: 'fancy-link fancy-link--white'}").html_safe)
+
+    %br
+    %br
+    .developer-tag
+      %small
+        Made by
+        %a{:href => "https://rannyeribaptist.github.io"} rannyeribaptist.github.io

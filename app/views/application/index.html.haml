@@ -1,6 +1,6 @@
 #particles-js
-.particles-content.display-evenly.text-center.text-center--text-white
-  .limiter
+.section.particles-content.display-evenly--small{style: "color: white"}
+  .section--content
     = image_tag("logo-white.png", class: "logo-default")
 
     .action
@@ -10,12 +10,13 @@
         %strong Se você quer isso para seus alunos e filhos
 
     .action__clean
-      .inline
-        .inline__element.inline__element--30.text-center
-          %h2.title.title--small.title--thin Descubra quem nós somos
-        .inline__element.inline__element--20
+      .advanced-inline{style: "justify-content: center; align-items: center; flex-direction: row"}
+        %div{style: "max-width: 200px"}
+          %a.fancy-link{:href => about_page_url}
+            %h2.title.title--small.title--thin Descubra quem nós somos
+        %div{style: "width: 150px"}
           %hr.vertical
-        .inline__element.inline__element--30.text-center
+        %div{style: "max-width: 250px"}
           %a.fancy-link{:href => slide_show_url}
             %h2.title.title--small.title--thin Descubra as emoções e sentimentos
 

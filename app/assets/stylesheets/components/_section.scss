@@ -1,0 +1,13 @@
+.section {
+  @import "colors";
+  text-align: center;
+
+
+  &--content {
+    padding: 30px;
+
+    @include limiter;
+  }
+
+  &--footer { position: relative }
+}

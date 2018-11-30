@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   root to: "application#index"
 
   get "slides", to: "application#slides", as: :slide_show
+  get "about", to: "application#about", as: :about_page
 end
