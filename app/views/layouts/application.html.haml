@@ -2,7 +2,16 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Plataform
+    %title Toque Emocional
+
+    %meta{:content => "Motivação e comportamento de alto desempenho escolar é nossa especialidade!", :name => "description"}/    
+    / Open Graph data
+    %meta{:content => "Inteligência Emocional", :property => "og:title"}/
+    %meta{:content => "article", :property => "og:type"}/
+    %meta{:content => "https://www.toqueemocional.com.br/", :property => "og:url"}/
+    %meta{:content => "https://toqueemocional.com.br/logo.png", :property => "og:image"}/
+    %meta{:content => "Descubra como aumentar o desempenho escolar dos seus filhos, melhorando a sua Motivação e Comportamento.", :property => "og:description"}/
+
     = csrf_meta_tags
     = csp_meta_tag
 
