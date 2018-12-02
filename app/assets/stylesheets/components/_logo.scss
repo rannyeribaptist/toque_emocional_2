@@ -9,13 +9,13 @@
   &--small { width: 100px }
 }
 
-.about-picture {
-  width: 100%;
+.logo-footer {
   height: 100%;
+  width: 250px;
+  margin: 0 auto;
 
-  @include breakpoint("small-up") {
-    width: auto;
-
-    &:first-of-type { margin-right: 100px;}
+  @include breakpoint("medium") {
+    width: 350px;
+    margin: unset;
   }
 }

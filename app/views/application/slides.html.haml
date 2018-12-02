@@ -1,7 +1,8 @@
 .slide.slide--white.animated.fadeIn.slide--active#1
   .slide__content
     .slide__group
-      = image_tag('brain.png', class: 'slide__logo')
+      %a{:href => "/"}
+        = image_tag('brain.png', class: 'slide__logo')
 
     .slide__group
       .slide__pages
@@ -20,7 +21,8 @@
 .slide.slide--white#2
   .slide__content
     .slide__group
-      = image_tag('brain.png', class: 'slide__logo')
+      %a{:href => "/"}
+        = image_tag('brain.png', class: 'slide__logo')
 
     .slide__group
       .slide__pages
@@ -39,7 +41,8 @@
 .slide.slide--white#3
   .slide__content
     .slide__group
-      = image_tag('brain.png', class: 'slide__logo')
+      %a{:href => "/"}
+        = image_tag('brain.png', class: 'slide__logo')
 
     .slide__group
       .slide__pages
@@ -58,7 +61,8 @@
 .slide.slide--white#4
   .slide__content
     .slide__group
-      = image_tag('brain.png', class: 'slide__logo')
+      %a{:href => "/"}
+        = image_tag('brain.png', class: 'slide__logo')
 
     .slide__group
       .slide__pages
@@ -77,7 +81,8 @@
 .slide.slide--white#5
   .slide__content
     .slide__group
-      = image_tag('brain.png', class: 'slide__logo')
+      %a{:href => "/"}
+        = image_tag('brain.png', class: 'slide__logo')
 
     .slide__group
       .slide__pages
@@ -96,7 +101,8 @@
 .slide.slide--yellow#6
   .slide__content
     .slide__group
-      = image_tag('brain.png', class: 'slide__logo')
+      %a{:href => "/"}
+        = image_tag('brain.png', class: 'slide__logo')
       %h1.title.title--thin ALEGRIA
 
     .slide__group
@@ -123,7 +129,8 @@
 .slide.slide--blue#7
   .slide__content
     .slide__group
-      = image_tag('brain-white.png', class: 'slide__logo')
+      %a{:href => "/"}
+        = image_tag('brain-white.png', class: 'slide__logo')
       %h1.title.title--thin TRISTEZA
 
     .slide__group
@@ -150,7 +157,8 @@
 .slide.slide--grey#8
   .slide__content
     .slide__group
-      = image_tag('brain-white.png', class: 'slide__logo')
+      %a{:href => "/"}
+        = image_tag('brain-white.png', class: 'slide__logo')
       %h1.title.title--thin MEDO
 
     .slide__group
@@ -177,7 +185,8 @@
 .slide.slide--red#9
   .slide__content
     .slide__group
-      = image_tag('brain-black.png', class: 'slide__logo')
+      %a{:href => "/"}
+        = image_tag('brain-black.png', class: 'slide__logo')
       %h1.title.title--thin RAIVA
 
     .slide__group
@@ -200,6 +209,8 @@
     .slide__group
       .float-right{style: "margin-top: 10px"}
         %a.fancy-link.title.title--thin.title--small{href: about_page_url} SAIBA QUEM SOMOS
+        %br
+        %br        	        	
 
 - content_for :javascript do
   :javascript
