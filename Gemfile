@@ -65,6 +65,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # for unit tests
   gem 'rspec-rails', '~> 3.8'
+  gem 'database_cleaner'
 end
 
 group :test do
