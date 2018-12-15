@@ -28,7 +28,7 @@
   }
 
   &__image {
-    max-width: 100%;
+    max-width: 50%;
 
     @include breakpoint("small-up") {
       max-width: 50%;

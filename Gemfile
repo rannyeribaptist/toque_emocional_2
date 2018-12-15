@@ -57,6 +57,9 @@ gem 'devise'
 gem 'carrierwave', '~> 1.0'
 gem 'rmagick'
 
+# Add a trash can to Rails models
+gem 'rails-trash', :github => 'trilogyinteractive/rails-trash'
+
 # Font Awesome icons
 gem 'font-awesome-sass', '~> 5.4.1'
 

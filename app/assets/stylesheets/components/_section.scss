@@ -9,4 +9,5 @@
   }
 
   &--footer { position: relative }
+  @include colors("background-color");
 }

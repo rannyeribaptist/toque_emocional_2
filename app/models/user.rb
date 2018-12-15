@@ -1,10 +1,13 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
 
   belongs_to :school
+
+  has_trash
+  default_scope {where(arel_table[:deleted_at].eq(nil)) if arel_table[:deleted_at]}
 
   before_create :check_school, :validate_user_permission
 

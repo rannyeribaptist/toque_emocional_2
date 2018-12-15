@@ -11,4 +11,5 @@
 
   &--large { font-size: 2.5rem }
   &--thin { font-weight: 300 }
+  @include colors("color");
 }

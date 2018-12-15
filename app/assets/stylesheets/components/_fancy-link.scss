@@ -1,4 +1,6 @@
 .fancy-link {
   text-decoration: none;
   color: inherit;
+
+  @include colors("color");
 }

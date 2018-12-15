@@ -2,6 +2,7 @@
 $yellow: #FFEC48;
 $blue: #60A6E0;
 $grey: #606062;
+$light-grey: #ccc;
 $red: #F25957;
 
 // Breakpoints
@@ -37,5 +38,26 @@ $red: #F25957;
   @else if $value == limiter {
     max-width: 1700px;
     margin: 0 auto;
+  }
+}
+
+// managing theme colors with a mixin
+@mixin colors($attribute) {
+  @if $attribute == color {
+    &--yellow { color: $yellow };
+    &--blue { color: $blue };
+    &--grey { color: $grey };
+    &--red { color: $red };
+    &--white{ color: white };
+    &--black{ color: black };
+  }
+
+  @else if $attribute == background-color {
+    &--yellow { background-color: $yellow };
+    &--blue { background-color: $blue };
+    &--grey { background-color: $grey };
+    &--red { background-color: $red };
+    &--white{ color: white };
+    &--black{ color: black };
   }
 }
