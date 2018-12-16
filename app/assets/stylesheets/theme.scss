@@ -21,6 +21,7 @@
 @import "components/columns";
 @import "components/navbar";
 @import "components/flash";
+@import "components/colorful-content";
 
 body {
   margin: 0;
@@ -53,6 +54,14 @@ body {
 .vertical {
   width: 0;
   height: 100px;
+
+  &--large { height: -moz-available; height: -webkit-fill-available; height: fill-available }
+}
+
+.mobile-hidden {
+  display: none;
+
+  @include breakpoint("small-up") { display: block }
 }
 
 .action {
@@ -82,7 +91,7 @@ body {
 }
 
 .plus {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   margin: 25px;

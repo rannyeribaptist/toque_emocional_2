@@ -1,9 +1,12 @@
 // Colors
 $yellow: #FFEC48;
+$dark-yellow: #ffca0c;
+$cyan: #09c7e6;
+$green: #09e609;
 $blue: #60A6E0;
 $grey: #606062;
 $light-grey: #ccc;
-$red: #F25957;
+$red: #e60909;
 
 // Breakpoints
 @mixin breakpoint($value) {
@@ -21,6 +24,10 @@ $red: #F25957;
 
   @else if $value == small-up {
     @media (min-width: 600px) { @content; }
+  }
+
+  @else if $value == touch {
+    @media (max-width: 899px) { @content; }
   }
 
   @else if $value == medium {
@@ -45,19 +52,37 @@ $red: #F25957;
 @mixin colors($attribute) {
   @if $attribute == color {
     &--yellow { color: $yellow };
+    &--dark-yellow { color: $dark-yellow };
     &--blue { color: $blue };
+    &--cyan { color: $cyan };
     &--grey { color: $grey };
     &--red { color: $red };
+    &--green { color: $green };
     &--white{ color: white };
     &--black{ color: black };
   }
 
   @else if $attribute == background-color {
+    &--dark-yellow { background-color: $dark-yellow };
+    &--cyan { background-color: $cyan };
+    &--green { background-color: $green };
     &--yellow { background-color: $yellow };
     &--blue { background-color: $blue };
     &--grey { background-color: $grey };
     &--red { background-color: $red };
-    &--white{ color: white };
-    &--black{ color: black };
+    &--white{ background-color: white };
+    &--black{ background-color: black };
+  }
+
+  @else if $attribute == border-color {
+    &--dark-yellow { border-color: $dark-yellow };
+    &--cyan { border-color: $cyan };
+    &--green { border-color: $green };
+    &--yellow { border-color: $yellow };
+    &--blue { border-color: $blue };
+    &--grey { border-color: $grey };
+    &--red { border-color: $red };
+    &--white{ border-color: white };
+    &--black{ border-color: black };
   }
 }

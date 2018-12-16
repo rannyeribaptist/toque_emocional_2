@@ -1,0 +1,58 @@
+.animated.fadeIn
+  .section
+    .section__content
+      %h1.title.title--thin.title--large Escolas
+
+      .columns.columns--medium
+        .column.column--2
+          %h2.title.title--thin.title--small Adicionar Escola
+
+          %br
+
+          .action{style: "text-align: left"}
+            = simple_form_for School.new, :defaults => { :input_html => { class: "fancy-form__input" } } do |school|
+              = school.input :name
+              = school.input :color, input_html: { type: "color", value: "#fded00" }
+
+              .text-center
+                %br
+                = school.submit "Salvar", class: "button button--green"
+
+        %hr.vertical.vertical--large.mobile-hidden
+
+        .column.column--2
+          %h2.title.title--thin.title--small Escolas Salvas
+
+          %br
+
+          - @schools.each do |s|
+            .colorful-content{style: "background-color: #{s.color}", id: "school_#{s.id}"}
+              %text= s.name
+              - unless s.id == 1
+                %div
+                  = link_to icon('fas', 'user-plus'), { controller: "users", action: "new", school: "#{s.id}" } unless s.user.present?
+                  = icon('fas', 'pen', class: "form-toggle", style: "cursor: pointer", "data-toggle" => "#{s.id}")
+                  = link_to icon('fas', 'trash'), school_path(s), method: :delete, data: { confirm: "Você tem certeza que quer excluir essa escola?" }
+
+            .colorful-content.colorful-content--bordered{style: "display: none", id: "edit_school_#{s.id}", "data-toggle" => "#{s.id}"}
+              = simple_form_for s, :defaults => { :input_html => { class: "fancy-form__input" } } do |school|
+                = school.input :name
+                = school.input :color, input_html: { type: "color", value: "#{s.color}" }
+
+                .text-center
+                  %br
+                  %button.button.form-toggle{type: "button"} Cancelar
+                  = school.submit "Salvar", class: "button button--green"
+
+- content_for :javascript do
+  :javascript
+    $('.form-toggle').click(function() {
+      let id = $(this).attr("data-toggle");
+      let old_id = $('.form-active').attr("data-toggle");
+
+      $('#school_' + old_id).toggle();
+      $('.form-active').toggle().removeClass("form-active");
+
+      $('#school_' + id).toggle();
+      $('#edit_school_' + id).toggle().addClass('form-active');
+    });

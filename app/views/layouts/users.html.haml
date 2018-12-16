@@ -30,8 +30,9 @@
 
           .navbar__content
             - if current_user.role == "Admin"
-              .button.button
-                ESCOLAS
+              %a.fancy-link{:href => schools_path}
+                .button.button
+                  ESCOLAS
               .button.button
                 OCORRÊNCIAS
               .button.button
@@ -53,12 +54,9 @@
               %i "There's no place like home" - Unknown
 
       .column.column--3{style: "position: relative"}
-        .display-evenly.display-evenly--sm.text-center
-          - if flash.any?
-            - flash.each do |f|
-              .flash.animated.fadeInDown{class: "flash--#{f[0]}"}= f[1]
+        = show_flash_message
 
-          = yield
+        = yield
 
       .plus
         .plus__content

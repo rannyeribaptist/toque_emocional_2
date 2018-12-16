@@ -1,0 +1,13 @@
+@import "variables";
+
+.colorful-content {
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+
+  text, i { color: chocolate; mix-blend-mode: exclusion; }
+  i { margin-left: 10px }
+
+  &--bordered { border: 1px solid grey; display: block; text-align: left }
+}

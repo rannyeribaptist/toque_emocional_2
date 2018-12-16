@@ -5,6 +5,9 @@ class SchoolsController < ApplicationController
   layout "users"
 
   # TODO: Change the routes and redirects when configs model is created
+  def index
+    @schools = School.active
+  end
 
   # POST /schools
   # POST /schools.json
@@ -13,10 +16,10 @@ class SchoolsController < ApplicationController
 
     respond_to do |format|
       if @school.save
-        format.html { redirect_to @school, flash: {:success => 'Escola criada'} }
+        format.html { redirect_to schools_url, flash: {:success => 'Tudo certo! Escola salva com sucesso'} }
         format.json { render :show, status: :created, location: @school }
       else
-        format.html { render :new, flash: {:warning => 'Algo deu errado, verifique os campos e tente novamente'} }
+        format.html { redirect_to schools_url, flash: {:danger => 'Algo deu errado, preencha todos os campos corretamente'} }
         format.json { render json: @school.errors, status: :unprocessable_entity }
       end
     end
@@ -27,10 +30,10 @@ class SchoolsController < ApplicationController
   def update
     respond_to do |format|
       if @school.update(school_params)
-        format.html { redirect_to @school, flash: {:success => 'Escola atualizada'} }
+        format.html { redirect_to schools_url, flash: {:success => 'As novas informações foram salvas'} }
         format.json { render :show, status: :ok, location: @school }
       else
-        format.html { render :edit, flash: {:warning => 'Algo deu errado, verifique os campos e tente novamente'} }
+        format.html { render schools_url, flash: {:danger => 'Algo deu errado, preencha todos os campos corretamente'} }
         format.json { render json: @school.errors, status: :unprocessable_entity }
       end
     end
@@ -41,7 +44,7 @@ class SchoolsController < ApplicationController
   def destroy
     @school.destroy
     respond_to do |format|
-      format.html { redirect_to schools_url, flash: {:info => 'Escola excluída'} }
+      format.html { redirect_to schools_url, flash: {:success => 'Escola excluída com sucesso'} }
       format.json { head :no_content }
     end
   end

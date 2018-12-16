@@ -1,6 +1,8 @@
 class School < ApplicationRecord
   validates_presence_of :name, :color, required: true
 
+  validates_format_of :color, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
+
   has_one :user, dependent: :destroy
 
   has_trash

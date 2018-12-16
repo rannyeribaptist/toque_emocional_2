@@ -3,11 +3,16 @@
 .flash {
   padding: 10px;
   position: absolute;
+  width: fit-content;
   top: 0;
-  margin: 35px 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  margin-top: 10px;
 
-  &--success { color: #09e609; border: 1px solid #09e609; }
-  &--warning { color: #ffca0c; border: 1px solid #ffca0c; }
-  &--alert { color: #e60909; border: 1px solid #e60909; }
-  &--notice { color: #09c7e6; border: 1px solid #09c7e6; }
+  &--success { color: $green; border: 1px solid $green; }
+  &--warning { color: $dark-yellow; border: 1px solid $dark-yellow; }
+  &--danger { color: $red; border: 1px solid $red; }
+  &--alert { color: $red; border: 1px solid $red; }
+  &--notice { color: $cyan; border: 1px solid $cyan; }
 }

@@ -4,7 +4,10 @@
   display: flex;
   flex-direction: column;
 
-  @include breakpoint("small-up") { flex-direction: row }
+  @include breakpoint("medium") { flex-direction: row }
+
+  &--small { flex-direction: row }
+  &--medium { @include breakpoint("small-up"){ flex-direction: row } }
 }
 
 .column {

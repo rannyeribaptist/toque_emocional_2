@@ -4,7 +4,7 @@
   &--vertical {
     text-align: center;
 
-    @include breakpoint("small-up") {
+    @include breakpoint("medium") {
       height: 100vh;
       position: fixed;
     }
@@ -17,19 +17,19 @@
 
   &__content {
     padding: 15px;
-    height: 40%;
+    height: 65%;
     display: none;
     justify-content: space-between;
     flex-direction: column;
 
-    @include breakpoint("small-up") { display: flex; margin-top: 20%; }
+    @include breakpoint("medium") { display: flex; margin-top: 10%; }
   }
 
   &__bottom {
     margin-top: 20px;
     font-size: 0.7rem;
 
-    @include breakpoint("small-up") {
+    @include breakpoint("medium") {
       position: absolute;
       right: 0;
       left: 0;
@@ -40,7 +40,7 @@
     }
   }
 
-  &__content-toggle { @include breakpoint("small-only") { display: block } display: none; }
+  &__content-toggle { @include breakpoint("touch") { display: block } display: none; }
 
   @include colors("background-color");
 }
