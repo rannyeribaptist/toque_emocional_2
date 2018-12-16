@@ -1,7 +1,7 @@
 @import "variables";
 
 .logo-default {
-  width: 100%;
+  width: 80%;
   height: 100%;
 
   @include breakpoint("small-up") { width: 400px }
@@ -18,4 +18,12 @@
     width: 350px;
     margin: unset;
   }
+}
+
+.logo-dashboard {
+  height: auto;
+  width: 150px;
+  margin: 15px;
+
+  @include breakpoint("medium") { width: 200px }
 }

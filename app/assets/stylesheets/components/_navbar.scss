@@ -1,0 +1,46 @@
+@import "variables";
+
+.navbar {
+  &--vertical {
+    text-align: center;
+
+    @include breakpoint("small-up") {
+      height: 100vh;
+      position: fixed;
+    }
+  }
+
+  &--horizontal {
+    width: 100%;
+    position: fixed;
+  }
+
+  &__content {
+    padding: 15px;
+    height: 40%;
+    display: none;
+    justify-content: space-between;
+    flex-direction: column;
+
+    @include breakpoint("small-up") { display: flex; margin-top: 20%; }
+  }
+
+  &__bottom {
+    margin-top: 20px;
+    font-size: 0.7rem;
+
+    @include breakpoint("small-up") {
+      position: absolute;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      bottom: 0;
+      margin-bottom: 5px;
+      font-size: 0.7rem;
+    }
+  }
+
+  &__content-toggle { @include breakpoint("small-only") { display: block } display: none; }
+
+  @include colors("background-color");
+}

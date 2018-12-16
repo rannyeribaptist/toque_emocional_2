@@ -1,0 +1,12 @@
+@import "variables";
+
+.hr {
+  border: none;
+  border-bottom: 1px solid;
+  width: 100%;
+
+  @include colors("border-color");
+
+  &--small { @include breakpoint("small-up") { width: 40% } }
+  &--medium { @include breakpoint("small-up") { width: 60% } }
+}

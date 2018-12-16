@@ -13,3 +13,8 @@
   &--thin { font-weight: 300 }
   @include colors("color");
 }
+
+.saldation {
+  font-weight: lighter;
+  text-shadow: 0 5px 29px rgba(0,0,0,0.0980392) , 10px 10px 5px rgba(0,0,0,0.0470588);
+}

@@ -23,7 +23,7 @@ class User < ApplicationRecord
   end
 
   def validate_user_permission
-    if self.role == "Admin" and User.count <= 0
+    if self.role == "Admin" and User.count > 0
       errors.add(:base, "Desculpe mas eu não posso permitir que isso aconteça... Este incidente será relatado.")
       throw(:abort)
     end

@@ -1,0 +1,97 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Toque Emocional - plataforma
+
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    -# Css animations
+    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css", :rel => "stylesheet"}/
+
+    -# Montserrat Font
+    %link{:href => "https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i", :rel => "stylesheet"}/
+
+    -# Responsive metatag
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+
+    = stylesheet_link_tag    'theme', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    .columns
+      .column.column--1
+        .navbar.navbar--yellow.navbar--vertical
+          %a{:href => "/"}
+            = image_tag("logo-black.png", class: "logo-dashboard")
+
+          .button.button--transparent.navbar__content-toggle
+            %image{src: "https://icongr.am/clarity/bars.svg"}
+
+          .navbar__content
+            - if current_user.role == "Admin"
+              .button.button
+                ESCOLAS
+              .button.button
+                OCORRÊNCIAS
+              .button.button
+                ATENDIMENTOS
+              .button.button
+                USUÁRIOS
+              .button.button
+                ESTATÍSTICAS
+
+            - else
+              .button.button
+                OCORRÊNCIAS
+              .button.button
+                ATENDIMENTOS
+              .button.button
+                RELATÓRIOS
+
+            .navbar__bottom
+              %i "There's no place like home" - Unknown
+
+      .column.column--3{style: "position: relative"}
+        .display-evenly.display-evenly--sm.text-center
+          - if flash.any?
+            - flash.each do |f|
+              .flash.animated.fadeInDown{class: "flash--#{f[0]}"}= f[1]
+
+          = yield
+
+      .plus
+        .plus__content
+          = link_to "Sair", destroy_user_session_path, method: :delete, class: "fancy-link"
+        .plus__button
+          %image{src: "https://icongr.am/clarity/plus.svg"}
+
+    %script{:crossorigin => "anonymous", :integrity => "sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA=", :src => "https://code.jquery.com/jquery-3.3.1.slim.js"}
+
+    :javascript
+      $(".navbar__content-toggle").click(function() {
+        $(".navbar__content").toggle();
+      });
+
+      setTimeout(function(){
+        $(".flash").removeClass("animated fadeInDown");
+        $(".flash").addClass("animated fadeOutUp");
+      }, 5000);
+
+      $(".plus").click(function() {
+        var element = $(this);
+
+        if (element.hasClass("active")) {
+          element.removeClass("active");
+
+          $(".plus__button").removeClass("plus__button--active");
+          $(".plus__content").removeClass("plus__content--active fadeInUp");
+        } else {
+          element.addClass("active");
+
+          $(".plus__button").addClass("plus__button--active");
+          $(".plus__content").addClass("plus__content--active   animated fadeInUp");
+        }
+      });
+
+    = yield(:javascript)

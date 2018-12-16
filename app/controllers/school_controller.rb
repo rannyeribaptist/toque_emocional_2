@@ -1,5 +1,8 @@
 class SchoolsController < ApplicationController
   before_action :set_school, only: [:update, :destroy]
+  before_action :authenticate_user!
+
+  layout "users"
 
   # TODO: Change the routes and redirects when configs model is created
 

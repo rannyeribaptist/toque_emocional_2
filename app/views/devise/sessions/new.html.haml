@@ -3,6 +3,8 @@
     = image_tag("logo.png")
   .devise__content
     %div
+      - flash.each do |key, value|
+        .flash.animated.fadeInDown{:class => "flash--#{key}"}= value
       %h1.title.title--thin.title--large Entrar
       = simple_form_for(resource, as: resource_name, url: session_path(resource_name), defaults: { input_html: {class: "fancy-form__input"} }) do |f|
         .form-inputs

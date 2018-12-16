@@ -4,7 +4,7 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Toque Emocional
 
-    %meta{:content => "Motivação e comportamento de alto desempenho escolar é nossa especialidade!", :name => "description"}/    
+    %meta{:content => "Motivação e comportamento de alto desempenho escolar é nossa especialidade!", :name => "description"}/
     / Open Graph data
     %meta{:content => "Inteligência Emocional", :property => "og:title"}/
     %meta{:content => "article", :property => "og:type"}/
@@ -52,5 +52,11 @@
     = yield
 
     %script{:crossorigin => "anonymous", :integrity => "sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA=", :src => "https://code.jquery.com/jquery-3.3.1.slim.js"}
+
+    :javascript
+      setTimeout(function(){
+        $(".flash").removeClass("animated fadeInDown");
+        $(".flash").addClass("animated fadeOutUp");
+      }, 5000);
 
     = yield(:javascript)

@@ -15,4 +15,19 @@
   }
 
   @include colors("background-color");
+
+  &--large {
+    font-size: 2rem;
+    width: 100%;
+    font-weight: 100;
+    padding: 0;
+
+    &:hover { font-size: 2.3rem; font-weight: 100 }
+
+    @include breakpoint("small-up") {
+      font-size: 4rem;
+
+      &:hover { font-size: 4.3rem; font-weight: 100 }
+    }
+  }
 }

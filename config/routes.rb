@@ -4,9 +4,13 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-
-  resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  authenticated :user do
+    root to: "application#dashboard"
+    resources :users
+    resources :schools
+  end
 
   root to: "application#index"
 

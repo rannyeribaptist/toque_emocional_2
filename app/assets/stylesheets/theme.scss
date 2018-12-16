@@ -17,6 +17,10 @@
 @import "components/description-card";
 @import "components/devise";
 @import "components/button";
+@import "components/hr";
+@import "components/columns";
+@import "components/navbar";
+@import "components/flash";
 
 body {
   margin: 0;
@@ -75,4 +79,33 @@ body {
   right: 0;
   width: fit-content;
   width: -moz-fit-content;
+}
+
+.plus {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 25px;
+  cursor: pointer;
+
+  &__button {
+    background-color: #fded00;
+    border-radius: 50%;
+    display: flex;
+    padding: 5px;
+    transition: transform 0.5s;
+
+    &--active {
+      transform: rotate(45deg);
+    }
+  }
+
+  &__content {
+    display: none;
+    margin: 10px 0;
+
+    &--active {
+      display: block;
+    }
+  }
 }
