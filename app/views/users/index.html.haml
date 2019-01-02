@@ -22,8 +22,8 @@
                   %div{style: "background-color: #{user.school.color}; width: 20px; height: 20px;"}
                 %td= user.school.name
                 %td= user.role
-                %td= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_user_path(user), class: "fancy-link fancy-link--green"
-                %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), user, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
+                %td= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_user_path(user), class: "fancy-link fancy-link--green" if not user == User.first
+                %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), user, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red" if not user == User.first
 
       %br
 

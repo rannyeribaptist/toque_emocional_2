@@ -1,0 +1,17 @@
+-# frozen_string_literal: true
+= simple_form_for(@student, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+  %strong= f.error_notification
+  %p= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  %br
+
+  - if not current_user.role == "Admin"
+    = f.association :school, selected: current_user.school.id, input_html: { class: "fancy-form__input fancy-form__select" }
+  - else
+    = f.association :school, input_html: { class: "fancy-form__input fancy-form__select" }
+
+  = f.input :name
+  = f.input :classy
+  = f.input :group
+
+  = f.submit "Salvar", class: "button button--green"

@@ -1,0 +1,17 @@
+.animated.fadeIn
+  .section
+    .section__content
+      .inline
+        %div{style: "background-color: #{@student.school.color}; width: 30px; height: 30px; margin-right: 20px;"}
+        %h1= @student.school.name
+
+      %p= @student.name
+      = @student.classy
+      = @student.group
+
+      %br
+      %br
+
+      = link_to 'Editar', edit_student_path(@student), class: "fancy-link"
+      \|
+      = link_to 'Voltar', students_path, class: "fancy-link"

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   authenticated :user do
     root to: "application#dashboard"
+    resources :students
     resources :users
     resources :schools
   end

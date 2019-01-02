@@ -33,23 +33,19 @@
               %a.fancy-link{:href => schools_path}
                 .button.button
                   ESCOLAS
-              .button.button
-                OCORRÊNCIAS
-              .button.button
-                ATENDIMENTOS
               %a.fancy-link{:href => users_path}
                 .button.button
                   USUÁRIOS
-              .button.button
-                ESTATÍSTICAS
 
-            - else
+            .button.button
+              OCORRÊNCIAS
+            .button.button
+              ATENDIMENTOS
+            %a.fancy-link{:href => students_path}
               .button.button
-                OCORRÊNCIAS
-              .button.button
-                ATENDIMENTOS
-              .button.button
-                RELATÓRIOS
+                ESTUDANTES
+            .button.button
+              RELATÓRIOS
 
             .navbar__bottom
               %i "There's no place like home" - Unknown
