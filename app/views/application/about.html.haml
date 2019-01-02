@@ -33,7 +33,7 @@
     .advanced-inline
       = image_tag('logo-white.png', class: "logo-footer")
 
-      %div{style: "text-align: left; color: white"}
+      .section--footer__content-list
         %h3.title.title--small.title--thin SOCIAL
 
         %ul.fancy-list
@@ -41,7 +41,7 @@
           %li= icon('fab', 'instagram', ("#{link_to 'Instagram', 'https://instagram.com/toqueemocional', class: 'fancy-link fancy-link--white'}").html_safe)
           %li= icon('fab', 'youtube', ("#{link_to 'Youtube', 'https://youtube.com/toqueemocional', class: 'fancy-link fancy-link--white'}").html_safe)
 
-      %div{style: "text-align: left; color: white"}
+      .section--footer__content-list
         %h3.title.title--small.title--thin CONTATO
 
         %ul.fancy-list

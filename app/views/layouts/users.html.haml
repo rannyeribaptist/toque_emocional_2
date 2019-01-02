@@ -20,7 +20,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
     .columns
-      .column.column--1
+      .column.column--2
         .navbar.navbar--yellow.navbar--vertical
           %a{:href => "/"}
             = image_tag("logo-black.png", class: "logo-dashboard")
@@ -37,8 +37,9 @@
                 OCORRÊNCIAS
               .button.button
                 ATENDIMENTOS
-              .button.button
-                USUÁRIOS
+              %a.fancy-link{:href => users_path}
+                .button.button
+                  USUÁRIOS
               .button.button
                 ESTATÍSTICAS
 
@@ -53,7 +54,7 @@
             .navbar__bottom
               %i "There's no place like home" - Unknown
 
-      .column.column--3{style: "position: relative"}
+      .column.column--8{style: "position: relative"}
         = show_flash_message
 
         = yield

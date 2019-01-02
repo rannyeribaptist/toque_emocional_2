@@ -11,14 +11,31 @@
 }
 
 .column {
-  &--1 { flex: 1 }
-  &--2 { flex: 2 }
-  &--3 { flex: 3 }
-  &--4 { flex: 4 }
-  &--5 { flex: 5 }
-  &--6 { flex: 6 }
-  &--7 { flex: 7 }
-  &--8 { flex: 8 }
+  @include breakpoint("medium") {
+    &--1 { width: 10% }
+    &--2 { width: 20% }
+    &--3 { width: 30% }
+    &--4 { width: 40% }
+    &--5 { width: 50% }
+    &--6 { width: 60% }
+    &--7 { width: 70% }
+    &--8 { width: 80% }
+    &--9 { width: 90% }
+  }
+
+  &--small {
+    @include breakpoint("small-up") {
+      &--1 { width: 10% }
+      &--2 { width: 20% }
+      &--3 { width: 30% }
+      &--4 { width: 40% }
+      &--5 { width: 50% }
+      &--6 { width: 60% }
+      &--7 { width: 70% }
+      &--8 { width: 80% }
+      &--9 { width: 90% }
+    }
+  }
 
   @include colors("background-color");
 }

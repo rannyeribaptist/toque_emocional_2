@@ -8,6 +8,15 @@
     @include breakpoint("limiter");
   }
 
-  &--footer { position: relative }
+  &--footer {
+    position: relative;
+
+    &__content-list {
+      color: white;
+      text-align: left;
+
+      &:first-of-type { @include breakpoint("small-up"){ margin: 0 30px; } }
+    }
+  }
   @include colors("background-color");
 }

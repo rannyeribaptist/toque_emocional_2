@@ -1,4 +1,4 @@
-# MySQL. Versions 5.1.10 and up are supported.
+  # MySQL. Versions 5.1.10 and up are supported.
 #
 # Install the MySQL driver
 #   gem install mysql2
@@ -15,7 +15,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: root
-  socket: /tmp/mysql.sock
+  socket: /run/mysqld/mysqld.sock
 
 development:
   <<: *default

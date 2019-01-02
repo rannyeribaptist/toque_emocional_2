@@ -23,6 +23,7 @@
 .logo-dashboard {
   height: auto;
   width: 150px;
+  max-width: 80%;
   margin: 15px;
 
   @include breakpoint("medium") { width: 200px }

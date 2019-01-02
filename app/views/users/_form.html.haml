@@ -1,11 +1,18 @@
 -# frozen_string_literal: true
-= simple_form_for(@user) do |f|
-  = f.error_notification
-  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+= simple_form_for(@user, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+  %strong= f.error_notification
+  %p= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
-  .form-inputs
-    = f.association :school
-    = f.input :role
+  %br
 
-  .form-actions
-    = f.button :submit
+  - if params[:school]
+    = f.association :school, selected: params[:school], input_html: { class: "fancy-form__input fancy-form__select" }
+  - else
+    = f.association :school, input_html: { class: "fancy-form__input fancy-form__select" }
+
+  = f.input :role, as: :hidden, input_html: { value: "coordenator" }
+  = f.input :email
+  = f.input :password
+  = f.input :password_confirmation
+
+  = f.submit "Salvar", class: "button button--green"

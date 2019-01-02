@@ -1,12 +1,12 @@
-%p#notice= notice
+.animated.fadeIn
+  .section
+    .section__content
+      .inline
+        %div{style: "background-color: #{@user.school.color}; width: 30px; height: 30px; margin-right: 20px;"}
+        %h1= @user.school.name
 
-%p
-  %b School:
-  = @user.school
-%p
-  %b Role:
-  = @user.role
+      %p= @user.role
 
-= link_to 'Edit', edit_user_path(@user)
-\|
-= link_to 'Back', users_path
+      = link_to 'Editar', edit_user_path(@user), class: "fancy-link"
+      \|
+      = link_to 'Voltar', users_path, class: "fancy-link"

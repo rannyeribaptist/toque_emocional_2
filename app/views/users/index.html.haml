@@ -1,23 +1,30 @@
-%h1 Listing users
+.animated.fadeIn
+  .section
+    .section__content
+      %h1.title.title--thin.title--large Usuários
 
-%table
-  %thead
-    %tr
-      %th School
-      %th Role
-      %th
-      %th
-      %th
+      %br
 
-  %tbody
-    - @users.each do |user|
-      %tr
-        %td= user.school
-        %td= user.role
-        %td= link_to 'Show', user
-        %td= link_to 'Edit', edit_user_path(user)
-        %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
+      .table
+        %table.table
+          %thead
+            %tr
+              %th{style: "width: 20px"}
+              %th Escola
+              %th Permissão
+              %th
+              %th
 
-%br
+          %tbody
+            - @users.each do |user|
+              %tr
+                %td
+                  %div{style: "background-color: #{user.school.color}; width: 20px; height: 20px;"}
+                %td= user.school.name
+                %td= user.role
+                %td= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_user_path(user), class: "fancy-link fancy-link--green"
+                %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), user, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
 
-= link_to 'New User', new_user_path
+      %br
+
+      = link_to '+ Novo Usuário', new_user_path, class: "fancy-link fancy-link--blue2"

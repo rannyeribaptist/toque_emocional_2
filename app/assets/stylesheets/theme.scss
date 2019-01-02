@@ -22,6 +22,7 @@
 @import "components/navbar";
 @import "components/flash";
 @import "components/colorful-content";
+@import "components/table";
 
 body {
   margin: 0;
@@ -117,4 +118,10 @@ body {
       display: block;
     }
   }
+}
+
+.field_with_errors {
+  padding: 5px;
+  border: 1px solid tomato;
+  margin-bottom: 10px;
 }

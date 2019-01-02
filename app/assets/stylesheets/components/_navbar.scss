@@ -3,6 +3,7 @@
 .navbar {
   &--vertical {
     text-align: center;
+    width: inherit;
 
     @include breakpoint("medium") {
       height: 100vh;
