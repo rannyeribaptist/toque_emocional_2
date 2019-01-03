@@ -6,9 +6,9 @@
   %br
 
   - if params[:school]
-    = f.association :school, selected: params[:school], input_html: { class: "fancy-form__input fancy-form__select" }
+    = f.input :school_id, as: :select, collection: School.all.drop(1), selected: params[:school], input_html: { class: "fancy-form__input fancy-form__select" }
   - else
-    = f.association :school, input_html: { class: "fancy-form__input fancy-form__select" }
+    = f.input :school_id, as: :select, collection: School.all.drop(1), input_html: { class: "fancy-form__input fancy-form__select" }
 
   = f.input :role, as: :hidden, input_html: { value: "coordenator" }
   = f.input :email

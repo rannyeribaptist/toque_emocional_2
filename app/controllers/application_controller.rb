@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   layout "application"
   layout "users", only: :dashboard
 
+  include ApplicationHelper
+
   def index
   end
 

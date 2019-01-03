@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, flash: {:success => 'Usuário criado'} }
+        format.html { redirect_to users_path, flash: {:success => 'Usuário criado'} }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, flash: {:warning => 'Algo deu errado, verifique os campos e tente novamente'} }
@@ -43,9 +43,16 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    @user_params = user_params
+
+    if is_admin? and @user_params[:password].empty?
+      @user_params[:password] = @user.password
+      @user_params[:password_confirmation] = @user_params[:password]
+    end
+
     respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, flash: {:success => 'Usuário atualizado'} }
+      if @user.update(@user_params)
+        format.html { redirect_to users_path, flash: {:success => 'Usuário atualizado'} }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, flash: {:warning => 'Algo deu errado, verifique os campos e tente novamente'} }
