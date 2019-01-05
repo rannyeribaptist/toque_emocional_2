@@ -4,7 +4,7 @@ class CreateStudents < ActiveRecord::Migration[5.2]
       t.string :name
       t.belongs_to :school, foreign_key: true
       t.string :classy
-      t.string :group
+      t.string :groupy
 
       t.timestamps
     end

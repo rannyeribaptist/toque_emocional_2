@@ -13,4 +13,5 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require filterrific/filterrific-jquery
 //= require_tree .

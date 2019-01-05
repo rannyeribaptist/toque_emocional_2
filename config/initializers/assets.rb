@@ -35,4 +35,6 @@ Rails.application.config.assets.precompile += %w(
 
                                                 Lilyan.png
                                                 Ellyson.png
+
+                                                filterrific/filterrific-spinner.gif
                                               )

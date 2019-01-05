@@ -7,8 +7,21 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = Student.active if is_admin?
-    @students = Student.where(:school_id => current_user.school_id) if not is_admin?
+    @filterrific = initialize_filterrific(
+      Student,
+      params[:filterrific],
+      select_options: {
+        with_school_id: School.all.collect {|a| [a.name, a.id]},
+        sorted_by: Student.options_for_sorted_by
+      }
+    ) or return
+    @students = @filterrific.find.page(params[:page]) if is_admin?
+    @students = @filterrific.find.where(:school_id => current_user.school_id).page(params[:page]) if not is_admin?
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /students/1
@@ -47,7 +60,7 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1.json
   def update
     respond_to do |format|
-      if student_params[:school_id] == current_user.school.id || is_admin?
+      if is_admin? || student_params[:school_id].to_s == current_user.school_id.to_s
         if @student.update(student_params)
           format.html { redirect_to students_path, flash: {:success => 'Estudante atualizado'} }
           format.json { render :show, status: :ok, location: @student }
@@ -77,6 +90,6 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:name, :school_id, :classy, :group)
+      params.require(:student).permit(:name, :school_id, :classy, :groupy)
     end
 end

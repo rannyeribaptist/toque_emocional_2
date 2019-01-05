@@ -5,29 +5,35 @@
 
       %br
 
-      .table
-        %table.table
-          %thead
-            %tr
-              %th{style: "width: 20px"}
-              %th Escola
-              %th Nome
-              %th Ano
-              %th Turma
-              %th
-              %th
+      = form_for_filterrific @filterrific, html: { class: "fancy-form fancy-form--inline" } do |f|
+        %div
+          Buscar por palavra chave
+          = f.text_field(                                |
+              :search_query,                             |
+              class: 'filterrific-periodically-observed fancy-form__input', |
+              placeholder: 'Nome, Ano, Turma...' |
+            )                                            |
 
-          %tbody
-            - @students.each do |student|
-              %tr
-                %td
-                  %div{style: "background-color: #{student.school.color}; width: 20px; height: 20px;"}
-                %td= student.school.name
-                %td= student.name
-                %td= student.classy
-                %td= student.group
-                %td= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_student_path(student), class: "fancy-link fancy-link--green"
-                %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), student, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
+        - if is_admin?
+          %div
+            Escola
+            \#{f.select( :with_school_id, @filterrific.select_options[:with_school_id], { include_blank: 'Todas' }, class: "fancy-form__input fancy-form__select" )}
+        %div
+          Organizar por
+          = f.select( :sorted_by, @filterrific.select_options[:sorted_by] )
+        %div
+          = link_to(                 |
+              'Resetar',       |
+              reset_filterrific_url, |
+              class: "fancy-link fancy-link--blue2" |
+            )                        |
+
+        = f.submit 'Filtrar', class: "button button--green"
+
+      = render(                           |
+          partial: 'students/list',       |
+          locals: { students: @students } |
+        )                                 |
 
       %br
 

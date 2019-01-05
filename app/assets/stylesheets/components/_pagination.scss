@@ -1,0 +1,29 @@
+@import "variables";
+
+.pagination {
+  .current {
+    color: #ff0084;
+    font-style: normal;
+    font-weight: 700;
+    padding: .2em .5em;
+  }
+
+  a {
+    border: 1px solid #036;
+    color: #036;
+    padding: .2em .5em;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #0063dc;
+      color: white;
+    }
+  }
+
+  .disabled {
+    border-width: 2px;
+    color: #aaa;
+    margin-right: 1em;
+    padding: .2em .5em;
+  }
+}
