@@ -7,7 +7,8 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = Student.all
+    @students = Student.active if is_admin?
+    @students = Student.where(:school_id => current_user.school_id) if not is_admin?
   end
 
   # GET /students/1
@@ -30,12 +31,14 @@ class StudentsController < ApplicationController
     @student = Student.new(student_params)
 
     respond_to do |format|
-      if @student.save
-        format.html { redirect_to students_path, flash: {:success => 'Estudante criado'} }
-        format.json { render :show, status: :created, location: @student }
-      else
-        format.html { render :new }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+      if is_admin? || student_params[:school_id].to_s == current_user.school_id.to_s
+        if @student.save
+          format.html { redirect_to students_path, flash: {:success => 'Estudante criado'} }
+          format.json { render :show, status: :created, location: @student }
+        else
+          format.html { render :new }
+          format.json { render json: @student.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -44,12 +47,14 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1.json
   def update
     respond_to do |format|
-      if @student.update(student_params)
-        format.html { redirect_to students_path, flash: {:success => 'Estudante atualizado'} }
-        format.json { render :show, status: :ok, location: @student }
-      else
-        format.html { render :edit }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+      if student_params[:school_id] == current_user.school.id || is_admin?
+        if @student.update(student_params)
+          format.html { redirect_to students_path, flash: {:success => 'Estudante atualizado'} }
+          format.json { render :show, status: :ok, location: @student }
+        else
+          format.html { render :edit }
+          format.json { render json: @student.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
