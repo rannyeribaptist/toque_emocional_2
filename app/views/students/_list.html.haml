@@ -4,28 +4,34 @@
     %br
     %br
 
-  .table
-    %table.table
-      %thead
-        %tr
-          %th{style: "width: 20px"}
-          %th Escola
-          %th Nome
-          %th Ano
-          %th Turma
-          %th
-          %th
-      %tbody
-        - @students.each do |student|
+  - if not @students.empty?
+    .table
+      %table.table
+        %thead
           %tr
-            %td
-              %div{style: "background-color: #{student.school.color}; width: 20px; height: 20px;"}
-            %td= student.school.name
-            %td= student.name
-            %td= student.classy
-            %td= student.groupy
-            %td= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_student_path(student), class: "fancy-link fancy-link--green"
-            %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), student, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
+            %th{style: "width: 20px"}
+            %th Escola
+            %th Nome
+            %th Ano
+            %th Turma
+            %th
+            %th
+        %tbody
+          - @students.each do |student|
+            %tr
+              %td
+                %div{style: "background-color: #{student.school.color}; width: 20px; height: 20px;"}
+              %td= student.school.name
+              %td= student.name
+              %td= student.classy
+              %td= student.groupy
+              %td= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_student_path(student), class: "fancy-link fancy-link--green"
+              %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), student, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
+
+  - else
+    %h1.title.title--grey Não há nada disso por aqui...
+    = image_tag('brain.png', class: "logo-default logo-default--small")
+
 
   %br
   = will_paginate students # provided by will_paginate

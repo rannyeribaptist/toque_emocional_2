@@ -1,19 +1,17 @@
 module ApplicationHelper
   def salute
-    name = "Fulano"
-
     case Time.now.hour
 
       when 6..12
-        "Bom dia, #{name}!"
+        "Olá, Bom dia!"
       when 12
-        "Já almoçou, #{name}?"
+        "Já almoçou?"
       when 13..17
-        "Boa tarde, #{name}!"
+        "Boa tarde!"
       when 18..24
-        "Boa noite, #{name}!"
+        "Boa noite!"
       when 1..5
-        "Boa madrugada, #{name}!"
+        "Boa madrugada!"
     end
   end
 
