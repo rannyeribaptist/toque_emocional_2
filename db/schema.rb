@@ -12,6 +12,19 @@
 
 ActiveRecord::Schema.define(version: 2019_01_05_171338) do
 
+  create_table "errors", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "class_name"
+    t.text "status"
+    t.text "message"
+    t.text "trace"
+    t.text "target"
+    t.text "referrer"
+    t.text "params"
+    t.text "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "schools", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "color"
