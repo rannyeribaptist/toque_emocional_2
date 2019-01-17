@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     resources :students
     resources :users
     resources :schools
+    resources :occurrencies do
+      get :autocomplete_student_name, :on => :collection
+    end
   end
 
   root to: "application#index"

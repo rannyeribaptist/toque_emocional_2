@@ -1,5 +1,6 @@
 class Student < ApplicationRecord
   belongs_to :school
+  has_many :occurrency_students
 
   has_trash
   validates_presence_of :name, :school
@@ -46,5 +47,9 @@ class Student < ApplicationRecord
       ['Data de Registro (novos primeiro)', 'created_at_desc'],
       ['Data de Registro (antigos primeiro)', 'created_at_asc']
     ]
+  end
+
+  def funky_method
+    "#{self.name}"
   end
 end

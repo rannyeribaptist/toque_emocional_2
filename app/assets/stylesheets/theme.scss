@@ -1,6 +1,7 @@
 // Fontawesome icons pack
 @import "font-awesome-sprockets";
 @import "font-awesome";
+@import "jquery-ui";
 
 // Color Variables, Breakpoints and utils
 @import "components/variables";
@@ -125,4 +126,14 @@ body {
   padding: 5px;
   border: 1px solid tomato;
   margin-bottom: 10px;
+}
+
+.ui-menu {
+  text-decoration: none;
+  list-style: none;
+  background-color: rgb(221, 221, 221);
+  border: 1px solid grey;
+  padding: 5px 10px;
+  max-width: 60%;
+  width: 853px;
 }

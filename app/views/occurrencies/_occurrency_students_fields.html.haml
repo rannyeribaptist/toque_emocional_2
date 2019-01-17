@@ -1,0 +1,6 @@
+.nested-fields
+  = f.input :name, label: "Nome completo", :url => autocomplete_student_name_occurrencies_path, :as => :autocomplete, :update_elements => {:classy => '#', :groupy => '#', :id => "#"}
+  = f.input :classy, label: "Ano"
+  = f.input :groupy, label: "Turma"
+  = f.input :student_id, as: :hidden
+  = link_to_remove_association "Remover", f, class: "button button--red fancy-link fancy-link--white"

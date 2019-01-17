@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_05_171338) do
+ActiveRecord::Schema.define(version: 2019_01_13_172104) do
 
   create_table "errors", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "class_name"
@@ -23,6 +23,29 @@ ActiveRecord::Schema.define(version: 2019_01_05_171338) do
     t.text "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "occurrencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "description"
+    t.string "filled_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "school_id"
+    t.timestamp "deleted_at"
+    t.index ["school_id"], name: "index_occurrencies_on_school_id"
+  end
+
+  create_table "occurrency_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "occurrency_id"
+    t.bigint "student_id"
+    t.string "name"
+    t.string "classy"
+    t.string "groupy"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.timestamp "deleted_at"
+    t.index ["occurrency_id"], name: "index_occurrency_students_on_occurrency_id"
+    t.index ["student_id"], name: "index_occurrency_students_on_student_id"
   end
 
   create_table "schools", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -60,6 +83,9 @@ ActiveRecord::Schema.define(version: 2019_01_05_171338) do
     t.index ["school_id"], name: "index_users_on_school_id"
   end
 
+  add_foreign_key "occurrencies", "schools"
+  add_foreign_key "occurrency_students", "occurrencies"
+  add_foreign_key "occurrency_students", "students"
   add_foreign_key "students", "schools"
   add_foreign_key "users", "schools"
 end

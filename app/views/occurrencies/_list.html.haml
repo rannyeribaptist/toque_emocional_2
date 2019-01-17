@@ -1,0 +1,38 @@
+#filterrific_results
+  %div
+    = page_entries_info occurrencies # provided by will_paginate
+    %br
+    %br
+
+  - if not occurrencies.empty?
+    .table
+      %table.table
+        %thead
+          %tr
+            %th{style: "width: 20px"}
+            %th Descrição
+            %th Data de registro
+            %th Registrado por
+            %th
+            %th
+            %th
+
+        %tbody
+          - occurrencies.each do |occurrency|
+            %tr
+              %td
+                %div{style: "background-color: #{School.find_by_id(occurrency.school_id).color}; width: 20px; height: 20px;"}
+              %td= occurrency.description
+              %td= l(occurrency.created_at.strftime("%d.%m.%Y").to_date)
+              %td= occurrency.filled_by
+              %td{style: "text-align: center"}= link_to icon('fas', 'eye', 'Ver', class: "fancy-link fancy-link--blue2"), occurrency, class: "fancy-link fancy-link--blue2"
+              %td{style: "text-align: center"}= link_to icon('fas', 'pen ', 'Editar', class: "fancy-link fancy-link--green"), edit_occurrency_path(occurrency), class: "fancy-link fancy-link--green"
+              %td{style: "text-align: center"}= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), occurrency, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
+
+
+  - else
+    %h1.title.title--grey Não há nada disso por aqui...
+    = image_tag('brain.png', class: "logo-default logo-default--small")
+
+  %br
+  = will_paginate occurrencies # provided by will_paginate

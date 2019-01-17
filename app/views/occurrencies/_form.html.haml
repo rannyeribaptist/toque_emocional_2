@@ -1,0 +1,32 @@
+-# frozen_string_literal: true
+= simple_form_for(@occurrency, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+  %strong= f.error_notification
+  %p= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  = f.input :description
+  = f.input :filled_by
+
+  %div{style: "text-align: center"}
+    %h2.title.title--thin.title--small Estudantes
+    %br
+
+    = f.simple_fields_for :occurrency_students do |g|
+      = render "occurrency_students_fields", f: g
+    .links
+      %br
+      = link_to_add_association 'Adicionar Estudante', f, :occurrency_students, partial: "occurrency_students_fields", class: "button button--green fancy-link fancy-link--white"
+
+  %br
+  %br
+
+  = f.submit "Salvar", class: "button button--blue2 fancy-link fancy-link--white"
+
+- content_for :javascript do
+  :javascript
+    $(window).load(function() {
+      fields();
+    });
+
+    $('.add_fields').click(function(){
+      setTimeout(fields, 200);
+    });

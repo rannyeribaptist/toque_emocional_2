@@ -58,3 +58,13 @@
   outline: unset;
   transition: font-size 0.5s;
 }
+
+.nested-fields {
+  @include breakpoint('small-up') {    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    justify-content: space-evenly;
+  }
+}

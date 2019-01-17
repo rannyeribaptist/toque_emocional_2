@@ -1,0 +1,40 @@
+.animated.fadeIn
+  .section
+    .section__content
+      %h1.title.title--thin.title--large Ocorrências
+
+      %br
+
+      = form_for_filterrific @filterrific, html: { class: "fancy-form fancy-form--inline" } do |f|
+        %div
+          Buscar por palavra chave
+          = f.text_field(                                |
+              :search_query,                             |
+              class: 'filterrific-periodically-observed fancy-form__input', |
+              placeholder: 'Buscar palavras chave...' |
+            )                                            |
+            
+        - if is_admin?
+          %div
+            Escola
+            \#{f.select( :with_school_id, @filterrific.select_options[:with_school_id], { include_blank: 'Todas' }, class: "fancy-form__input fancy-form__select" )}
+        %div
+          Organizar por
+          = f.select( :sorted_by, @filterrific.select_options[:sorted_by] )
+        %div
+          = link_to(                 |
+              'Resetar',       |
+              reset_filterrific_url, |
+              class: "fancy-link fancy-link--blue2" |
+            )                        |
+
+        = f.submit 'Filtrar', class: "button button--green"
+
+      = render(                           |
+          partial: 'occurrencies/list',       |
+          locals: { occurrencies: @occurrencies } |
+        )                                 |
+
+      %br
+
+      = link_to '+ Registrar ocorrência', new_occurrency_path, class: "fancy-link fancy-link--blue2"

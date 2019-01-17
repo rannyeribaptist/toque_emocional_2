@@ -11,7 +11,7 @@
 }
 
 .column {
-  @include breakpoint("medium") {
+  @include breakpoint("small-up") {
     &--1 { width: 10% }
     &--2 { width: 20% }
     &--3 { width: 30% }
@@ -24,18 +24,17 @@
   }
 
   &--small {
-    @include breakpoint("small-up") {
-      &--1 { width: 10% }
-      &--2 { width: 20% }
-      &--3 { width: 30% }
-      &--4 { width: 40% }
-      &--5 { width: 50% }
-      &--6 { width: 60% }
-      &--7 { width: 70% }
-      &--8 { width: 80% }
-      &--9 { width: 90% }
-    }
+    &--1 { width: 10% }
+    &--2 { width: 20% }
+    &--3 { width: 30% }
+    &--4 { width: 40% }
+    &--5 { width: 50% }
+    &--6 { width: 60% }
+    &--7 { width: 70% }
+    &--8 { width: 80% }
+    &--9 { width: 90% }
   }
 
+  &--middle { @include breakpoint("medium"){margin: 0 20px} }
   @include colors("background-color");
 }
