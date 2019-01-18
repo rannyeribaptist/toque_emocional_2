@@ -2,7 +2,7 @@
   .section
     .section__content
       = image_tag('brain-black.png', class: 'logo-default logo-default--small')
-      %h1{style: "margin: 50px 0"} ATMOSFERA EMOCIONAL AQUI/ OCORRÊNCIA
+      %h1{style: "margin: 50px 0"}= @occurrency.emotional_sphere.upcase
 
       %h2.title.title--small.title--thin{style: "margin: 50px 0"}= @occurrency.description
 

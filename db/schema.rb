@@ -10,20 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_13_172104) do
-
-  create_table "errors", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.text "class_name"
-    t.text "status"
-    t.text "message"
-    t.text "trace"
-    t.text "target"
-    t.text "referrer"
-    t.text "params"
-    t.text "user_agent"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 2019_01_17_194110) do
 
   create_table "occurrencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "description"
@@ -32,6 +19,7 @@ ActiveRecord::Schema.define(version: 2019_01_13_172104) do
     t.datetime "updated_at", null: false
     t.bigint "school_id"
     t.timestamp "deleted_at"
+    t.string "emotional_sphere"
     t.index ["school_id"], name: "index_occurrencies_on_school_id"
   end
 

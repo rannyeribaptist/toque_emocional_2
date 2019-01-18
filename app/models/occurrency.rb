@@ -1,7 +1,7 @@
 class Occurrency < ApplicationRecord
   has_many :occurrency_students
 
-  validates_presence_of :description, :filled_by
+  validates_presence_of :description, :filled_by, :emotional_sphere
   accepts_nested_attributes_for :occurrency_students, reject_if: :all_blank, allow_destroy: true
   validate :check_for_students
 
@@ -17,7 +17,7 @@ class Occurrency < ApplicationRecord
     ]
   )
 
-  scope :search_query, lambda { |query| where("description LIKE ?", "%#{query}%") }
+  scope :search_query, lambda { |query| where("description LIKE ? OR emotional_sphere LIKE ?", "%#{query}%", "%#{query}%") }
   scope :with_school_id, lambda { |school_id| where(:school_id => school_id) }
 
   scope :sorted_by, lambda { |sort_option|

@@ -3,7 +3,7 @@ class Student < ApplicationRecord
   has_many :occurrency_students
 
   has_trash
-  validates_presence_of :name, :school
+  validates_presence_of :name, :school, :classy, :groupy
 
   self.per_page = 10
 

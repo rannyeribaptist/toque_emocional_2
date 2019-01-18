@@ -104,6 +104,6 @@ class OccurrenciesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def occurrency_params
-      params.require(:occurrency).permit(:school_id, :description, :filled_by, occurrency_students_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy])
+      params.require(:occurrency).permit(:school_id, :emotional_sphere, :description, :filled_by, occurrency_students_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy])
     end
 end
