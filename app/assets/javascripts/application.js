@@ -19,6 +19,7 @@
 //= require cocoon
 //= require jquery-ui/widgets/autocomplete
 //= require autocomplete-rails
+//= require jquery.mask
 //= require_tree .
 
 jQuery.railsAutocomplete.options.noMatchesLabel = 'Nada encontrado, preencha os campos para que o que você procura seja automaticamente registrado no nosso banco de dados'
@@ -30,5 +31,8 @@ function fields() {
 
   number = number.replace('occurrency_occurrency_students_attributes_', '').replace('_name', '');
   name.attr('data-update-elements', '{"classy":"#occurrency_occurrency_students_attributes_' + number + '_classy","groupy":"#occurrency_occurrency_students_attributes_' + number + '_groupy","id":"#occurrency_occurrency_students_attributes_' + number + '_student_id"}');
-  console.log(number);
 }
+
+$(document).ready(function(){
+  $(".date").mask("00/00/0000");
+});

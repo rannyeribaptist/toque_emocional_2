@@ -25,6 +25,7 @@
 @import "components/colorful-content";
 @import "components/table";
 @import "components/pagination";
+@import "components/calendar";
 
 body {
   margin: 0;
@@ -136,4 +137,23 @@ body {
   padding: 5px 10px;
   max-width: 60%;
   width: 853px;
+}
+
+.ui-datepicker-header {
+  background-color: white;
+  padding: 10px;
+}
+
+.ui-datepicker-next {
+  float: right;
+}
+
+.ui-datepicker-title {
+  text-align: center;
+}
+
+.ui-timepicker-wrapper {
+  background-color: white;
+  height: 200px;
+  overflow-y: scroll;
 }

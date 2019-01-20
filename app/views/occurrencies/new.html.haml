@@ -32,7 +32,7 @@
     .slide__content
       .slide__group
         = image_tag('brain.png', class: "logo-default logo-default--small", style: "margin: 20px 0")
-        %h1.title.title--thin.title--grey Procure identificar se o comportamento dos envolvidos está ligado à
+        %h1.title.title--thin.title--grey Identifique se o comportamento dos envolvidos está ligado à uma das opções abaixo, e selecione a que melhor se encaixa...
 
         .columns{style: "text-align: left; justify-content: center"}
           .column.column--2
@@ -113,10 +113,6 @@
       element.addClass('animated fadeIn slide--active');
     });
 
-    $(window).load(function() {
-      fields();
-    });
-
     $('.add_fields').click(function(){
       setTimeout(fields, 200);
     });
@@ -124,3 +120,5 @@
     $('.set-field').click(function(){
       $('#occurrency_emotional_sphere').attr('value', $(this).attr("data-value"));
     });
+
+    setTimeout(fields, 200);

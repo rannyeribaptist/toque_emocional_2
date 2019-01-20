@@ -6,12 +6,12 @@
   %br
 
   - if is_admin?
-    = f.input :school_id, as: :select, collection: School.all.drop(1), input_html: { class: "fancy-form__input fancy-form__select" }
+    = f.input :school_id, label: "Escola", as: :select, collection: School.all.drop(1), input_html: { class: "fancy-form__input fancy-form__select" }
   - else
-    = f.input :school_id, as: :hidden, input_html: { value: School.find_by_id(current_user.school.id).id }
+    = f.input :school_id, label: "Escola", as: :hidden, input_html: { value: School.find_by_id(current_user.school.id).id }
 
-  = f.input :name
-  = f.input :classy
-  = f.input :groupy
+  = f.input :name, label: "Nome"
+  = f.input :classy, label: "Ano/Série"
+  = f.input :groupy, label: "Turma"
 
   = f.submit "Salvar", class: "button button--green"

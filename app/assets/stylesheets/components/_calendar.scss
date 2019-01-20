@@ -1,0 +1,8 @@
+@import "variables";
+
+#full-calendar table {
+  height: 4rem;
+  @include breakpoint("medium") { height: 6rem; }
+}
+
+.fc-day-header { background: #ffec48 !important; }

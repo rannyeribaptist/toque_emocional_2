@@ -74,6 +74,8 @@ gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
 # Rails autocomplete inputs using ActiveRecord
 gem 'rails-jquery-autocomplete'
 gem 'jquery-ui-rails'
+# jQuery input masks
+gem 'jquery_mask_rails', '~> 0.1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

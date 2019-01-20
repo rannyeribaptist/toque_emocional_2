@@ -14,8 +14,9 @@
             input_html: { autocomplete: "email" }
           = f.input :password,
             required: false,
+            label: "Senha",
             input_html: { autocomplete: "current-password" }
-          = f.input :remember_me, input_html: {style: "display: flex", class: "fancy-form__checkbox"}, as: :boolean if devise_mapping.rememberable?
+          = f.input :remember_me, label: "Mantenha-me conectado", input_html: {style: "display: flex", class: "fancy-form__checkbox"}, as: :boolean if devise_mapping.rememberable?
         .form-actions
           = f.submit "Entrar", class: "button button--yellow"
 

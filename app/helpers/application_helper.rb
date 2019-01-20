@@ -26,4 +26,12 @@ module ApplicationHelper
   def is_admin?
     current_user.role == "Admin"
   end
+
+  def remove_old_appointments
+    appointments = Appointment.all
+
+    appointments.each do |ap|
+      ap.destroy if ap.appointment_date.strftime("%m %y") < Date.today.strftime("%m %y")
+    end
+  end
 end

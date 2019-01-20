@@ -3,9 +3,9 @@
   %strong= f.error_notification
   %p= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
-  = f.input :description
-  = f.input :filled_by
-  = f.input :emotional_sphere
+  = f.input :description, label: "Descrição do ocorrido"
+  = f.input :filled_by, label: "Preenchido por"
+  = f.input :emotional_sphere, label: "Atmosfera Emocional"
 
   %div{style: "text-align: center"}
     %h2.title.title--thin.title--small Estudantes

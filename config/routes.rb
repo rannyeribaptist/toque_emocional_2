@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 
   authenticated :user do
     root to: "application#dashboard"
+    resources :appointments do
+      get :autocomplete_student_name, :on => :collection
+    end
     resources :students
     resources :users
     resources :schools

@@ -11,8 +11,8 @@
 
           .action{style: "text-align: left"}
             = simple_form_for School.new, :defaults => { :input_html => { class: "fancy-form__input" } } do |school|
-              = school.input :name
-              = school.input :color, input_html: { type: "color", value: "#fded00" }
+              = school.input :name, label: "Nome"
+              = school.input :color, label: "Cor", input_html: { type: "color", value: "#fded00" }
 
               .text-center
                 %br

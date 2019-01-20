@@ -1,0 +1,20 @@
+.animated.fadeIn
+  .section
+    .section__content
+      %h1.title.title--large Atendimento
+      %h1.title.title--thin= l(@appointment.appointment_date) + " as " + @appointment.appointment_time
+
+      %p=@appointment.reason
+
+      .inline
+        %h2.title.title--small.title--thin= Student.find_by_id(@appointment.student_id).name
+        - if is_admin?
+          %h2.title.title--small.title--thin{style: "margin-left: 30px"}= @appointment.school.name
+
+      %h1.title.title--large Descrição do atendimento
+      %h3.title.title--small.title--thin= @appointment.description.present? ? @appointment.description : 'Ainda não há uma descrição desse atendimento'
+
+      - if is_admin?
+        = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.input :description, label: "Preencha a descrição do atendimento"
+          = f.submit "Enviar", class: "button button--blue2 fancy-link--white"

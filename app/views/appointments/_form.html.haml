@@ -1,0 +1,47 @@
+-# frozen_string_literal: true
+= simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .columns.columns--small
+    - if is_admin?
+      .column.column--small.column--small--5{style: "margin-right: 15px"}
+        = f.input :school_id, as: :select, collection: School.all.drop(1), label: "Escola", input_html: { class: "fancy-form__input fancy-form__select" }
+      .column.column--small.column--small--5
+        = f.input :student_id, label: "Nome completo", :url => autocomplete_student_name_occurrencies_path, :as => :autocomplete, :update_elements => {:id => "#appointment_student_id"}, input_html: {id: "student_name"} if not action_name == 'edit'
+        = f.input :student_id, label: "Nome completo", :url => autocomplete_student_name_occurrencies_path, :as => :autocomplete, :update_elements => {:id => "#appointment_student_id"}, input_html: {id: "student_name", value: Student.find_by_id(@appointment.student_id).name} if action_name == 'edit'
+
+
+
+    - else
+      = f.input :school_id, as: :hidden, input_html: { value: School.find_by_id(current_user.school.id).id }
+      = f.input :student_id, label: "Nome completo", :url => autocomplete_student_name_occurrencies_path, :as => :autocomplete, :update_elements => {:id => "#appointment_student_id"}, input_html: {id: "student_name"}
+
+  = f.input :student_id, as: :hidden, required: false
+
+  .columns.columns--small
+    .column.column--small.column--small--5{style: "margin-right: 15px"}
+      = f.input :appointment_date, as: :string, label: "Data", input_html: {id: "date-picker", class: "string required fancy-form__input date"} if not action_name == 'edit'
+      = f.input :appointment_date, as: :string, label: "Data", input_html: {id: "date-picker", class: "string required fancy-form__input date", value: l(@appointment.appointment_date)} if action_name == 'edit'
+    .column.column--small.column--small--5
+      = f.input :appointment_time, label: "Hora", input_html: {id: "time-picker"}
+
+  = f.input :reason, label: "Motivo da solicitação", as: :text
+
+  .text-center
+    = f.submit "Agendar", class: "button button--green fancy-link--white"
+
+- content_for :javascript do
+  :javascript
+    $( "#date-picker" ).datepicker({
+      dateFormat: "dd/mm/yy",
+      prevText: "Anterior",
+      nextText: "Próximo",
+      monthNames: [ "Janeiro", "Fevereiro", "Março", "Abril", "Março", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ],
+      dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb" ]
+    });
+
+    $('#time-picker').timepicker({
+      'scrollDefault': 'now',
+      'timeFormat': 'H:i'
+    });
