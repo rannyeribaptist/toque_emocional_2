@@ -1,7 +1,7 @@
 class Student < ApplicationRecord
   belongs_to :school
-  has_many :occurrency_students
-  has_many :appointments
+  has_many :occurrency_students, dependent: :destroy
+  has_many :appointments, dependent: :destroy
 
   has_trash
   validates_presence_of :name, :school, :classy, :groupy

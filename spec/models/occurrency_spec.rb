@@ -15,10 +15,13 @@ RSpec.describe Occurrency, type: :model do
     end
 
     it "should save if at least one nested students fields is present" do
-      occurrency = Occurrency.new(description: "test", filled_by: "test", emotional_sphere: "test")
-      occurrency.occurrency_students.new(name: "test", classy: "test", groupy: "test")
+      school = School.create(color: "#ffffff", name: "test")
+      student = Student.create(name: "test", classy: "test", groupy: "test", :school_id => school.id)
 
-      expect(occurrency.save).to be_falsy
+      occurrency = Occurrency.new(description: "test", filled_by: "test", emotional_sphere: "test")
+      occurrency.occurrency_students.new(name: "test", classy: "test", groupy: "test", :student_id => student.id)
+
+      expect(occurrency.save).to be_truthy
     end
   end
 end

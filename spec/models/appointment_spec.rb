@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
-  context "create school" do
+  context "must validate fields" do
     it { should validate_presence_of(:appointment_date) }
     it { should validate_presence_of(:appointment_time) }
     it { should validate_presence_of(:reason) }
