@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_01_130003) do
+ActiveRecord::Schema.define(version: 2019_02_03_162010) do
 
   create_table "appointments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "school_id"
@@ -32,6 +32,15 @@ ActiveRecord::Schema.define(version: 2019_02_01_130003) do
     t.string "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "complements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "file"
+    t.string "name"
+    t.bigint "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_complements_on_book_id"
   end
 
   create_table "occurrencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -104,6 +113,7 @@ ActiveRecord::Schema.define(version: 2019_02_01_130003) do
 
   add_foreign_key "appointments", "schools"
   add_foreign_key "appointments", "students"
+  add_foreign_key "complements", "books"
   add_foreign_key "occurrencies", "schools"
   add_foreign_key "occurrency_students", "occurrencies"
   add_foreign_key "occurrency_students", "students"

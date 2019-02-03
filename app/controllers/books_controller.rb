@@ -1,6 +1,8 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
+  layout "users"
+
   # GET /books
   # GET /books.json
   def index
@@ -15,6 +17,7 @@ class BooksController < ApplicationController
   # GET /books/new
   def new
     @book = Book.new
+    @book.complements.build
   end
 
   # GET /books/1/edit
@@ -69,6 +72,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:url, :name, :file)
+      params.require(:book).permit(:url, :name, :file, :complements_attributes => [:name, :file, :id, :_destroy])
     end
 end

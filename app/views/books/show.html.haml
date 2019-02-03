@@ -6,9 +6,34 @@
 %p
   %b Name:
   = @book.name
-%p
-  %b File:
-  = @book.file
+
+%hr
+
+%div
+  %object{:data => "#{@book.file}", :height => "200", :type => "application/pdf", :width => "300"}
+    alt :
+    %a{:href => "#{@book.file}"} test.pdf
+
+%hr
+
+- @book.complements.each do |complement|
+  = complement.name
+  %a{href: "#{complement.file}", target: "_blank"} ver
+  %br
+
+%hr
+
+= simple_form_for(@book) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  #complements
+    = f.simple_fields_for :complements do |complement|
+      = render 'complement_fields', f: complement
+    .links
+      = link_to_add_association 'add complement', f, :complements
+
+  = f.submit "Salvar"
 
 = link_to 'Edit', edit_book_path(@book)
 \|
