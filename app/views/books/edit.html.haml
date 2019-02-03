@@ -1,7 +1,7 @@
-%h1 Editing book
+.animated.fadeIn
+  .section
+    .section__content
+      %h1.title.title--thin.title--large Novo Livro
 
-= render 'form'
-
-= link_to 'Show', @book
-\|
-= link_to 'Back', books_path
+      %div{style: "text-align: left"}
+        = render 'form'

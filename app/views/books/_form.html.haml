@@ -1,5 +1,5 @@
 -# frozen_string_literal: true
-= simple_form_for(@book) do |f|
+= simple_form_for(@book, defaults: { input_html: { class: "fancy-form__input" } }) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
@@ -8,5 +8,15 @@
     = f.input :name
     = f.input :file
 
+  %h3 Material complementar
+
+  #complements
+    = f.simple_fields_for :complements do |complement|
+      = render 'complement_fields', f: complement
+    .links
+      = link_to_add_association 'Adicionar', f, :complements, class: "button button--blue2 fancy-link fancy-link--white"
+
+  %br
+  	
   .form-actions
-    = f.button :submit
+    = f.submit "Salvar", class: "button button--green fancy-link--white"
