@@ -18,6 +18,7 @@ class BooksController < ApplicationController
   def new
     @book = Book.new
     @book.complements.build
+    @book.guests.build
   end
 
   # GET /books/1/edit
@@ -72,6 +73,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:url, :name, :file, :complements_attributes => [:name, :file, :id, :_destroy])
+      params.require(:book).permit(:url, :name, :file, :complements_attributes => [:name, :file, :id, :_destroy], :guests_attributes => [:name, :classy, :groupy, :school, :code, :authenticated, :id, :_destroy])
     end
 end
