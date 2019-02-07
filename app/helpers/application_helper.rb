@@ -34,4 +34,10 @@ module ApplicationHelper
       ap.destroy if ap.appointment_date.strftime("%m %y") < Date.today.strftime("%m %y")
     end
   end
+
+  def generate_code()
+    require 'securerandom'
+
+    return SecureRandom.urlsafe_base64(5)
+  end
 end

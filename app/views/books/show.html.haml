@@ -37,3 +37,14 @@
         %br
 
         = f.submit "Salvar", class: "button button--green fancy-link--white"
+
+    %input#quantity{type: "integer", name: "quantity"}
+
+    = button_to 'Gerar cartões de acesso', {:controller => "books", :action => "generate_access_cards", :quantity => "0", :book_id => @book.id} , :method => :post
+
+
+- content_for :javascript do
+  :javascript
+    $('#quantity').change(function() {
+      $('.button_to').attr('action', '/books/generate_access_cards?book_id=' + "#{@book.id}" + '&quantity=' + $(this)[0].value);
+    })

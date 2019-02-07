@@ -65,6 +65,26 @@ class BooksController < ApplicationController
     end
   end
 
+  def generate_access_cards
+    quantity = params[:quantity].to_i
+    book = Book.find_by_id(params[:book_id].to_i)
+
+    quantity.times do |x|
+      a = book.guests.new
+
+      until a.valid?
+        a.code = generate_code()
+      end
+
+      a.save
+    end
+
+    respond_to do |format|
+      format.html { redirect_to book, notice: "#{quantity} códigos gerados com sucesso." }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
@@ -73,6 +93,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:url, :name, :file, :complements_attributes => [:name, :file, :id, :_destroy], :guests_attributes => [:name, :classy, :groupy, :school, :code, :authenticated, :id, :_destroy])
+      params.require(:book).permit(:url, :name, :file, :complements_attributes => [:name, :file, :id, :_destroy], :guests_attributes => [:name, :classy, :groupy, :school_id, :code, :authenticated, :id, :_destroy])
     end
 end
