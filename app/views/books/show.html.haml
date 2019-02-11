@@ -1,50 +1,66 @@
 .animated.fadeIn
   .section
     .section__content
-      %h1.title.title--thin= @book.name.capitalize!
+      %h1.title.title--thin.title--large= @book.name.capitalize
 
       %br
 
       .columns
         .column--5
-          %div
-            %object{:data => "#{@book.file}", :height => "700px", :type => "application/pdf", :width => "100%"}
-              alt :
-              %a{:href => "#{@book.file}"} test.pdf
+          %iframe{:frameborder => "0", :height => "500", :scrolling => "no", :src => "#{@book.file}#toolbar=0&navpanes=0&scrollbar=1", :style => "border: 0", :width => "100%"}
         .column--5
           %h2 Material complementar
 
           %div{style: "text-align: left; padding: 0 20px"}
             - @book.complements.each do |complement|
-              = complement.name.capitalize!
+              = complement.name.capitalize
               %a{href: "#{complement.file}", target: "_blank"} ver
               %br
 
       %hr
 
-      %h2.title.title--small Adicionar Material Complementar
+      %h2.title.title--small{style: "margin-bottom: 0px"} Gerar cartões de acesso
+      %small= @book.guests.count.to_s + " Cartões de acesso gerados"
 
-      = simple_form_for(@book, defaults: { input_html: { class: "fancy-form__input" } }) do |f|
-        = f.error_notification
-        = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+      %br
+      %br
 
-        #complements
-          = f.simple_fields_for :complements do |complement|
-            = render 'complement_fields', f: complement
-          .links
-            = link_to_add_association 'Adicionar', f, :complements, class: "button button--blue2 fancy-link fancy-link--white"
+      .advanced-inline
 
-        %br
+        %div
+          %label{for: "number"} Quantos cartões você quer gerar?
+          %input#quantity{type: "number", name: "quantity", class: "fancy-form__input"}
 
-        = f.submit "Salvar", class: "button button--green fancy-link--white"
+        = button_to 'Gerar cartões de acesso', {:controller => "books", :action => "generate_access_cards", :quantity => "0", :book_id => @book.id}, :method => :post, class: "button button--green fancy-link--white"
 
-    %input#quantity{type: "integer", name: "quantity"}
+      %button.button.button--blue2.fancy-link--white{onclick: "print()"} Imprimir cartões de acesso
+      %br
+      %small#label{style: "display: none"} Selecione as opções para impressão abaixo
 
-    = button_to 'Gerar cartões de acesso', {:controller => "books", :action => "generate_access_cards", :quantity => "0", :book_id => @book.id} , :method => :post
+#options.section{style: "display: none"}
+  .section__content{style: "text-align: left"}
+    %hr
+    = simple_form_for @book, :url => :print_access_cards do |f|
+      %label{for: "number"} Quantos cartões você quer imprimir?
+      %input{type: "number", name: "number", class: "fancy-form__input"}
 
+      %label{for: "order"} Como eu devo ordenar os cartões?
+      %select{class: "fancy-form__input fancy-form__select", name: "order"}
+        %option{value: "desc"} Dos mais novos
+        %option{value: "asc"} Dos mais antigos
+
+      = f.submit "imprimir"
+
+    -# %form{method: "post", action: "/books/#{@book.id}/print_access_cards"}
+      -# %input{type: "hidden", name: "id", value: "#{@book.id}"}
 
 - content_for :javascript do
   :javascript
     $('#quantity').change(function() {
       $('.button_to').attr('action', '/books/generate_access_cards?book_id=' + "#{@book.id}" + '&quantity=' + $(this)[0].value);
     })
+
+    function print() {
+      $('#options').toggle();
+      $('#label').toggle();
+    }

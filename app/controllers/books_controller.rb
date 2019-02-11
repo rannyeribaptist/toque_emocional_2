@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   require 'rqrcode'
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_book, only: [:show, :edit, :update, :destroy, :print_access_cards]
 
   layout "users"
 
@@ -85,6 +85,10 @@ class BooksController < ApplicationController
       format.html { redirect_to book, notice: "#{quantity} códigos gerados com sucesso." }
       format.json { head :no_content }
     end
+  end
+
+  def print_access_cards
+    @guests = @book.guests.limit(params[:number]).order('id ' + params[:order])
   end
 
   private
