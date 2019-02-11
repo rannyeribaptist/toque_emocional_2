@@ -88,6 +88,7 @@ class BooksController < ApplicationController
   end
 
   def print_access_cards
+    redirect_to @book, :notice => "preencha o formulário completo de opções para que eu possa imprimir" if params[:number].empty? or params[:order].empty?
     @guests = @book.guests.limit(params[:number]).order('id ' + params[:order])
   end
 
