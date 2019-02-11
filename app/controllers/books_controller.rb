@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  require 'rqrcode'
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   layout "users"
@@ -12,6 +13,7 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
+    @qr = RQRCode::QRCode.new( 'https://github.com/whomwah/rqrcode', :size => 4)
   end
 
   # GET /books/new
