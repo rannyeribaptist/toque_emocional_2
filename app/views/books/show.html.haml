@@ -49,10 +49,7 @@
         %option{value: "desc"} Dos mais novos
         %option{value: "asc"} Dos mais antigos
 
-      = f.submit "imprimir"
-
-    -# %form{method: "post", action: "/books/#{@book.id}/print_access_cards"}
-      -# %input{type: "hidden", name: "id", value: "#{@book.id}"}
+      = f.submit "imprimir", class: "button button--yellow fancy-link fancy-link--black"
 
 - content_for :javascript do
   :javascript

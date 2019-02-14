@@ -27,4 +27,5 @@ Rails.application.routes.draw do
   post "/books/generate_access_cards", to: "books#generate_access_cards", as: :generate_access_cards
 
   patch "/books/:id/print_access_cards", to: "books#print_access_cards", as: :print_access_cards
+  get "/books/:id/print_access_cards", to: "books#print_access_cards"
 end

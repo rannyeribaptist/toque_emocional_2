@@ -13,7 +13,6 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
-    @qr = RQRCode::QRCode.new( 'https://github.com/whomwah/rqrcode', :size => 4)
   end
 
   # GET /books/new
@@ -88,8 +87,28 @@ class BooksController < ApplicationController
   end
 
   def print_access_cards
-    redirect_to @book, :notice => "preencha o formulário completo de opções para que eu possa imprimir" if params[:number].empty? or params[:order].empty?
-    @guests = @book.guests.limit(params[:number]).order('id ' + params[:order])
+    @qr = RQRCode::QRCode.new( 'https://toqueemocional.com.br/livros/' + @book.url)
+    @png = @qr.as_png(
+          resize_gte_to: false,
+          resize_exactly_to: false,
+          fill: 'white',
+          color: 'black',
+          size: 100,
+          border_modules: 4,
+          module_px_size: 6,
+          file: nil # path to write
+          )
+
+    @png.save("/tmp/#{@book.name.split('')}.png", :interlace => true)
+
+    if (params[:number].present? or params[:order].present?)
+      redirect_to @book, :notice => "preencha o formulário completo de opções para que eu possa imprimir" if params[:number].empty? or params[:order].empty?
+      @guests = @book.guests.limit(params[:number]).order('id ' + params[:order]) if params[:number].present?
+    else
+      @guests = @book.guests.all
+    end
+
+    render layout: "printing_layout"
   end
 
   private
