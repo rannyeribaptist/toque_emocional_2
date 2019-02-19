@@ -2,7 +2,7 @@
 
 .logo-default {
   width: 80%;
-  height: 100%;
+  height: auto;
 
   @include breakpoint("small-up") { width: 400px }
 
