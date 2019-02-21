@@ -80,15 +80,6 @@ ActiveRecord::Schema.define(version: 2019_02_04_021709) do
     t.index ["student_id"], name: "index_occurrency_students_on_student_id"
   end
 
-  create_table "pages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "book_id"
-    t.string "number"
-    t.text "content", limit: 16777215
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["book_id"], name: "index_pages_on_book_id"
-  end
-
   create_table "schools", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "color"
@@ -131,7 +122,6 @@ ActiveRecord::Schema.define(version: 2019_02_04_021709) do
   add_foreign_key "occurrencies", "schools"
   add_foreign_key "occurrency_students", "occurrencies"
   add_foreign_key "occurrency_students", "students"
-  add_foreign_key "pages", "books"
   add_foreign_key "students", "schools"
   add_foreign_key "users", "schools"
 end

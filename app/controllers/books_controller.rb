@@ -59,6 +59,7 @@ class BooksController < ApplicationController
   # DELETE /books/1
   # DELETE /books/1.json
   def destroy
+    FileUtils.remove_dir("vendor/uploads/books/#{@book.name}", true)
     @book.destroy
     respond_to do |format|
       format.html { redirect_to books_url, notice: 'Book was successfully destroyed.' }
@@ -109,6 +110,12 @@ class BooksController < ApplicationController
     end
 
     render layout: "printing_layout"
+  end
+
+  def read
+    @book = Book.find_by_url(params[:url])
+
+    render layout: "book"
   end
 
   private

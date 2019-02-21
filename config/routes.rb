@@ -28,4 +28,6 @@ Rails.application.routes.draw do
 
   patch "/books/:id/print_access_cards", to: "books#print_access_cards", as: :print_access_cards
   get "/books/:id/print_access_cards", to: "books#print_access_cards"
+
+  get "/livro/:url", to: "books#read", as: :read_book
 end

@@ -1,11 +1,24 @@
 class ArchiveUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
+  include CarrierWave::RMagick
+  include Sprockets::Rails::Helper
 
   # Choose what kind of storage to use for this uploader:
   storage :file
   # storage :fog
+
+  process :convert_to_png
+
+  def convert_to_png
+    @pdf = Magick::ImageList.new(path) do
+      self.quality = 100
+      self.density = 400
+    end
+
+    Dir.mkdir("vendor/uploads/books/#{model.name}", 0700)
+    @pdf.write("vendor/uploads/books/#{model.name}/#{model.name}.png")
+  end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -41,7 +54,7 @@ class ArchiveUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
+  def filename
+    "#{model.name}.pdf" if original_filename
+  end
 end
