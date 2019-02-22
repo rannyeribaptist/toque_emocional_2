@@ -31,5 +31,7 @@ module Plataform
     config.generators.system_tests = nil
 
     config.i18n.default_locale = "pt-BR"
+
+    config.assets.paths << Rails.root.join("vendor", "uploads", "books")
   end
 end

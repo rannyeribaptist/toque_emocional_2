@@ -16,8 +16,7 @@ class ArchiveUploader < CarrierWave::Uploader::Base
       self.density = 400
     end
 
-    Dir.mkdir("vendor/uploads/books/#{model.name}", 0700)
-    @pdf.write("vendor/uploads/books/#{model.name}/#{model.name}.png")
+    @pdf.write("vendor/uploads/books/#{model.name}.png")
   end
 
   # Override the directory where uploaded files will be stored.
