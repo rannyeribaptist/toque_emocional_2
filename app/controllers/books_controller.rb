@@ -115,7 +115,7 @@ class BooksController < ApplicationController
   def read
     @book = Book.find_by_url(params[:url])
 
-    @pages = Dir.glob("vendor/uploads/books/#{@book.name}*").count
+    @pages = Dir.glob("vendor/uploads/books/#{@book.name}-*").count
 
     render layout: "book"
   end

@@ -1,2 +1,38 @@
-= @pages.times do |i|
-  = image_tag(@book.name + '-' + i.to_s + '.png', style: "max-height: 150px")
+.section.section--grey
+  .section__content
+    %h1.title.title--thin.title--white.title--large= @book.name.capitalize
+
+- @pages.times do |i|
+  - if i == 0
+    .slide.slide--grey.slide--active{id: "#{i}", style: "padding: 2% 0; text-align: center; height: auto"}
+      = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 500px")
+
+      %div{style: "padding: 0 2%; display: flex; justify-content: center"}
+        .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "max-width: 500px"} PRÓXIMO
+
+  - else
+    .slide.slide--grey{id: "#{i}", style: "padding: 5% 0; text-align: center; height: auto"}
+      = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 500px")
+
+      %div{style: "padding: 0 2%; display: flex; flex-direction: colum; justify-content: center"}
+        .button.button--black.fancy-link--white.next-slide{href: "#", "data-target" => "#{i-1}", "data-turbolinks" => "false"} ANTERIOR
+        - if not i == @pages
+          .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false"} PRÓXIMO
+
+- if @book.complements.any?
+  .section.section--yellow
+    .section__content
+      %h1.title.title--thin.title--large Material Complementar
+      %br
+      %div{style: "text-align: left"}
+        - @book.complements.each do |c|
+          %h2= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--black"), c.file.to_s, class: "fancy-link fancy-link--black"
+
+- content_for :javascript do
+  :javascript
+    $('.next-slide').click(function(){
+      let element = $('#' + $(this).attr('data-target'));
+
+      $('.slide--active').removeClass('animated fadeIn slide--active');
+      element.addClass('animated fadeIn slide--active');
+    })
