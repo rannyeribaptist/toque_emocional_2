@@ -5,19 +5,26 @@
 - @pages.times do |i|
   - if i == 0
     .slide.slide--grey.slide--active{id: "#{i}", style: "padding: 2% 0; text-align: center; height: auto"}
-      = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 500px")
+      .protection
+        .protection__layer
+        .content
+          = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 500px")
 
-      %div{style: "padding: 0 2%; display: flex; justify-content: center"}
-        .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "max-width: 500px"} PRÓXIMO
+      %div{style: "padding: 0 2%; display: flex; justify-content: center; position: relative"}
+        .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "position: absolute; z-index: 9999"} PRÓXIMO
 
   - else
     .slide.slide--grey{id: "#{i}", style: "padding: 5% 0; text-align: center; height: auto"}
-      = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 500px")
+      .protection
+        .protection__layer
+        .content
+          = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 500px")
 
-      %div{style: "padding: 0 2%; display: flex; flex-direction: colum; justify-content: center"}
-        .button.button--black.fancy-link--white.next-slide{href: "#", "data-target" => "#{i-1}", "data-turbolinks" => "false"} ANTERIOR
-        - if not i == @pages
-          .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false"} PRÓXIMO
+      %div{style: "padding: 0 2%; display: flex; flex-direction: colum; justify-content: center; position: relative"}
+        %div{style: "position: absolute; z-index: 9999; margin-top: 2%"}
+          .button.button--black.fancy-link--white.next-slide{href: "#", "data-target" => "#{i-1}", "data-turbolinks" => "false", style: "display: inline"} ANTERIOR
+          - if not i == @pages
+            .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "display: inline"} PRÓXIMO
 
 - if @book.complements.any?
   .section.section--yellow

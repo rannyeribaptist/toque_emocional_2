@@ -180,3 +180,15 @@ body {
   td.black { border-color: #000; }
   td.white { border-color: #fff; }
 }
+
+.protection {
+  &__layer {
+    z-index: 999;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    height: -webkit-fill-available;
+    height: -moz-available;
+    height: fill-available;
+  }
+}
