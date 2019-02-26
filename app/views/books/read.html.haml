@@ -8,7 +8,7 @@
       .protection
         .protection__layer
         .content
-          = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 500px")
+          = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 700px")
 
       %div{style: "padding: 0 2%; display: flex; justify-content: center; position: relative"}
         .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "position: absolute; z-index: 9999"} PRÓXIMO
@@ -18,7 +18,7 @@
       .protection
         .protection__layer
         .content
-          = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 500px")
+          = image_tag(@book.name + '-' + i.to_s + '.png', style: "width: 96%; max-width: 700px")
 
       %div{style: "padding: 0 2%; display: flex; flex-direction: colum; justify-content: center; position: relative"}
         %div{style: "position: absolute; z-index: 9999; margin-top: 2%"}
@@ -33,7 +33,7 @@
       %br
       %div{style: "text-align: left"}
         - @book.complements.each do |c|
-          %h2= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--black"), c.file.to_s, class: "fancy-link fancy-link--black"
+          %h2= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--black"), c.file.to_s, class: "fancy-link fancy-link--black", target: "_blank"
 
 - content_for :javascript do
   :javascript
