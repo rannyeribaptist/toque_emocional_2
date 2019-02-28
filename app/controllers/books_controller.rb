@@ -88,7 +88,7 @@ class BooksController < ApplicationController
   end
 
   def print_access_cards
-    @qr = RQRCode::QRCode.new( 'https://toqueemocional.com.br/livros/' + @book.url)
+    @qr = RQRCode::QRCode.new( 'https://toqueemocional.com.br/livro/' + @book.id)
     @png = @qr.as_png(
           resize_gte_to: false,
           resize_exactly_to: false,
@@ -113,7 +113,7 @@ class BooksController < ApplicationController
   end
 
   def read
-    @book = Book.find_by_url(params[:url])
+    @book = Book.find(params[:id])
 
     @pages = Dir.glob("vendor/uploads/books/#{@book.name}-*").count
 
