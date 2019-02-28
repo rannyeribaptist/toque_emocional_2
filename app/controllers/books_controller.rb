@@ -88,7 +88,7 @@ class BooksController < ApplicationController
   end
 
   def print_access_cards
-    @qr = RQRCode::QRCode.new( 'https://toqueemocional.com.br/livro/' + @book.id)
+    @qr = RQRCode::QRCode.new( 'https://toqueemocional.com.br/livro/' + @book.url)
     @png = @qr.as_png(
           resize_gte_to: false,
           resize_exactly_to: false,
@@ -99,8 +99,6 @@ class BooksController < ApplicationController
           module_px_size: 6,
           file: nil # path to write
           )
-
-    @png.save("/tmp/#{@book.name.split('')}.png", :interlace => true)
 
     if (params[:number].present? or params[:order].present?)
       redirect_to @book, :notice => "preencha o formulário completo de opções para que eu possa imprimir" if params[:number].empty? or params[:order].empty?
@@ -113,7 +111,7 @@ class BooksController < ApplicationController
   end
 
   def read
-    @book = Book.find(params[:id])
+    @book = Book.find_by_url(params[:url])
 
     @pages = Dir.glob("vendor/uploads/books/#{@book.name}-*").count
 
