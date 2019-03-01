@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   require 'rqrcode'
-  before_action :set_book, only: [:show, :edit, :update, :destroy, :print_access_cards]
+  before_action :set_book, only: [:show, :edit, :update, :destroy, :print_access_cards, :new_book_comments]
 
   layout "users"
 
@@ -20,6 +20,7 @@ class BooksController < ApplicationController
     @book = Book.new
     @book.complements.build
     @book.guests.build
+    @book.book_comments.build
   end
 
   # GET /books/1/edit
@@ -120,6 +121,18 @@ class BooksController < ApplicationController
     render layout: "book"
   end
 
+  def new_book_comments
+    respond_to do |format|
+      if @book.update(book_params)
+        format.html { redirect_back(fallback_location: root_path, notice: 'Anotação salva com sucesso') }
+        format.json { render :show, status: :ok, location: @book }
+      else
+        format.html { render :edit }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
@@ -128,6 +141,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:url, :name, :file, :complements_attributes => [:name, :file, :id, :_destroy], :guests_attributes => [:name, :classy, :groupy, :school_id, :code, :authenticated, :id, :_destroy])
+      params.require(:book).permit(:url, :name, :file, :complements_attributes => [:name, :file, :id, :_destroy], :guests_attributes => [:name, :classy, :groupy, :school_id, :code, :authenticated, :id, :_destroy], :book_comments_attributes => [:comment, :guest_id, :book_id, :_destroy])
     end
 end

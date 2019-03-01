@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_04_021709) do
+ActiveRecord::Schema.define(version: 2019_02_26_142749) do
 
   create_table "appointments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "school_id"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 2019_02_04_021709) do
     t.timestamp "deleted_at"
     t.index ["school_id"], name: "index_appointments_on_school_id"
     t.index ["student_id"], name: "index_appointments_on_student_id"
+  end
+
+  create_table "book_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "book_id"
+    t.bigint "guest_id"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_book_comments_on_book_id"
+    t.index ["guest_id"], name: "index_book_comments_on_guest_id"
   end
 
   create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -117,6 +127,8 @@ ActiveRecord::Schema.define(version: 2019_02_04_021709) do
 
   add_foreign_key "appointments", "schools"
   add_foreign_key "appointments", "students"
+  add_foreign_key "book_comments", "books"
+  add_foreign_key "book_comments", "guests"
   add_foreign_key "complements", "books"
   add_foreign_key "guests", "books"
   add_foreign_key "occurrencies", "schools"

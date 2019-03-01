@@ -30,4 +30,6 @@ Rails.application.routes.draw do
   get "/books/:id/print_access_cards", to: "books#print_access_cards"
 
   get "/livro/:url", to: "books#read", as: :read_book
+
+  patch "/books/:id/book_comments", to: "books#new_book_comments", as: :new_book_comments
 end

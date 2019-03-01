@@ -26,14 +26,34 @@
           - if not i == @pages
             .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "display: inline"} PRÓXIMO
 
-- if @book.complements.any?
-  .section.section--yellow
-    .section__content
-      %h1.title.title--thin.title--large Material Complementar
-      %br
-      %div{style: "text-align: left"}
-        - @book.complements.each do |c|
-          %h2= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--black"), c.file.to_s, class: "fancy-link fancy-link--black", target: "_blank"
+.section.section--yellow
+  .section__content
+    .columns
+      .column.column--5
+        %h1.title.title--thin.title--large Material Complementar
+        %br
+        %div{style: "text-align: left"}
+          - @book.complements.each do |c|
+            %h2= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--black"), c.file.to_s, class: "fancy-link fancy-link--black", target: "_blank"
+
+      .column.column--5
+        %h1.title.title--thin.title--large Anotações
+        %br
+        = simple_form_for @book, :url => new_book_comments_url(@book), html: { class: "fancy-form--inline" } do |f|
+          = f.simple_fields_for :book_comments, @book.book_comments.new do |g|
+            = g.input :guest_id, as: :hidden, input_html: {value: "1"}
+            = g.input :book_id, as: :hidden
+            = g.input :comment, label: "Adicionar anotação", input_html: { class: "fancy-form__input", style: "background-color: transparent; border-color: black" }, required: false
+            = g.submit "Salvar anotação", class: "button button--green fancy-link--white"
+
+        %br
+        %br
+
+        -# TODO: Create current_guest helper when session_storage is working
+
+        - @book.book_comments.each do |bc|
+          %em= bc.comment
+          %br
 
 - content_for :javascript do
   :javascript
