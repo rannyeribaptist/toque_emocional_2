@@ -8,6 +8,6 @@
             .column.columns--small.column--5
               = image_tag "data:image/png;base64,#{Base64.strict_encode64(@png.to_s)}", style: "border-radius: 10px"
             .column.columns--small.column--5{style: "text-align: center;margin-left: 0.3cm"}
-              = image_tag('logo', style: "max-width: 2cm")
+              = image_tag('logo.png', style: "max-width: 2cm")
               %p{style: "font-size: 10px"} Use o código abaixo para validar o seu acesso ao nosso livro digital
               %strong{style: "font-size: 10px"}= guest.code
