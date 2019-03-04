@@ -12,7 +12,7 @@
 
       %div{style: "padding: 0 2%; display: flex; justify-content: center; position: relative"}
         .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "position: absolute; z-index: 9999"} PRÓXIMO
-        %br        	
+        %br
 
   - else
     .slide.slide--grey{id: "#{i}", style: "padding: 5% 0; text-align: center; height: auto"}
@@ -40,21 +40,37 @@
       .column.column--5
         %h1.title.title--thin.title--large Anotações
         %br
-        = simple_form_for @book, :url => new_book_comments_url(@book), html: { class: "fancy-form--inline" } do |f|
+        = simple_form_for @book, :url => new_book_comments_url(@book) do |f|
           = f.simple_fields_for :book_comments, @book.book_comments.new do |g|
             = g.input :guest_id, as: :hidden, input_html: {value: "1"}
             = g.input :book_id, as: :hidden
-            = g.input :comment, label: "Adicionar anotação", input_html: { class: "fancy-form__input", style: "background-color: transparent; border-color: black" }, required: false
-            = g.submit "Salvar anotação", class: "button button--green fancy-link--white"
+            .columns.columns--small
+              .column.column--small.column--small--7
+                = g.input :comment, label: "Adicionar anotação", input_html: { class: "fancy-form__input", style: "background-color: transparent; border-color: black" }, required: false
+              .column.column--small.column--small--3
+                = g.submit "Salvar anotação", class: "button button--green fancy-link--white", disabled: "disabled", id: "submit"
 
         %br
         %br
 
         -# TODO: Create current_guest helper when session_storage is working
 
-        - @book.book_comments.each do |bc|
-          %em= bc.comment
-          %br
+        %table.table.table--transparent
+          %tbody
+            - @book.book_comments.each do |bc|
+              - unless bc.id == nil
+                = simple_form_for @book do |f|
+                  = f.simple_fields_for :book_comments, bc do |g|
+                    %tr
+                      %td
+                        %em{id: "bc_#{bc.id}"}= bc.comment
+                        %div{id: "edit_bc_#{bc.id}", style: "display: none"}= g.input :comment, label: false, input_html: {class: "fancy-form__input"}
+                      %td{id: "submit_bc_#{bc.id}", style: "display: none"}
+                        = g.submit "Salvar", class: "button button--green fancy-link--white"
+                      %td
+                        %a{style: "cursor: pointer", onclick: "$('#bc_#{bc.id}').toggle();$('#edit_bc_#{bc.id}').toggle();$('#submit_bc_#{bc.id}').toggle()"}= icon('fas', 'pen', class: 'fancy-link--blue2')
+                      %td
+                        %a{style: "cursor: pointer"}= link_to icon('fas', 'trash', class: 'fancy-link--red'), delete_comment_url(bc.id), method: :delete, data: { confirm: 'Excluir anotação?' }, class: "fancy-link fancy-link--red"
 
 - content_for :javascript do
   :javascript
@@ -63,4 +79,12 @@
 
       $('.slide--active').removeClass('animated fadeIn slide--active');
       element.addClass('animated fadeIn slide--active');
-    })
+    });
+
+    $('#book_book_comments_attributes_0_comment').on('change keyup paste', function() {
+      if($(this).val().length == 0) {
+        $('#submit').attr("disabled", disabled);
+      } else {
+        $('#submit').attr("disabled", false);
+      }
+    });

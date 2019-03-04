@@ -32,4 +32,5 @@ Rails.application.routes.draw do
   get "/livro/:url", to: "books#read", as: :read_book
 
   patch "/books/:id/book_comments", to: "books#new_book_comments", as: :new_book_comments
+  delete "/book_comments/:id", to: "books#destroy_book_comments", as: :delete_comment
 end

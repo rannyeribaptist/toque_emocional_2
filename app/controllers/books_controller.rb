@@ -48,7 +48,8 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: 'Book was successfully updated.' }
+        format.html { redirect_to @book, notice: 'Book was successfully updated.' } if current_user.present?
+        format.html { redirect_back(fallback_location: root_path, notice: 'Anotação salva com sucesso') } if not current_user.present?
         format.json { render :show, status: :ok, location: @book }
       else
         format.html { render :edit }
@@ -60,10 +61,19 @@ class BooksController < ApplicationController
   # DELETE /books/1
   # DELETE /books/1.json
   def destroy
-    FileUtils.remove_dir("vendor/uploads/books/#{@book.name}", true)
     @book.destroy
     respond_to do |format|
       format.html { redirect_to books_url, notice: 'Book was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def destroy_book_comments
+    @comment = BookComment.find(params[:id])
+    @comment.destroy
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path, notice: 'Anotação excluída') }
       format.json { head :no_content }
     end
   end
@@ -139,6 +149,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:url, :name, :file, :complements_attributes => [:name, :file, :id, :_destroy], :guests_attributes => [:name, :classy, :groupy, :school_id, :code, :authenticated, :id, :_destroy], :book_comments_attributes => [:comment, :guest_id, :book_id, :_destroy])
+      params.require(:book).permit(:url, :name, :file, :complements_attributes => [:name, :file, :id, :_destroy], :guests_attributes => [:name, :classy, :groupy, :school_id, :code, :authenticated, :id, :_destroy], :book_comments_attributes => [:comment, :guest_id, :book_id, :_destroy, :id])
     end
 end

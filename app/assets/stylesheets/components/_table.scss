@@ -7,6 +7,12 @@
     max-width: 100%;
     overflow-x: scroll;
   }
+
+  &--transparent {
+    tr { background-color: transparent }
+    tr:nth-child(even) {background-color: rgba($light-grey, 0.4)}
+    th, td {border-bottom: none;}
+  }
 }
 
 table {
