@@ -4,7 +4,10 @@
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .form-inputs
-    = f.input :url
+    = f.input :url, input_html: {style: "margin-bottom: 0"}
+    %small Não insira espaços em branco e/ou barra "/"
+    %br
+    %br
     = f.input :name
     = f.input :file
 
@@ -17,6 +20,10 @@
       = link_to_add_association 'Adicionar', f, :complements, class: "button button--blue2 fancy-link fancy-link--white"
 
   %br
-  	
+
   .form-actions
-    = f.submit "Salvar", class: "button button--green fancy-link--white"
+    = f.submit "Salvar", class: "button button--green fancy-link--white", onclick: "$('#loader').toggle();$(this).attr('disabled', disabled)"
+
+#loader{style: "display: none"}
+  %br  	
+  %strong Carregando, isto pode levar até alguns minutos... Por favor não feche seu navegador

@@ -10,4 +10,5 @@ class Book < ApplicationRecord
   validates_presence_of :url, :name, :file
   mount_uploader :file, ArchiveUploader
   validates_uniqueness_of :url
+  validates :url, format: { with: /\A[a-zA-Z0-9]+\Z/ }
 end
