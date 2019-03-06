@@ -23,79 +23,83 @@
     = stylesheet_link_tag    'theme', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    .columns
-      .column.column--2
-        .navbar.navbar--yellow.navbar--vertical
-          %a{:href => "/"}
-            = image_tag("logo-black.png", class: "logo-dashboard")
+    - if not current_user.present?
+      :javascript
+        window.location.replace("http://www.toqueemocional.com.br");
+    - else
+      .columns
+        .column.column--2
+          .navbar.navbar--yellow.navbar--vertical
+            %a{:href => "/"}
+              = image_tag("logo-black.png", class: "logo-dashboard")
 
-          .button.button--transparent.navbar__content-toggle
-            %image{src: "https://icongr.am/clarity/bars.svg"}
+            .button.button--transparent.navbar__content-toggle
+              %image{src: "https://icongr.am/clarity/bars.svg"}
 
-          .navbar__content
-            - if current_user.role == "Admin"
-              %a.fancy-link{:href => schools_path}
+            .navbar__content
+              - if current_user.role == "Admin"
+                %a.fancy-link{:href => schools_path}
+                  .button.button
+                    ESCOLAS
+                %a.fancy-link{:href => users_path}
+                  .button.button
+                    USUÁRIOS
+                %a.fancy-link{:href => books_path}
+                  .button.button
+                    LIVROS
+
+              %a.fancy-link{:href => occurrencies_path}
                 .button.button
-                  ESCOLAS
-              %a.fancy-link{:href => users_path}
+                  OCORRÊNCIAS
+              %a.fancy-link{:href => appointments_path}
                 .button.button
-                  USUÁRIOS
-              %a.fancy-link{:href => books_path}
+                  ATENDIMENTOS
+              %a.fancy-link{:href => students_path}
                 .button.button
-                  LIVROS
+                  ESTUDANTES
 
-            %a.fancy-link{:href => occurrencies_path}
-              .button.button
-                OCORRÊNCIAS
-            %a.fancy-link{:href => appointments_path}
-              .button.button
-                ATENDIMENTOS
-            %a.fancy-link{:href => students_path}
-              .button.button
-                ESTUDANTES
+              .navbar__bottom
+                %i "There's no place like home" - Unknown
 
-            .navbar__bottom
-              %i "There's no place like home" - Unknown
+        .column.column--8{style: "position: relative"}
+          = show_flash_message
 
-      .column.column--8{style: "position: relative"}
-        = show_flash_message
+          = yield
 
-        = yield
+        .plus
+          .plus__content
+            = link_to "Sair", destroy_user_session_path, method: :delete, class: "fancy-link"
+          .plus__button
+            %image{src: "https://icongr.am/clarity/plus.svg"}
 
-      .plus
-        .plus__content
-          = link_to "Sair", destroy_user_session_path, method: :delete, class: "fancy-link"
-        .plus__button
-          %image{src: "https://icongr.am/clarity/plus.svg"}
+      %script{:src => "https://cdn.jsdelivr.net/npm/timepicker@1.11.14/jquery.timepicker.min.js"}
+      %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"}
+      %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"}
 
-    %script{:src => "https://cdn.jsdelivr.net/npm/timepicker@1.11.14/jquery.timepicker.min.js"}
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"}
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"}
+      :javascript
+        $(".navbar__content-toggle").click(function() {
+          $(".navbar__content").toggle();
+        });
 
-    :javascript
-      $(".navbar__content-toggle").click(function() {
-        $(".navbar__content").toggle();
-      });
+        setTimeout(function(){
+          $(".flash").removeClass("animated fadeInDown");
+          $(".flash").addClass("animated fadeOutUp");
+        }, 5000);
 
-      setTimeout(function(){
-        $(".flash").removeClass("animated fadeInDown");
-        $(".flash").addClass("animated fadeOutUp");
-      }, 5000);
+        $(".plus").click(function() {
+          var element = $(this);
 
-      $(".plus").click(function() {
-        var element = $(this);
+          if (element.hasClass("active")) {
+            element.removeClass("active");
 
-        if (element.hasClass("active")) {
-          element.removeClass("active");
+            $(".plus__button").removeClass("plus__button--active");
+            $(".plus__content").removeClass("plus__content--active fadeInUp");
+          } else {
+            element.addClass("active");
 
-          $(".plus__button").removeClass("plus__button--active");
-          $(".plus__content").removeClass("plus__content--active fadeInUp");
-        } else {
-          element.addClass("active");
+            $(".plus__button").addClass("plus__button--active");
+            $(".plus__content").addClass("plus__content--active   animated fadeInUp");
+          }
+        });
 
-          $(".plus__button").addClass("plus__button--active");
-          $(".plus__content").addClass("plus__content--active   animated fadeInUp");
-        }
-      });
-
-    = yield(:javascript)
+      = yield(:javascript)
