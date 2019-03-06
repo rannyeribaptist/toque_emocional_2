@@ -10,13 +10,13 @@
         %strong Se você quer isso para seus alunos e filhos
 
     .action__clean
-      .advanced-inline{style: "justify-content: center; align-items: center; flex-direction: row"}
-        %div{style: "max-width: 200px"}
+      .columns.columns--small{style: "justify-content: center"}
+        .column--small--3
           %a.fancy-link{:href => about_page_url}
             %h2.title.title--small.title--thin Descubra quem nós somos
-        %div{style: "width: 50px"}
+        .column--small--2
           %hr.vertical
-        %div{style: "max-width: 200px"}
+        .column--small--3
           %a.fancy-link{:href => slide_show_url}
             %h2.title.title--small.title--thin Descubra as emoções e sentimentos
 
@@ -25,14 +25,11 @@
     %br
 
     .action__clean
-      .advanced-inline{style: "justify-content: center; align-items: center; flex-direction: row"}
-        %div{style: "max-width: 400px"}
+      .columns.columns--small{style: "justify-content: center"}
+        .column--small--5
           %a.fancy-link{:href => "/sign_in"} PLATAFORMA
-        %div{style: "width: 150px"}
-          %a.fancy-link{:href => "https://gestao.toqueemocional.com.br"} GESTÃO
-        %div{style: "max-width: 400px"}
-          %a.fancy-link{:href => "https://blog.toqueemocional.com.br"} NOSSO BLOG
-
+        .column--small--5
+          %a.fancy-link{:href => "https://gestao.toqueemocional.com.br"} LIVROS
 
 -# particles.js
 %script{:src => "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"}
