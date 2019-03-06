@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_26_142749) do
+ActiveRecord::Schema.define(version: 2019_03_06_015157) do
 
   create_table "appointments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "school_id"
@@ -88,6 +88,13 @@ ActiveRecord::Schema.define(version: 2019_02_26_142749) do
     t.timestamp "deleted_at"
     t.index ["occurrency_id"], name: "index_occurrency_students_on_occurrency_id"
     t.index ["student_id"], name: "index_occurrency_students_on_student_id"
+  end
+
+  create_table "phrases", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "content"
+    t.string "author"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "schools", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

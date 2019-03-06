@@ -59,7 +59,7 @@
                   ESTUDANTES
 
               .navbar__bottom
-                %i "There's no place like home" - Unknown
+                %i= show_phrase
 
         .column.column--8{style: "position: relative"}
           = show_flash_message
@@ -68,6 +68,9 @@
 
         .plus
           .plus__content
+            - if is_admin?
+              = link_to "Frases", phrases_path, class: "fancy-link"
+              %br
             = link_to "Sair", destroy_user_session_path, method: :delete, class: "fancy-link"
           .plus__button
             %image{src: "https://icongr.am/clarity/plus.svg"}

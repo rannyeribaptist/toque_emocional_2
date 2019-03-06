@@ -1,0 +1,11 @@
+-# frozen_string_literal: true
+= simple_form_for(@phrase, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :content, label: "Frase"
+    = f.input :author, label: "Autor"
+
+  .form-actions
+    = f.submit "Salvar", class: "button button--green fancy-link--white"

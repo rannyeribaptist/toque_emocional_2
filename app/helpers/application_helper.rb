@@ -40,4 +40,13 @@ module ApplicationHelper
 
     return SecureRandom.urlsafe_base64(5)
   end
+
+  def show_phrase
+    if Phrase.all.any?
+      element = Phrase.all.sample
+      text = element.content
+      author = element.author
+      return text + " - " + author
+    end
+  end
 end

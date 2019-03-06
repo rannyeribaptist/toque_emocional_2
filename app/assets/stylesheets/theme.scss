@@ -104,6 +104,8 @@ body {
   cursor: pointer;
 
   &__button {
+    width: 30px;
+    height: 30px;
     background-color: #fded00;
     border-radius: 50%;
     display: flex;
