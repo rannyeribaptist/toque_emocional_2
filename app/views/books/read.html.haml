@@ -42,7 +42,7 @@
         %br
         = simple_form_for @book, :url => new_book_comments_url(@book) do |f|
           = f.simple_fields_for :book_comments, @book.book_comments.new do |g|
-            = g.input :guest_id, as: :hidden, input_html: {value: "1"}
+            = g.input :guest_id, as: :hidden, input_html: {value: "#{Guest.first.id}"}
             = g.input :book_id, as: :hidden
             .columns.columns--small
               .column.column--small.column--small--7
