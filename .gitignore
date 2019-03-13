@@ -37,3 +37,5 @@ config/database.yml
 
 /vendor/uploads/books/*
 /public/uploads/*
+
+/config/environments/*.rb
