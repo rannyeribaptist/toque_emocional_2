@@ -1,5 +1,5 @@
 class Occurrency < ApplicationRecord
-  has_many :occurrency_students, depentend: :destroy
+  has_many :occurrency_students, dependent: :destroy
 
   validates_presence_of :description, :filled_by, :emotional_sphere
   accepts_nested_attributes_for :occurrency_students, reject_if: :all_blank, allow_destroy: true
