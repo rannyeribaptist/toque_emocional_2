@@ -3,62 +3,61 @@
     .section__content
       %h1.title.title--thin.title--large Atendimentos
 
-      %a#change-view Mudar visualização
+      = form_for_filterrific @filterrific, html: { class: "fancy-form fancy-form--inline" } do |f|
+        %div
+          Buscar por palavra chave
+          = f.text_field(                                |
+              :search_query,                             |
+              class: 'filterrific-periodically-observed fancy-form__input', |
+              placeholder: 'Buscar palavras chave...' |
+            )                                            |
 
-      #full-calendar
+        %div
+          Estudante
+          \#{f.select( :student_id, @filterrific.select_options[:student_id], { include_blank: 'Todos' }, class: "fancy-form__input fancy-form__select" )}
+        %div
+          Organizar por
+          = f.select( :sorted_by, @filterrific.select_options[:sorted_by] )
+        %div
+          Data
+          = f.select( :date, months(), { include_blank: 'Escolha um mês' }, class: "fancy-form__input fancy-form__select"  )
 
-      #list{style: "display: none"}
-        - if not @aps.empty?
-          .table
-            %table.table
-              %thead
-                %tr
-                  %th{style: "width: 20px"}
-                  %th Estudante
-                  %th Motivo
-                  %th Data
-                  %th
-                  %th
-              %tbody
-                - @aps.each do |appointment|
-                  %tr
-                    %td
-                      %div{style: "background-color: #{appointment.school.color}; width: 20px; height: 20px;"}
-                    %td= appointment.student.name
-                    %td= appointment.reason
-                    %td= l(appointment.appointment_date)
-                    %td{style: "text-align: center"}= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_appointment_path(appointment), class: "fancy-link fancy-link--green"
-                    %td{style: "text-align: center"}= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), appointment, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
+        %div
+          = link_to(                 |
+              'Resetar',       |
+              reset_filterrific_url, |
+              class: "fancy-link fancy-link--blue2" |
+            )                        |
 
-        - else
-          = image_tag('brain.png', class: "logo-default logo-default--small")
-          %h1.title.title--grey Não há nada disso por aqui...
+        = f.submit 'Filtrar', class: "button button--green"
 
-        %br
-        = will_paginate @aps
+      = render(                           |
+          partial: 'appointments/list',       |
+          locals: { appointments: @appointments } |
+        )                                 |
 
       %br
       = link_to '+ Agendar Atendimento', new_appointment_path, class: 'fancy-link fancy-link--blue2'
 
-- content_for :javascript do
-  :javascript
-    function calendar() {
-      let ap = ("#{@appointments}").replace(/&quot;/g,'"').replace('[', '').replace(']', '');
-      let a = JSON.parse('[' + ap + ']');
-
-      $('#full-calendar').fullCalendar({
-        weekends: false,
-        locale: 'pt',
-        events: a,
-        color: 'black',
-        textColor: 'yellow'
-      });
-    }
-
-    $("#change-view").click(function() {
-      $("#full-calendar").toggle();
-      $("#list").toggle();
-      calendar();
-    });
-
-    calendar();
+-# - content_for :javascript do
+-#   :javascript
+-#     function calendar() {
+-#       let ap = ("#{@appointments}").replace(/&quot;/g,'"').replace('[', '').replace(']', '');
+-#       let a = JSON.parse('[' + ap + ']');
+-#
+-#       $('#full-calendar').fullCalendar({
+-#         weekends: false,
+-#         locale: 'pt',
+-#         events: a,
+-#         color: 'black',
+-#         textColor: 'yellow'
+-#       });
+-#     }
+-#
+-#     $("#change-view").click(function() {
+-#       $("#full-calendar").toggle();
+-#       $("#list").toggle();
+-#       calendar();
+-#     });
+-#
+-#     calendar();
