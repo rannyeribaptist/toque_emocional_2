@@ -10,16 +10,23 @@
 
       %h2.title Motivo da solicitação:
 
-      %p{style: "text-align: justify"}=@appointment.reason
+      %div{style: "display: flex; flex-direction: column; align-items: center"}
+        %div{style: "border: 1px solid grey;border-radius:5px;padding: 15px; width: 80%"}
+          %p{style: "text-align: justify"}=@appointment.reason
 
 
-      %h1.title Descrição do atendimento:
-      %div{style: "border: 1px solid grey;border-radius:5px;padding: 15px"}
-        %p{style: "text-align: justify"}= @appointment.description.present? ? @appointment.description : 'Ainda não há uma descrição desse atendimento'
+        %h1.title Descrição do atendimento:
+        %div{style: "border: 1px solid grey;border-radius:5px;padding: 15px; width: 80%"}
+          %p{style: "text-align: justify"}= @appointment.description.present? ? @appointment.description : 'Ainda não há uma descrição desse atendimento'
+
+        %br
+
+        %button.button.button--blue2.fancy-link--white{onclick: "$('.form').toggle()", "data-turbolinks" => "false"} Editar
 
       - if is_admin?
-        %br
-        %br
-        = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-          = f.input :description, label: "Preencha a descrição do atendimento"
-          = f.submit "Enviar", class: "button button--blue2 fancy-link--white"
+        .form{style: "display: none"}
+          %br
+          %br
+          = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+            = f.input :description, label: "Preencha a descrição do atendimento"
+            = f.submit "Enviar", class: "button button--blue2 fancy-link--white"

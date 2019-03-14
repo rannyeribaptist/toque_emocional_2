@@ -1,7 +1,8 @@
 class Student < ApplicationRecord
   belongs_to :school
-  has_many :occurrency_students, dependent: :destroy
-  has_many :appointments, dependent: :destroy
+  has_many :occurrency_students
+  has_many :appointment_students
+  has_many :appointments
 
   has_trash
   validates_presence_of :name, :school, :classy, :groupy
@@ -51,6 +52,6 @@ class Student < ApplicationRecord
   end
 
   def funky_method
-    "#{self.name}"
+    "#{self.name}, #{self.classy} #{self.groupy}"
   end
 end
