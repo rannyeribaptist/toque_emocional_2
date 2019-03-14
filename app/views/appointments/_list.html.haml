@@ -16,7 +16,7 @@
             %td
               %div{style: "background-color: #{appointment.school.color}; width: 20px; height: 20px;"}
             %td= appointment.student.name
-            %td= appointment.reason
+            %td= appointment.reason.first(100) + "..."
             %td= l(appointment.appointment_date)
             %td{style: "text-align: center"}= link_to icon('fas', 'eye', 'Ver', class: "fancy-link fancy-link--blue2"), appointment, class: "fancy-link fancy-link--blue2"
             %td{style: "text-align: center"}= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_appointment_path(appointment), class: "fancy-link fancy-link--green"
