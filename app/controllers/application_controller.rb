@@ -15,4 +15,7 @@ class ApplicationController < ActionController::Base
 
   def dashboard
   end
+
+  def soon
+  end
 end
