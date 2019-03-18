@@ -4,7 +4,7 @@
       %h1.title.title--large Atendimento
       .inline
         %h2.title.title--small.title--thin= "Escola: " + @appointment.school.name.capitalize
-        %h2.title.title--small.title--thin{style: "margin-left: 30px"}= "Aluno: " + Student.find_by_id(@appointment.student_id).name.capitalize
+        %h2.title.title--small.title--thin{style: "margin-left: 30px"}= "Aluno: " + Student.find_by_id(@appointment.appointment_student.student_id).name.capitalize
 
       %h2.title.title--small.title--thin= l(@appointment.appointment_date) + " as " + @appointment.appointment_time
 
