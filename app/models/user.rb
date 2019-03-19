@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   belongs_to :school
 
-  has_trash
+  # has_trash
   default_scope {where(arel_table[:deleted_at].eq(nil)) if arel_table[:deleted_at]}
 
   before_create :check_school, :validate_user_permission
