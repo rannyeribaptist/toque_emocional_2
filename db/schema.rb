@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_06_015157) do
+ActiveRecord::Schema.define(version: 2019_03_14_185808) do
+
+  create_table "appointment_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "appointment_id"
+    t.bigint "student_id"
+    t.string "name"
+    t.string "classy"
+    t.string "groupy"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.timestamp "deleted_at"
+    t.index ["appointment_id"], name: "index_appointment_students_on_appointment_id"
+    t.index ["student_id"], name: "index_appointment_students_on_student_id"
+  end
 
   create_table "appointments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "school_id"
@@ -18,7 +31,7 @@ ActiveRecord::Schema.define(version: 2019_03_06_015157) do
     t.date "appointment_date"
     t.string "appointment_time"
     t.text "description"
-    t.string "reason"
+    t.text "reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.timestamp "deleted_at"
@@ -132,6 +145,8 @@ ActiveRecord::Schema.define(version: 2019_03_06_015157) do
     t.index ["school_id"], name: "index_users_on_school_id"
   end
 
+  add_foreign_key "appointment_students", "appointments"
+  add_foreign_key "appointment_students", "students"
   add_foreign_key "appointments", "schools"
   add_foreign_key "appointments", "students"
   add_foreign_key "book_comments", "books"

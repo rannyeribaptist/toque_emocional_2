@@ -2,9 +2,12 @@ class Appointment < ApplicationRecord
   belongs_to :school
   belongs_to :student
 
+  has_one :appointment_student, dependent: :destroy
+  accepts_nested_attributes_for :appointment_student, reject_if: :all_blank, allow_destroy: true
+
   validates_presence_of :student_id, :school_id, :appointment_date, :appointment_time, :reason
 
-  has_trash
+  # has_trash
   self.per_page = 10
 
   filterrific(
@@ -17,7 +20,6 @@ class Appointment < ApplicationRecord
     ]
   )
 
-  scope :student_id, lambda { |student_id| where(:student_id => student_id) }
   scope :search_query, lambda { |query| where("description LIKE ? OR reason LIKE ?", "%#{query}%", "%#{query}%") }
 
   scope :date, lambda { |query|

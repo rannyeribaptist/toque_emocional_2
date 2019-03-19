@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   resources :books
+
+  authenticated :guests do
+    resources :book_comments
+    resources :guests
+  end
+
   devise_for :users, path: '', controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
@@ -19,12 +25,14 @@ Rails.application.routes.draw do
       get :autocomplete_student_name, :on => :collection
     end
     resources :phrases
+    resources :guests
   end
 
   root to: "application#index"
 
   get "slides", to: "application#slides", as: :slide_show
   get "about", to: "application#about", as: :about_page
+  get "soon", to: "application#soon", as: :soon
   post "/books/generate_access_cards", to: "books#generate_access_cards", as: :generate_access_cards
 
   patch "/books/:id/print_access_cards", to: "books#print_access_cards", as: :print_access_cards

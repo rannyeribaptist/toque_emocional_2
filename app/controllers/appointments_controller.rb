@@ -44,6 +44,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new
   def new
     @appointment = Appointment.new
+    @appointment.build_appointment_student
   end
 
   # GET /appointments/1/edit
@@ -54,6 +55,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
+    create_student(@appointment, @appointment.appointment_student)
 
     respond_to do |format|
       if @appointment.save
@@ -69,6 +71,8 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
+    create_student(@appointment, @appointment.appointment_student)
+
     respond_to do |format|
       if @appointment.update(appointment_params)
         format.html { redirect_to @appointment, flash: {:success => 'Atendimento atualizado'} }
@@ -97,6 +101,13 @@ class AppointmentsController < ApplicationController
     render :json => students.map { |student| {:id => student.id, :label => student.name, :value => student.name, :classy => student.classy, :groupy => student.groupy} }
   end
 
+  def create_student(appointment, student)
+    st = Student.find_or_create_by(name: student.name, classy: student.classy, groupy: student.groupy, school_id: current_user.school_id)
+    student.student_id = st.id
+
+    appointment.student_id = st.id
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment
@@ -105,6 +116,6 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params.require(:appointment).permit(:school_id, :student_id, :appointment_date, :appointment_time, :description, :reason)
+      params.require(:appointment).permit(:school_id, :student_id, :appointment_date, :appointment_time, :description, :reason, appointment_student_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy])
     end
 end

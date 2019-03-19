@@ -2,19 +2,31 @@
   .section
     .section__content
       %h1.title.title--large Atendimento
-      %h1.title.title--thin= l(@appointment.appointment_date) + " as " + @appointment.appointment_time
-
-      %p=@appointment.reason
-
       .inline
-        %h2.title.title--small.title--thin= Student.find_by_id(@appointment.student_id).name
-        - if is_admin?
-          %h2.title.title--small.title--thin{style: "margin-left: 30px"}= @appointment.school.name
+        %h2.title.title--small.title--thin= "Escola: " + @appointment.school.name.capitalize
+        %h2.title.title--small.title--thin{style: "margin-left: 30px"}= "Aluno: " + Student.find_by_id(@appointment.appointment_student.student_id).name.capitalize
 
-      %h1.title.title--large Descrição do atendimento
-      %h3.title.title--small.title--thin= @appointment.description.present? ? @appointment.description : 'Ainda não há uma descrição desse atendimento'
+      %h2.title.title--small.title--thin= l(@appointment.appointment_date) + " as " + @appointment.appointment_time
+
+      %h2.title Motivo da solicitação:
+
+      %div{style: "display: flex; flex-direction: column; align-items: center"}
+        %div{style: "border: 1px solid grey;border-radius:5px;padding: 15px; width: 80%"}
+          %p{style: "text-align: justify"}=@appointment.reason
+
+
+        %h1.title Descrição do atendimento:
+        %div{style: "border: 1px solid grey;border-radius:5px;padding: 15px; width: 80%"}
+          %p{style: "text-align: justify"}= @appointment.description.present? ? @appointment.description : 'Ainda não há uma descrição desse atendimento'
+
+        %br
+
+        %button.button.button--blue2.fancy-link--white{onclick: "$('.form').toggle()", "data-turbolinks" => "false"} Editar
 
       - if is_admin?
-        = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-          = f.input :description, label: "Preencha a descrição do atendimento"
-          = f.submit "Enviar", class: "button button--blue2 fancy-link--white"
+        .form{style: "display: none"}
+          %br
+          %br
+          = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+            = f.input :description, label: "Preencha a descrição do atendimento"
+            = f.submit "Enviar", class: "button button--blue2 fancy-link--white"
