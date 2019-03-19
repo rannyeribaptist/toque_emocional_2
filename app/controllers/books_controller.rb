@@ -24,8 +24,8 @@ class BooksController < ApplicationController
   def new
     @book = Book.new
     @book.complements.build
-    @book.guests.build
-    @book.book_comments.build
+    # @book.guests.build
+    # @book.book_comments.build
   end
 
   # GET /books/1/edit
@@ -79,36 +79,6 @@ class BooksController < ApplicationController
     end
   end
 
-  def destroy_book_comments
-    @comment = BookComment.find(params[:id])
-    @comment.destroy
-
-    respond_to do |format|
-      format.html { redirect_back(fallback_location: root_path, notice: 'Anotação excluída') }
-      format.json { head :no_content }
-    end
-  end
-
-  def generate_access_cards
-    quantity = params[:quantity].to_i
-    book = Book.find_by_id(params[:book_id].to_i)
-
-    quantity.times do |x|
-      a = book.guests.new
-
-      until a.valid?
-        a.code = generate_code()
-      end
-
-      a.save
-    end
-
-    respond_to do |format|
-      format.html { redirect_to book, notice: "#{quantity} códigos gerados com sucesso." }
-      format.json { head :no_content }
-    end
-  end
-
   def print_access_cards
     @qr = RQRCode::QRCode.new( 'https://toqueemocional.com.br/livro/' + @book.url)
     @png = @qr.as_png(
@@ -138,19 +108,7 @@ class BooksController < ApplicationController
     @pages = Dir.glob("vendor/uploads/books/#{@book.name}-*").count
 
     render layout: "book"
-  end
-
-  def new_book_comments
-    respond_to do |format|
-      if @book.update(book_params)
-        format.html { redirect_back(fallback_location: root_path, notice: 'Anotação salva com sucesso') }
-        format.json { render :show, status: :ok, location: @book }
-      else
-        format.html { render :edit }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  end  
 
   private
     # Use callbacks to share common setup or constraints between actions.

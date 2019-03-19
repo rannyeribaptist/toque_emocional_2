@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   resources :books
+
+  authenticated :guests do
+    resources :book_comments
+    resources :guests
+  end
+
   devise_for :users, path: '', controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
@@ -19,6 +25,7 @@ Rails.application.routes.draw do
       get :autocomplete_student_name, :on => :collection
     end
     resources :phrases
+    resources :guests
   end
 
   root to: "application#index"
