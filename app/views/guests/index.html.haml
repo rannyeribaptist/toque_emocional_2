@@ -1,0 +1,49 @@
+.section
+  .section__content
+    %h1.title.title--thin.title--large= @book.name.capitalize
+
+    .columns
+      .column--3
+        %h1.title Gerar cartões
+        %div
+          %label{for: "number"} Quantos cartões você quer gerar?
+          %input#quantity{type: "number", name: "quantity", class: "fancy-form__input"}
+
+        = button_to 'Gerar cartões de acesso', {:controller => "guests", :action => "generate_access_cards", :quantity => "0", :book_id => @book.id}, :method => :post, class: "button button--green fancy-link--white"
+        %small= @book.guests.count.to_s + " Cartões de acesso gerados para este livro"
+
+      %hr.vertical.vertical--large.mobile-hidden
+
+      .column--7
+        %h1.title Cartões gerados para este livro
+        - if not @guests.empty?
+          .action
+            .table
+              %table.table
+                %thead
+                  %tr
+                    %th Gerado em
+                    %th Código
+                    %th Usado?
+                    %th
+
+                %tbody
+                  - @guests.each do |guest|
+                    %tr
+                      %td= l(guest.created_at.strftime("%d.%m.%Y").to_date)
+                      %td= guest.code
+                      %td= human_boolean(guest.authenticated)
+                      %td{style: "text-align: center"}= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), guest, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
+
+          = will_paginate @guests
+
+        - else
+          = image_tag('brain.png', class: "logo-default logo-default--small")
+          %h1.title.title--grey Não há nada disso por aqui...
+
+
+- content_for :javascript do
+  :javascript
+    $('#quantity').change(function() {
+      $('.button_to').attr('action', '/guests/generate_access_cards?book_id=' + "#{@book.id}" + '&quantity=' + $(this)[0].value);
+    })

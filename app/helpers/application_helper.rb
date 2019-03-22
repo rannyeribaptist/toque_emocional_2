@@ -66,4 +66,8 @@ module ApplicationHelper
       ["Dezembro", "12"],
     ]
   end
+
+  def human_boolean(boolean)
+    boolean ? 'Sim' : 'Não'
+  end
 end

@@ -19,45 +19,6 @@
 
       %hr
 
-      %h2.title.title--small{style: "margin-bottom: 0px"} Gerar cartões de acesso
-      %small= @book.guests.count.to_s + " Cartões de acesso gerados"
-
-      %br
       %br
 
-      .advanced-inline
-
-        %div
-          %label{for: "number"} Quantos cartões você quer gerar?
-          %input#quantity{type: "number", name: "quantity", class: "fancy-form__input"}
-
-        = button_to 'Gerar cartões de acesso', {:controller => "books", :action => "generate_access_cards", :quantity => "0", :book_id => @book.id}, :method => :post, class: "button button--green fancy-link--white"
-
-      %button.button.button--blue2.fancy-link--white{onclick: "print()"} Imprimir cartões de acesso
-      %br
-      %small#label{style: "display: none"} Selecione as opções para impressão abaixo
-
-#options.section{style: "display: none"}
-  .section__content{style: "text-align: left"}
-    %hr
-    = simple_form_for @book, :url => :print_access_cards do |f|
-      %label{for: "number"} Quantos cartões você quer imprimir?
-      %input{type: "number", name: "number", class: "fancy-form__input"}
-
-      %label{for: "order"} Como eu devo ordenar os cartões?
-      %select{class: "fancy-form__input fancy-form__select", name: "order"}
-        %option{value: "desc"} Dos mais novos
-        %option{value: "asc"} Dos mais antigos
-
-      = f.submit "imprimir", class: "button button--yellow fancy-link fancy-link--black"
-
-- content_for :javascript do
-  :javascript
-    $('#quantity').change(function() {
-      $('.button_to').attr('action', '/books/generate_access_cards?book_id=' + "#{@book.id}" + '&quantity=' + $(this)[0].value);
-    })
-
-    function print() {
-      $('#options').toggle();
-      $('#label').toggle();
-    }
+      = link_to "Gerar cartões de acesso", {:controller => "guests", :action => "index", :book_id => @book.id}, :method => :get, class: "button button--blue2 fancy-link fancy-link--white"
