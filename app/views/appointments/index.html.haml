@@ -14,7 +14,7 @@
 
         %div
           Estudante
-          \#{f.text_field( :student, class: "fancy-form__input fancy-form__select" )}
+          \#{f.text_field( :student, class: "fancy-form__input fancy-form__select", placeholder: 'Nome do estudante' )}
         %div
           Organizar por
           = f.select( :sorted_by, @filterrific.select_options[:sorted_by] )
