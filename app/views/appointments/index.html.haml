@@ -38,26 +38,3 @@
 
       %br
       = link_to '+ Agendar Atendimento', new_appointment_path, class: 'fancy-link fancy-link--blue2'
-
--# - content_for :javascript do
--#   :javascript
--#     function calendar() {
--#       let ap = ("#{@appointments}").replace(/&quot;/g,'"').replace('[', '').replace(']', '');
--#       let a = JSON.parse('[' + ap + ']');
--#
--#       $('#full-calendar').fullCalendar({
--#         weekends: false,
--#         locale: 'pt',
--#         events: a,
--#         color: 'black',
--#         textColor: 'yellow'
--#       });
--#     }
--#
--#     $("#change-view").click(function() {
--#       $("#full-calendar").toggle();
--#       $("#list").toggle();
--#       calendar();
--#     });
--#
--#     calendar();

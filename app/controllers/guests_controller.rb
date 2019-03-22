@@ -1,6 +1,6 @@
 class GuestsController < ApplicationController
   # before_action :ensure_account_presence
-  # before_action :set_guest, only: [:show, :edit, :update, :destroy]
+  before_action :set_guest, only: [:edit, :update, :destroy]
 
   layout "users"
 
@@ -38,13 +38,13 @@ class GuestsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to(controller: "guests", action: "show", book_id: @book.id, quantity: @quantity) }
+      format.html { redirect_to(controller: "guests", action: "print_access_cards", book_id: @book.id, quantity: @quantity) }
       # format.html { redirect_to guests_url(book_id: @book.id), notice: "#{@quantity} códigos gerados com sucesso." }
       format.json { head :no_content }
     end
   end
 
-  def show
+  def print_access_cards
     require 'rqrcode'
 
     @book = Book.find_by_id(params[:book_id])
@@ -74,6 +74,7 @@ class GuestsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_guest
       @guest = Guest.find(params[:id])
+      @book = Book.find_by_id(@guest.book_id)
     end
 
     def ensure_account_presence
