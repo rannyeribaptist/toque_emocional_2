@@ -14,7 +14,7 @@
 
         %div
           Estudante
-          \#{f.select( :student_id, @filterrific.select_options[:student_id], { include_blank: 'Todos' }, class: "fancy-form__input fancy-form__select" )}
+          \#{f.text_field( :student, class: "fancy-form__input fancy-form__select" )}
         %div
           Organizar por
           = f.select( :sorted_by, @filterrific.select_options[:sorted_by] )

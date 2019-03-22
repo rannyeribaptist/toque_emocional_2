@@ -7,23 +7,10 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-    # remove_old_appointments()
-    #
-    # if is_admin?
-    #   @appointments = Appointment.all.map do |a| { :title => a.student.name, :start => a.appointment_date } end
-    #   @aps = Appointment.all.page(params[:page])
-    # else
-    #   @appointments = Appointment.where(school_id: current_user.school_id).map do |a| { :title => a.student.name, :start => a.appointment_date } end
-    #   @aps = Appointment.where(school_id: current_user.school_id).page(params[:page])
-    # end
-    #
-    # @appointments = @appointments.to_json
-
     @filterrific = initialize_filterrific(
       Appointment,
       params[:filterrific],
       select_options: {
-        student_id: Student.all.collect {|a| [a.name, a.id]},
         sorted_by: Appointment.options_for_sorted_by
       }
     ) or return

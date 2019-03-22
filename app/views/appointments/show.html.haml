@@ -19,11 +19,11 @@
         %div{style: "border: 1px solid grey;border-radius:5px;padding: 15px; width: 80%"}
           %p{style: "text-align: justify"}= @appointment.description.present? ? @appointment.description : 'Ainda não há uma descrição desse atendimento'
 
+
+      - if is_admin?
         %br
 
         %button.button.button--blue2.fancy-link--white{onclick: "$('.form').toggle()", "data-turbolinks" => "false"} Editar
-
-      - if is_admin?
         .form{style: "display: none"}
           %br
           %br

@@ -12,15 +12,16 @@
           %th
       %tbody
         - appointments.each do |appointment|
-          %tr
-            %td
-              %div{style: "background-color: #{appointment.school.color}; width: 20px; height: 20px;"}
-            %td= appointment.appointment_student.name
-            %td= appointment.reason.first(100) + "..."
-            %td= l(appointment.appointment_date)
-            %td{style: "text-align: center"}= link_to icon('fas', 'eye', 'Ver', class: "fancy-link fancy-link--blue2"), appointment, class: "fancy-link fancy-link--blue2"
-            %td{style: "text-align: center"}= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_appointment_path(appointment), class: "fancy-link fancy-link--green"
-            %td{style: "text-align: center"}= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), appointment, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
+          - if Student.find_by_id(appointment.appointment_student.id).school_id == current_user.school_id || is_admin?
+            %tr
+              %td
+                %div{style: "background-color: #{appointment.school.color}; width: 20px; height: 20px;"}
+              %td= appointment.appointment_student.name
+              %td= appointment.reason.first(100) + "..."
+              %td= l(appointment.appointment_date)
+              %td{style: "text-align: center"}= link_to icon('fas', 'eye', 'Ver', class: "fancy-link fancy-link--blue2"), appointment, class: "fancy-link fancy-link--blue2"
+              %td{style: "text-align: center"}= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_appointment_path(appointment), class: "fancy-link fancy-link--green"
+              %td{style: "text-align: center"}= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), appointment, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
 
 - else
   %br

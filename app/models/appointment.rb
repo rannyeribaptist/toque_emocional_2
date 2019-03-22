@@ -14,13 +14,16 @@ class Appointment < ApplicationRecord
     default_filter_params: { sorted_by: 'created_at_desc' },
     available_filters: [
       :sorted_by,
-      :student_id,
+      :student,
       :search_query,
       :date
     ]
   )
 
   scope :search_query, lambda { |query| where("description LIKE ? OR reason LIKE ?", "%#{query}%", "%#{query}%") }
+  scope :student, lambda { |query|
+    Appointment.joins(:appointment_student).where('name LIKE ?', "%#{query}%")
+  }
 
   scope :date, lambda { |query|
     Appointment.where('extract(month from appointment_date) = ?', query)
