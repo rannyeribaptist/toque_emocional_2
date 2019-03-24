@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_21_193544) do
+ActiveRecord::Schema.define(version: 2019_03_24_172750) do
 
   create_table "appointment_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "appointment_id"
-    t.bigint "student_id"
     t.string "name"
     t.string "classy"
     t.string "groupy"
@@ -22,12 +21,10 @@ ActiveRecord::Schema.define(version: 2019_03_21_193544) do
     t.datetime "updated_at", null: false
     t.timestamp "deleted_at"
     t.index ["appointment_id"], name: "index_appointment_students_on_appointment_id"
-    t.index ["student_id"], name: "index_appointment_students_on_student_id"
   end
 
   create_table "appointments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "school_id"
-    t.bigint "student_id"
     t.date "appointment_date"
     t.string "appointment_time"
     t.text "description"
@@ -36,7 +33,6 @@ ActiveRecord::Schema.define(version: 2019_03_21_193544) do
     t.datetime "updated_at", null: false
     t.timestamp "deleted_at"
     t.index ["school_id"], name: "index_appointments_on_school_id"
-    t.index ["student_id"], name: "index_appointments_on_student_id"
   end
 
   create_table "book_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -142,9 +138,7 @@ ActiveRecord::Schema.define(version: 2019_03_21_193544) do
   end
 
   add_foreign_key "appointment_students", "appointments"
-  add_foreign_key "appointment_students", "students"
   add_foreign_key "appointments", "schools"
-  add_foreign_key "appointments", "students"
   add_foreign_key "book_comments", "books"
   add_foreign_key "book_comments", "guests"
   add_foreign_key "complements", "books"

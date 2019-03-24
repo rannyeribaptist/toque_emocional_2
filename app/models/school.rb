@@ -7,6 +7,6 @@ class School < ApplicationRecord
   has_many :students, dependent: :destroy
   has_many :appointments, dependent: :destroy
 
-  has_trash
+  # has_trash
   default_scope {where(arel_table[:deleted_at].eq(nil)) if arel_table[:deleted_at]}
 end

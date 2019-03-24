@@ -12,7 +12,7 @@
           %th
       %tbody
         - appointments.each do |appointment|
-          - if Student.find_by_id(appointment.appointment_student.student_id).school_id == current_user.school_id || is_admin?
+          - if appointment.school_id == current_user.school_id || is_admin?
             %tr
               %td
                 %div{style: "background-color: #{appointment.school.color}; width: 20px; height: 20px;"}

@@ -6,7 +6,7 @@ class SchoolsController < ApplicationController
 
   # TODO: Change the routes and redirects when configs model is created
   def index
-    @schools = School.active
+    @schools = School.all
   end
 
   # POST /schools

@@ -5,7 +5,7 @@ class Occurrency < ApplicationRecord
   accepts_nested_attributes_for :occurrency_students, reject_if: :all_blank, allow_destroy: true
   validate :check_for_students
 
-  has_trash
+  # has_trash
   self.per_page = 10
 
   filterrific(
