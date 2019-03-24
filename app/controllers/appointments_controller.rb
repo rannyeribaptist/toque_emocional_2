@@ -32,6 +32,7 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new
     @appointment.build_appointment_student
+    @appointment.appointment_comments.build
   end
 
   # GET /appointments/1/edit
@@ -90,8 +91,6 @@ class AppointmentsController < ApplicationController
 
   def create_student(student, school)
     a = Student.find_or_create_by(name: student.name, classy: student.classy, groupy: student.groupy, school_id: school)
-    puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-    puts a.inspect
   end
 
   private
@@ -102,6 +101,6 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params.require(:appointment).permit(:school_id, :appointment_date, :appointment_time, :description, :reason, appointment_student_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy])
+      params.require(:appointment).permit(:school_id, :appointment_date, :appointment_time, :description, :reason, appointment_student_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy], appointment_comments_attributes: [:id, :name, :comment, :_destroy, :user_id])
     end
 end

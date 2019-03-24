@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_24_172750) do
+ActiveRecord::Schema.define(version: 2019_03_24_181033) do
+
+  create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.text "comment"
+    t.bigint "appointment_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_appointment_comments_on_appointment_id"
+    t.index ["user_id"], name: "index_appointment_comments_on_user_id"
+  end
 
   create_table "appointment_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "appointment_id"
@@ -137,6 +148,8 @@ ActiveRecord::Schema.define(version: 2019_03_24_172750) do
     t.index ["school_id"], name: "index_users_on_school_id"
   end
 
+  add_foreign_key "appointment_comments", "appointments"
+  add_foreign_key "appointment_comments", "users"
   add_foreign_key "appointment_students", "appointments"
   add_foreign_key "appointments", "schools"
   add_foreign_key "book_comments", "books"

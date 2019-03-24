@@ -7,3 +7,14 @@
 
   @include colors("background-color");
 }
+
+.appointment-card {
+  border: 1px solid grey;
+  border-left: 8px solid;
+  border-radius: 5px;  
+  padding: 5px 15px;
+  width: 500px; max-width: 100%;
+  text-align: left;
+  box-shadow: 1px 1px 20px 3px #00000038;
+  margin-bottom: 15px
+}

@@ -2,7 +2,9 @@ class Appointment < ApplicationRecord
   belongs_to :school
 
   has_one :appointment_student, dependent: :destroy
+  has_many :appointment_comments, dependent: :destroy
   accepts_nested_attributes_for :appointment_student, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :appointment_comments, reject_if: :all_blank, allow_destroy: true
 
   validates_presence_of :school_id, :appointment_date, :appointment_time, :reason
 
