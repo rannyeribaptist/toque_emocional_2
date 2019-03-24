@@ -33,8 +33,13 @@
                         = f.input :file, label: "Arquivo (apenas arquivos em pdf, png, jpg ou jpeg)"
                         %br
                         = f.submit "Enviar", class: "button button--green fancy-link--white"
+                  %div{id: "sd_#{sd.id}_d", style: "display: none"}
+                    = simple_form_for(@student, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form", id: "delete_attribute_#{sd.id}" }) do |f|
+                      = f.simple_fields_for :student_documents, sd do |g|
+                        = g.check_box '_destroy', checked: 'checked'
 
-                  %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 10px", onclick: "$('#sd_#{sd.id}_s').toggle();$('#sd_#{sd.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--blue2")
+                  %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 10px 30px", onclick: "$('#sd_#{sd.id}_s').toggle();$('#sd_#{sd.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--blue2")
+                  %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 10px", onclick: "if (confirm('Tem certeza que quer excluir esse comentário?')) { $('#delete_attribute_#{sd.id}').submit()};"}= icon('fas', 'trash', class: "fancy-link fancy-link--red")
 
         %br
         %br

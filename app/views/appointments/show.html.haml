@@ -48,9 +48,15 @@
                   = g.input :comment, label: "Comentário"
 
                   = g.submit "Enviar", class: "button button--green fancy-link--white"
+            %div{id: "ac_#{appointment_comment.id}_d", style: "display: none"}
+              = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form", id: "delete_attribute_#{appointment_comment.id}" }) do |f|
+                = f.simple_fields_for :appointment_comments, appointment_comment do |g|
+                  = g.check_box '_destroy', checked: 'checked'
 
-            - if appointment_comment.user_id == current_user.id
-              %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 5px", onclick: "$('#ac_#{appointment_comment.id}_s').toggle();$('#ac_#{appointment_comment.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--blue2")
+            - if appointment_comment.user_id == current_user.id || is_admin?
+              %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 5px 30px", onclick: "$('#ac_#{appointment_comment.id}_s').toggle();$('#ac_#{appointment_comment.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--blue2")
+              %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 5px", onclick: "if (confirm('Tem certeza que quer excluir esse comentário?')) { $('#delete_attribute_#{appointment_comment.id}').submit()};"}= icon('fas', 'trash', class: "fancy-link fancy-link--red")
+
 
 
       %h3.title.title--small Fazer um comentário
