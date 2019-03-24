@@ -1,6 +1,9 @@
 class Student < ApplicationRecord
   belongs_to :school
   has_many :occurrency_students
+  has_many :student_documents
+
+  accepts_nested_attributes_for :student_documents, allow_destroy: true, reject_if: :all_blank
 
   # has_trash
   validates_presence_of :name, :school, :classy, :groupy

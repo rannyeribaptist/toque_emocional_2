@@ -23,6 +23,7 @@
               %td= student.name
               %td= student.classy
               %td= student.groupy
+              %td{style: "text-align: center"}= link_to icon('fas', 'eye', 'Ver', class: "fancy-link fancy-link--blue2"), student, class: "fancy-link fancy-link--blue2"
               %td= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_student_path(student), class: "fancy-link fancy-link--green"
               %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), student, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
 

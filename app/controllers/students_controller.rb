@@ -32,6 +32,7 @@ class StudentsController < ApplicationController
   # GET /students/new
   def new
     @student = Student.new
+    @student.student_documents.build
   end
 
   # GET /students/1/edit
@@ -46,7 +47,7 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if is_admin? || student_params[:school_id].to_s == current_user.school_id.to_s
         if @student.save
-          format.html { redirect_to students_path, flash: {:success => 'Estudante criado'} }
+          format.html { redirect_to @student, flash: {:success => 'Estudante criado'} }
           format.json { render :show, status: :created, location: @student }
         else
           format.html { render :new }
@@ -62,7 +63,7 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if is_admin? || student_params[:school_id].to_s == current_user.school_id.to_s
         if @student.update(student_params)
-          format.html { redirect_to students_path, flash: {:success => 'Estudante atualizado'} }
+          format.html { redirect_to @student, flash: {:success => 'Estudante atualizado'} }
           format.json { render :show, status: :ok, location: @student }
         else
           format.html { render :edit }
@@ -90,6 +91,6 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:name, :school_id, :classy, :groupy)
+      params.require(:student).permit(:name, :school_id, :classy, :groupy, :student_documents_attributes => [:name, :id, :_destroy, :file, :student_id])
     end
 end

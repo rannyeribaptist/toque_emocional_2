@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_24_181033) do
+ActiveRecord::Schema.define(version: 2019_03_24_192416) do
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -121,6 +121,15 @@ ActiveRecord::Schema.define(version: 2019_03_24_181033) do
     t.timestamp "deleted_at"
   end
 
+  create_table "student_documents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.bigint "student_id"
+    t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_student_documents_on_student_id"
+  end
+
   create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "school_id"
@@ -159,6 +168,7 @@ ActiveRecord::Schema.define(version: 2019_03_24_181033) do
   add_foreign_key "occurrencies", "schools"
   add_foreign_key "occurrency_students", "occurrencies"
   add_foreign_key "occurrency_students", "students"
+  add_foreign_key "student_documents", "students"
   add_foreign_key "students", "schools"
   add_foreign_key "users", "schools"
 end

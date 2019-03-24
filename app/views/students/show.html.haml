@@ -3,15 +3,58 @@
     .section__content
       .inline
         %div{style: "background-color: #{@student.school.color}; width: 30px; height: 30px; margin-right: 20px;"}
-        %h1= @student.school.name
+        %h1= 'Escola: ' + @student.school.name
 
-      %p= @student.name
+      %h2.title.title--small.title--thin= 'Nome: ' + @student.name.capitalize
       = @student.classy
       = @student.groupy
 
       %br
       %br
 
-      = link_to 'Editar', edit_student_path(@student), class: "fancy-link"
-      \|
-      = link_to 'Voltar', students_path, class: "fancy-link"
+      %h2.title Documentos e arquivos
+
+      - if @student.student_documents.any?
+        - @student.student_documents.each_slice(5) do |sds|
+          .columns{style: "justify-content: center; align-items: center"}
+            - sds.each do |sd|
+              .column.column--2
+                %div.card.card--with-border{style: "text-align: left; max-width: 200px; position: relative"}
+                  %div{id: "sd_#{sd.id}_s"}
+                    %strong= sd.name
+                    %br
+                    %br
+                    %a.fancy-link.fancy-link--blue{href: "#{sd.file}", target: "_blank"}= icon('fas', 'eye', "Visualizar arquivo")
+
+                  %div{id: "sd_#{sd.id}_e", style: "display: none"}
+                    = simple_form_for @student, defaults: { input_html: { class: "fancy-form__input" } } do |student|
+                      = student.simple_fields_for :student_documents, sd do |f|
+                        = f.input :name, label: "Nome do documento"
+                        = f.input :file, label: "Arquivo (apenas arquivos em pdf, png, jpg ou jpeg)"
+                        %br
+                        = f.submit "Enviar", class: "button button--green fancy-link--white"
+
+                  %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 10px", onclick: "$('#sd_#{sd.id}_s').toggle();$('#sd_#{sd.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--blue2")
+
+        %br
+        %br
+
+      - else
+        = image_tag('brain.png', class: "logo-default logo-default--small")
+        %h1.title.title--grey Não há nenhum documento por enquanto...
+
+      %div{style: "text-align: left"}
+        %strong Adiconar documento
+
+        %br
+        %br
+
+        = simple_form_for @student, defaults: { input_html: { class: "fancy-form__input" } } do |student|
+          = student.simple_fields_for :student_documents, @student.student_documents.new do |f|
+            = f.input :name, label: "Nome do documento"
+            = f.input :file, label: "Arquivo (apenas arquivos em pdf, png, jpg ou jpeg)"
+            %br
+            = f.submit "Enviar", class: "button button--green fancy-link--white"
+
+
+        = link_to 'Editar', edit_student_path(@student), class: "fancy-link fancy-link--blue2"

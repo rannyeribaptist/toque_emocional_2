@@ -6,12 +6,17 @@
   -webkit-print-color-adjust: exact;
 
   @include colors("background-color");
+
+  &--with-border {
+    border: 1px solid grey;
+    border-radius: 5px;
+  }
 }
 
 .appointment-card {
   border: 1px solid grey;
   border-left: 8px solid;
-  border-radius: 5px;  
+  border-radius: 5px;
   padding: 5px 15px;
   width: 500px; max-width: 100%;
   text-align: left;
