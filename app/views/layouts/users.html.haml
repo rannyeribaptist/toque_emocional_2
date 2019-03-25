@@ -79,6 +79,9 @@
       %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"}
       %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"}
 
+      - if Rails.env.production?
+        %meta{:content => "Us78rGNT84G_yqyHWp1z976W3U30iIsR6aVw7cc_sX4", :name => "google-site-verification"}/
+
       :javascript
         $(".navbar__content-toggle").click(function() {
           $(".navbar__content").toggle();
