@@ -11,6 +11,15 @@
     border: 1px solid grey;
     border-radius: 5px;
   }
+
+  &--with-shadow { box-shadow: 1px 1px 20px 3px #00000038 }
+
+  &--with-bg {
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position-x: center;
+    background-position-y: 50%;
+  }
 }
 
 .appointment-card {
@@ -18,7 +27,8 @@
   border-left: 8px solid;
   border-radius: 5px;
   padding: 5px 15px;
-  width: 500px; max-width: 100%;
+  width: 800px;
+  max-width: 100%;
   text-align: left;
   box-shadow: 1px 1px 20px 3px #00000038;
   margin-bottom: 15px

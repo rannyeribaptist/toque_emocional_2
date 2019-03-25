@@ -2,23 +2,24 @@
   .section
     .section__content
       .inline
-        %div{style: "background-color: #{@student.school.color}; width: 30px; height: 30px; margin-right: 20px;"}
-        %h1= 'Escola: ' + @student.school.name
+        %h1.title.title--large= @student.name.capitalize
 
-      %h2.title.title--small.title--thin= 'Nome: ' + @student.name.capitalize
-      = @student.classy
-      = @student.groupy
+      .inline
+        %h3.subtitle.title--thin= @student.school.name.capitalize
+        %h3.subtitle.title--thin{style: "margin-left: 30px"}= "Série/Turma: " + @student.classy + @student.groupy
+
+      = link_to 'Editar', edit_student_path(@student), class: "fancy-link fancy-link--blue2"
 
       %br
       %br
 
-      %h2.title Documentos e arquivos
+      %h2.title.title--thin Documentos e arquivos
 
       - if @student.student_documents.any?
-        - @student.student_documents.each_slice(5) do |sds|
+        - @student.student_documents.each_slice(4) do |sds|
           .columns{style: "justify-content: center; align-items: center"}
             - sds.each do |sd|
-              .column.column--2
+              .column.column--3
                 %div.card.card--with-border{style: "text-align: left; max-width: 200px; position: relative"}
                   %div{id: "sd_#{sd.id}_s"}
                     %strong= sd.name
@@ -60,6 +61,3 @@
             = f.input :file, label: "Arquivo (apenas arquivos em pdf, png, jpg ou jpeg)"
             %br
             = f.submit "Enviar", class: "button button--green fancy-link--white"
-
-
-        = link_to 'Editar', edit_student_path(@student), class: "fancy-link fancy-link--blue2"
