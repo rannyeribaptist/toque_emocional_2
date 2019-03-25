@@ -101,6 +101,6 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params.require(:appointment).permit(:school_id, :appointment_date, :appointment_time, :description, :reason, appointment_student_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy], appointment_comments_attributes: [:id, :name, :comment, :_destroy, :user_id])
+      params.require(:appointment).permit(:closing, :school_id, :appointment_date, :appointment_time, :description, :reason, appointment_student_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy], appointment_comments_attributes: [:id, :name, :comment, :_destroy, :user_id])
     end
 end
