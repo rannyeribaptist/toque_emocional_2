@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @reader.name
+%p
+  %b Classy:
+  = @reader.classy
+%p
+  %b Groupy:
+  = @reader.groupy
+%p
+  %b Birthday:
+  = @reader.birthday
+%p
+  %b School:
+  = @reader.school
+
+= link_to 'Edit', edit_reader_path(@reader)
+\|
+= link_to 'Back', readers_path

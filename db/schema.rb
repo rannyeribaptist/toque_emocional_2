@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_25_025511) do
+ActiveRecord::Schema.define(version: 2019_03_27_223015) do
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -114,6 +114,25 @@ ActiveRecord::Schema.define(version: 2019_03_25_025511) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "readers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "classy"
+    t.string "groupy"
+    t.date "birthday"
+    t.bigint "school_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "avatar"
+    t.index ["email"], name: "index_readers_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_readers_on_reset_password_token", unique: true
+    t.index ["school_id"], name: "index_readers_on_school_id"
+  end
+
   create_table "schools", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "color"
@@ -169,6 +188,7 @@ ActiveRecord::Schema.define(version: 2019_03_25_025511) do
   add_foreign_key "occurrencies", "schools"
   add_foreign_key "occurrency_students", "occurrencies"
   add_foreign_key "occurrency_students", "students"
+  add_foreign_key "readers", "schools"
   add_foreign_key "student_documents", "students"
   add_foreign_key "students", "schools"
   add_foreign_key "users", "schools"

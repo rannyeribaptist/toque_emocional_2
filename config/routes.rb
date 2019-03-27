@@ -1,17 +1,20 @@
 Rails.application.routes.draw do
-  resources :books
-
-  authenticated :guests do
-    resources :book_comments
-    resources :guests
-  end
+  devise_for :readers, path: 'reader', controllers: {
+    sessions: 'reader/sessions',
+    registrations: 'reader/registrations'
+  }
 
   devise_for :users, path: '', controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  authenticated :readers do
+    resources :book_comments
+    resources :guests
+    resources :readers
+    resources :books
+  end
 
   authenticated :user do
     root to: "application#dashboard"
