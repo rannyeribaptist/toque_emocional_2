@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_reader!, only: [:read, :list]
 
   layout "users"
 
@@ -10,7 +11,7 @@ class BooksController < ApplicationController
   end
 
   def list
-    @books = Book.all
+    @books = Book.where(:id => current_reader.book_list.books)
     render layout: "book"
   end
 
@@ -23,8 +24,6 @@ class BooksController < ApplicationController
   def new
     @book = Book.new
     @book.complements.build
-    # @book.guests.build
-    # @book.book_comments.build
   end
 
   # GET /books/1/edit
@@ -81,9 +80,13 @@ class BooksController < ApplicationController
   def read
     @book = Book.find_by_url(params[:url])
 
-    @pages = Dir.glob("vendor/uploads/books/#{@book.name}-*").count
+    if @book == nil
+      redirect_to "/404"
+    else
+      @pages = Dir.glob("vendor/uploads/books/#{@book.name}-*").count
 
-    render layout: "book"
+      render layout: "book"
+    end
   end
 
   private

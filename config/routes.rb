@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  authenticated :readers do
+  authenticated :reader do
+    root to: "books#list"
     resources :book_comments
     resources :guests
     resources :readers

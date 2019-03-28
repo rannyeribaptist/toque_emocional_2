@@ -15,6 +15,7 @@ class ReadersController < ApplicationController
   # GET /readers/new
   def new
     @reader = Reader.new
+    @reader.build_book_list
   end
 
   # GET /readers/1/edit
@@ -69,6 +70,6 @@ class ReadersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reader_params
-      params.require(:reader).permit(:name, :classy, :groupy, :birthday, :school_id)
+      params.require(:reader).permit(:name, :classy, :groupy, :birthday, :school_id, :book_list_attributes => [:id, :books => []])
     end
 end
