@@ -12,10 +12,12 @@ Rails.application.routes.draw do
 
   authenticated :reader do
     root to: "books#list"
-    resources :book_comments
     resources :guests
     resources :readers
     resources :books
+
+    patch "/reader/update_book_comments/:id", to: "readers#update_book_comments", as: :edit_book_comment
+    delete "/reader/update_book_comments/:id", to: "readers#delete_book_comments", as: :delete_book_comment
   end
 
   authenticated :user do
@@ -32,7 +34,6 @@ Rails.application.routes.draw do
     resources :phrases
     resources :guests, except: [:show]
 
-    resources :book_comments
     resources :readers
     resources :books
   end

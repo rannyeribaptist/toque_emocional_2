@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_28_024320) do
+ActiveRecord::Schema.define(version: 2019_03_28_034847) do
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -49,12 +49,12 @@ ActiveRecord::Schema.define(version: 2019_03_28_024320) do
 
   create_table "book_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "book_id"
-    t.bigint "guest_id"
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "reader_id"
     t.index ["book_id"], name: "index_book_comments_on_book_id"
-    t.index ["guest_id"], name: "index_book_comments_on_guest_id"
+    t.index ["reader_id"], name: "index_book_comments_on_reader_id"
   end
 
   create_table "book_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -193,7 +193,7 @@ ActiveRecord::Schema.define(version: 2019_03_28_024320) do
   add_foreign_key "appointment_students", "appointments"
   add_foreign_key "appointments", "schools"
   add_foreign_key "book_comments", "books"
-  add_foreign_key "book_comments", "guests"
+  add_foreign_key "book_comments", "readers"
   add_foreign_key "book_lists", "readers"
   add_foreign_key "books", "schools"
   add_foreign_key "complements", "books"

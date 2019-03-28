@@ -6,8 +6,10 @@ class Reader < ApplicationRecord
 
   belongs_to :school
   has_one :book_list, dependent: :destroy
+  has_many :book_comments, dependent: :destroy
 
   accepts_nested_attributes_for :book_list, allow_destroy: false
+  accepts_nested_attributes_for :book_comments, allow_destroy: true, reject_if: :all_blank
 
   after_create :set_code_as_authenticated, :define_school, :create_book_list
 

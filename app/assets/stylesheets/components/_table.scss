@@ -10,7 +10,7 @@
 
   &--transparent {
     tr { background-color: transparent }
-    tr:nth-child(even) {background-color: rgba($light-grey, 0.4)}
+    tr:nth-child(even) { background-color: #ffffff57 }
     th, td {border-bottom: none;}
   }
 }

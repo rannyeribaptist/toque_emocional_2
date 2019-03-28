@@ -27,50 +27,38 @@
           - if not i == (@pages.to_i - 1)
             .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "display: inline"} PRÓXIMO
 
-.section.section--yellow
+.section.section--golden{style: "color: white"}
   .section__content
+
     .columns
       .column.column--5
         %h1.title.title--thin.title--large Material Complementar
+
         %br
+
         %div{style: "text-align: left"}
           - @book.complements.each do |c|
             %h2= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--black"), c.file.to_s, class: "fancy-link fancy-link--black", target: "_blank"
 
       .column.column--5
-        %h1.title.title--thin.title--large Anotações
+        %h1.title.title--thin.title--large Suas Anotações
+
         %br
-        = simple_form_for @book, :url => new_book_comments_url(@book) do |f|
-          = f.simple_fields_for :book_comments, @book.book_comments.new do |g|
-            = g.input :guest_id, as: :hidden, input_html: {value: "#{Guest.first.id}"}
-            = g.input :book_id, as: :hidden
-            .columns.columns--small
-              .column.column--small.column--small--7
-                = g.input :comment, label: "Adicionar anotação", input_html: { class: "fancy-form__input", style: "background-color: transparent; border-color: black" }, required: false
-              .column.column--small.column--small--3
-                = g.submit "Salvar anotação", class: "button button--green fancy-link--white", disabled: "disabled", id: "submit"
+
+        = simple_form_for current_reader, :url => edit_book_comment_url(current_reader), defaults: { input_html: { class: "fancy-form__input", style: "background-color: transparent; border-color: white; color: white" } }, remote: true do |f|
+          = f.simple_fields_for :book_comments, current_reader.book_comments.new do |g|
+            = g.input :book_id, as: :hidden, input_html: { value: @book.id }
+            .columns{style: "text-align: left"}
+              .column.column--7
+                = g.input :comment, label: "Adicionar anotação", required: false
+              .column.column--3{style: "text-align: center"}
+                = g.submit "Salvar anotação", class: "button button--green fancy-link--white submit", disabled: "disabled", id: "submit"
 
         %br
         %br
 
-        -# TODO: Create current_guest helper when session_storage is working
-
-        %table.table.table--transparent
-          %tbody
-            - @book.book_comments.each do |bc|
-              - unless bc.id == nil
-                = simple_form_for @book do |f|
-                  = f.simple_fields_for :book_comments, bc do |g|
-                    %tr
-                      %td
-                        %em{id: "bc_#{bc.id}"}= bc.comment
-                        %div{id: "edit_bc_#{bc.id}", style: "display: none"}= g.input :comment, label: false, input_html: {class: "fancy-form__input"}
-                      %td{id: "submit_bc_#{bc.id}", style: "display: none"}
-                        = g.submit "Salvar", class: "button button--green fancy-link--white"
-                      %td
-                        %a{style: "cursor: pointer", onclick: "$('#bc_#{bc.id}').toggle();$('#edit_bc_#{bc.id}').toggle();$('#submit_bc_#{bc.id}').toggle()"}= icon('fas', 'pen', class: 'fancy-link--blue2')
-                      %td
-                        %a{style: "cursor: pointer"}= link_to icon('fas', 'trash', class: 'fancy-link--red'), delete_comment_url(bc.id), method: :delete, data: { confirm: 'Excluir anotação?' }, class: "fancy-link fancy-link--red"
+        #comments.animated.fadeIn
+          = render "books/book_comments"
 
 - content_for :javascript do
   :javascript
@@ -81,10 +69,19 @@
       element.addClass('animated fadeIn slide--active');
     });
 
-    $('#book_book_comments_attributes_0_comment').on('change keyup paste', function() {
+    $('#reader_book_comments_attributes_0_comment').on('change keyup paste', function() {
       if($(this).val().length == 0) {
         $('#submit').attr("disabled", disabled);
       } else {
         $('#submit').attr("disabled", false);
       }
     });
+
+    $('.submit').on('click', function() {
+      $("#comments").removeClass("fadeIn");
+    });
+
+    edit_comment = function(comment_id) {
+      $('#show_comment_' + comment_id).toggle();
+      $('#edit_comment_' + comment_id).toggle();
+    };

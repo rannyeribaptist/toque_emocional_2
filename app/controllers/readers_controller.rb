@@ -1,5 +1,6 @@
 class ReadersController < ApplicationController
-  before_action :set_reader, only: [:show, :edit, :update, :destroy]
+  before_action :set_reader, only: [:show, :edit, :update, :destroy, :update_book_comments]
+  skip_before_action :verify_authenticity_token, only: [:update_book_comments]
 
   # GET /readers
   # GET /readers.json
@@ -16,6 +17,7 @@ class ReadersController < ApplicationController
   def new
     @reader = Reader.new
     @reader.build_book_list
+    @reader.book_comments.build
   end
 
   # GET /readers/1/edit
@@ -58,7 +60,26 @@ class ReadersController < ApplicationController
     @reader.destroy
     respond_to do |format|
       format.html { redirect_to readers_url, notice: 'Reader was successfully destroyed.' }
+      format.js { render 'books/update_comments'}
       format.json { head :no_content }
+    end
+  end
+
+  def update_book_comments
+    respond_to do |format|
+      if @reader.update(reader_params)
+        format.js { render 'books/update_comments', statu: :ok }
+      else
+        format.js { render 'books/update_comments', statu: :unprocessable_entity }
+      end
+    end
+  end
+
+  def delete_book_comments
+    @comment = BookComment.find(params[:id]).destroy
+
+    respond_to do |format|
+      format.js { render 'books/update_comments', statu: :ok }
     end
   end
 
@@ -70,6 +91,6 @@ class ReadersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reader_params
-      params.require(:reader).permit(:name, :classy, :groupy, :birthday, :school_id, :book_list_attributes => [:id, :books => []])
+      params.require(:reader).permit(:name, :classy, :groupy, :birthday, :school_id, :book_list_attributes => [:id, :books => []], :book_comments_attributes => [:id, :_destroy, :comment, :book_id])
     end
 end
