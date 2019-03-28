@@ -8,6 +8,7 @@ $blue2: #0076ff;
 $grey: #606062;
 $light-grey: #ccc;
 $red: #e60909;
+$golden: #7F7A4A;
 
 // Breakpoints
 @mixin breakpoint($value) {
@@ -60,6 +61,7 @@ $red: #e60909;
     &--grey { color: $grey };
     &--red { color: $red };
     &--green { color: $green };
+    &--golden { color: $golden };
     &--white{ color: white };
     &--black{ color: black };
   }
@@ -73,6 +75,7 @@ $red: #e60909;
     &--blue2 { background-color: $blue2 };
     &--grey { background-color: $grey };
     &--red { background-color: $red };
+    &--golden { background-color: $golden };
     &--white{ background-color: white };
     &--black{ background-color: black };
   }
@@ -86,6 +89,7 @@ $red: #e60909;
     &--blue2 { border-color: $blue2 };
     &--grey { border-color: $grey };
     &--red { border-color: $red };
+    &--golden { border-color: $golden };
     &--white{ border-color: white };
     &--black{ border-color: black };
   }

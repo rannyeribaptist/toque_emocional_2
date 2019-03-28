@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   devise_for :readers, path: 'reader', controllers: {
-    sessions: 'reader/sessions',
-    registrations: 'reader/registrations'
+    sessions: 'readers/sessions',
+    registrations: 'readers/registrations',
+    passwords: 'readers/passwords'
   }
 
   devise_for :users, path: '', controllers: {

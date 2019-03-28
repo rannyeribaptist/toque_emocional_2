@@ -1,5 +1,0 @@
-<%# app/views/occurrencies/index.js.erb %>
-<% js = escape_javascript(
-  render(partial: 'occurrencies/list', locals: { occurrencies: @occurrencies })
-) %>
-$("#filterrific_results").html("<%= js %>");
