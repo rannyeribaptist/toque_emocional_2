@@ -30,6 +30,10 @@ Rails.application.routes.draw do
     end
     resources :phrases
     resources :guests, except: [:show]
+
+    resources :book_comments
+    resources :readers
+    resources :books
   end
 
   root to: "application#index"

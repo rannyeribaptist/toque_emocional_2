@@ -12,6 +12,8 @@
         %br
         %br
         = f.input :password_confirmation, required: false, input_html: { autocomplete: "new-password" }, label: "Confirmar Senha"
+        = f.input :sign_up_code, label: "Código de autenticação"
+        = f.input :school_id, as: :hidden, input_html: { value: "1" }
       .form-actions.advanced-inline
         = f.submit "Autenticar minha conta", class: "button button--green fancy-link--white"
       %br

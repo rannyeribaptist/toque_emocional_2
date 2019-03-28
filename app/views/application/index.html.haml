@@ -26,9 +26,13 @@
 
     .action__clean
       .columns.columns--small{style: "justify-content: center"}
-        .column--small--5
+        .column--small--3
           %a.fancy-link{:href => "/sign_in"} PLATAFORMA
-        .column--small--5
+        .column--small--3
+          %a.fancy-link{:href => "reader/sign_in"} LIVRO
+          -# TODO: Remove this link when going to production
+          = link_to "sair", destroy_reader_session_path, method: :delete if current_reader
+        .column--small--3
           %a.fancy-link{:href => "https://gestao.toqueemocional.com.br"} GESTÃO
 
 -# particles.js

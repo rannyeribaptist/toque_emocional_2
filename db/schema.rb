@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_27_223015) do
+ActiveRecord::Schema.define(version: 2019_03_28_015041) do
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 2019_03_27_223015) do
     t.string "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "school_id"
+    t.index ["school_id"], name: "index_books_on_school_id"
   end
 
   create_table "complements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -128,6 +130,7 @@ ActiveRecord::Schema.define(version: 2019_03_27_223015) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "avatar"
+    t.string "sign_up_code"
     t.index ["email"], name: "index_readers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_readers_on_reset_password_token", unique: true
     t.index ["school_id"], name: "index_readers_on_school_id"
@@ -183,6 +186,7 @@ ActiveRecord::Schema.define(version: 2019_03_27_223015) do
   add_foreign_key "appointments", "schools"
   add_foreign_key "book_comments", "books"
   add_foreign_key "book_comments", "guests"
+  add_foreign_key "books", "schools"
   add_foreign_key "complements", "books"
   add_foreign_key "guests", "books"
   add_foreign_key "occurrencies", "schools"

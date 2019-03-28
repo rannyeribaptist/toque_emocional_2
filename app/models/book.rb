@@ -3,12 +3,12 @@ class Book < ApplicationRecord
   has_many :guests, dependent: :destroy
   has_many :book_comments, dependent: :destroy
 
-  accepts_nested_attributes_for :complements, reject_if: :all_blank, allow_destroy: true
-  # accepts_nested_attributes_for :guests, reject_if: :all_blank, allow_destroy: true
-  # accepts_nested_attributes_for :book_comments, reject_if: :all_blank, allow_destroy: true
+  belongs_to :school
 
-  validates_presence_of :url, :name, :file
+  accepts_nested_attributes_for :complements, reject_if: :all_blank, allow_destroy: true
+
+  validates_presence_of :url, :name, :file, :school_id
   mount_uploader :file, ArchiveUploader
   validates_uniqueness_of :url
-  validates :url, format: { with: /\A[a-zA-Z0-9]+\Z/ }
+  validates :url, format: { with: /\A[a-zA-Z0-9\_]+\Z/ }
 end
