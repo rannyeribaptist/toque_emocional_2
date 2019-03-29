@@ -83,6 +83,25 @@ class ReadersController < ApplicationController
     end
   end
 
+  def validate_book_code
+  end
+
+  def add_book
+    if Guest.where(authenticated: false, code: params[:code]).present?
+      books = current_reader.book_list
+      guest = Guest.find_by_code(params[:code])
+      guest.authenticated = true
+
+      books.books += [guest.book_id]
+      books.save
+      guest.save
+
+      redirect_to "/livros", notice: "Sucesso!"
+    else
+      redirect_to validate_book_code_url, notice: "Este código é inválido!"
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_reader

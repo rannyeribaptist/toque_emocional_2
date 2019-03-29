@@ -2,8 +2,9 @@
   %tbody
     - current_reader.book_comments.each do |book_comment|
       - unless book_comment.id == nil
-        %tr.show{id: "show_comment_#{book_comment.id}"}
-          %td
-            %em= book_comment.comment          
-          %td
-            = link_to icon('fas', 'trash', class: "fancy-link fancy-link--white"), delete_book_comment_url(book_comment), method: :delete, data: { confirm: 'Tem certeza?' }, remote: :true
+        - if book.id == book_comment.book_id
+          %tr.show{id: "show_comment_#{book_comment.id}"}
+            %td
+              %em= book_comment.comment
+            %td
+              = link_to icon('fas', 'trash', class: "fancy-link fancy-link--white"), delete_book_comment_url(book_comment), method: :delete, data: { confirm: 'Tem certeza?' }, remote: :true

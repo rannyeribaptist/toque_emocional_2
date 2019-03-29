@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
     patch "/reader/update_book_comments/:id", to: "readers#update_book_comments", as: :edit_book_comment
     delete "/reader/update_book_comments/:id", to: "readers#delete_book_comments", as: :delete_book_comment
+    post "/livros/add/:code", to: "readers#add_book", as: :add_book
+    get "/validate_book_code", to: "readers#validate_book_code", as: :validate_book_code
   end
 
   authenticated :user do

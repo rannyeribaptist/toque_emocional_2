@@ -21,12 +21,14 @@
   %body
     = yield
 
-    -# %script{:crossorigin => "anonymous", :integrity => "sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA=", :src => "https://code.jquery.com/jquery-3.3.1.slim.js"}
+    = notice
 
     .plus
       .plus__content
+        = link_to 'Adicionar Livro', validate_book_code_path, class: "fancy-link fancy-link--white"
+        %br
         Perfil
-        %br        	
+        %br
         = link_to "Sair", destroy_reader_session_path, method: :delete, class: "fancy-link fancy-link--white"
       .plus__button
         %image{src: "https://icongr.am/clarity/plus.svg"}
@@ -52,5 +54,10 @@
           $(".plus__content").addClass("plus__content--active   animated fadeInUp");
         }
       });
+
+      setTimeout(function(){
+        $(".flash").removeClass("animated fadeInDown");
+        $(".flash").addClass("animated fadeOutUp");
+      }, 5000);
 
     = yield(:javascript)

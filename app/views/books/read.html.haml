@@ -38,19 +38,20 @@
 
         %div{style: "text-align: left"}
           - @book.complements.each do |c|
-            %h2= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--black"), c.file.to_s, class: "fancy-link fancy-link--black", target: "_blank"
+            %h3.subtitle.title--thin= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--white"), c.file.to_s, class: "fancy-link fancy-link--white", target: "_blank"
 
       .column.column--5
         %h1.title.title--thin.title--large Suas Anotações
 
         %br
 
-        = simple_form_for current_reader, :url => edit_book_comment_url(current_reader), defaults: { input_html: { class: "fancy-form__input", style: "background-color: transparent; border-color: white; color: white" } }, remote: true do |f|
+        = simple_form_for current_reader, :url => edit_book_comment_url(current_reader.id), defaults: { input_html: { class: "fancy-form__input", style: "background-color: transparent; border-color: white; color: white" } }, remote: true do |f|
           = f.simple_fields_for :book_comments, current_reader.book_comments.new do |g|
             = g.input :book_id, as: :hidden, input_html: { value: @book.id }
             .columns{style: "text-align: left"}
               .column.column--7
                 = g.input :comment, label: "Adicionar anotação", required: false
+                = g.input :book_id, as: :hidden, input_html: { value: @book.id }
               .column.column--3{style: "text-align: center"}
                 = g.submit "Salvar anotação", class: "button button--green fancy-link--white submit", disabled: "disabled", id: "submit"
 
@@ -58,7 +59,7 @@
         %br
 
         #comments.animated.fadeIn
-          = render "books/book_comments"
+          = render "books/book_comments", book: @book
 
 - content_for :javascript do
   :javascript
