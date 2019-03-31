@@ -59,7 +59,7 @@
         %br
 
         #comments.animated.fadeIn
-          = render "books/book_comments", book: @book
+          = render "books/book_comments", book: @book, current_reader: current_reader
 
 - content_for :javascript do
   :javascript

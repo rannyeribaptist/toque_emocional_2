@@ -1,6 +1,6 @@
 class ReadersController < ApplicationController
-  before_action :set_reader, only: [:show, :edit, :update, :destroy, :update_book_comments]
-  skip_before_action :verify_authenticity_token, only: [:update_book_comments]
+  before_action :set_reader, only: [:show, :edit, :update, :destroy]
+  before_action :set_reader_for_book_comments, only: [:update_book_comments]
 
   # GET /readers
   # GET /readers.json
@@ -68,18 +68,20 @@ class ReadersController < ApplicationController
   def update_book_comments
     respond_to do |format|
       if @reader.update(reader_params)
-        format.js { render 'books/update_comments', statu: :ok }
+        format.js { render 'books/update_comments', status: :ok, locals: {:book => @book} }
       else
-        format.js { render 'books/update_comments', statu: :unprocessable_entity }
+        format.js { render 'books/update_comments', status: :unprocessable_entity }
       end
     end
   end
 
   def delete_book_comments
-    @comment = BookComment.find(params[:id]).destroy
+    @comment = BookComment.find(params[:id])
+    @book = Book.find(@comment.book_id)
+    @comment.destroy
 
     respond_to do |format|
-      format.js { render 'books/update_comments', statu: :ok }
+      format.js { render 'books/update_comments', locals: {:book => @book} }
     end
   end
 
@@ -106,6 +108,11 @@ class ReadersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_reader
       @reader = Reader.find(params[:id])
+    end
+
+    def set_reader_for_book_comments
+      @reader = Reader.find(params[:id])
+      @book = Book.find(params[:reader][:book_comments_attributes]["0"][:book_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

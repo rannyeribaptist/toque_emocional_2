@@ -27,8 +27,6 @@
       .plus__content
         = link_to 'Adicionar Livro', validate_book_code_path, class: "fancy-link fancy-link--white"
         %br
-        Perfil
-        %br
         = link_to "Sair", destroy_reader_session_path, method: :delete, class: "fancy-link fancy-link--white"
       .plus__button
         %image{src: "https://icongr.am/clarity/plus.svg"}

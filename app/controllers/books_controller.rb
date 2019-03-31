@@ -24,6 +24,7 @@ class BooksController < ApplicationController
   def new
     @book = Book.new
     @book.complements.build
+    @book.book_comments.build
   end
 
   # GET /books/1/edit
