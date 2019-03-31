@@ -60,7 +60,7 @@
 }
 
 .nested-fields {
-  @include breakpoint('small-up') {    
+  @include breakpoint('small-up') {
     display: flex;
     flex-direction: row;
     align-items: center;

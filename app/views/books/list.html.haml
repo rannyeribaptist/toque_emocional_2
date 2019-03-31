@@ -1,11 +1,15 @@
 .section.section--grey{style: "min-height: 100vh"}
   .section__content
     = image_tag('logo-white.png', class: 'logo-default', style: "margin-bottom: 50px")
-    - @books.each_slice(3) do |books|
-      .columns{style: "margin-bottom: 30px"}
-        - books.each do |book|
-          .column.column--4
-            %a.fancy-link{:href => read_book_url(book.url)}
-              = image_tag(book.name + '-0.jpg', style: "width: 100%; max-width: 300px")
-              %br
-              %h3.title.title--thin.title--small= book.name.capitalize
+    - if not @books.empty?
+      - @books.each_slice(3) do |books|
+        .columns{style: "margin-bottom: 30px"}
+          - books.each do |book|
+            .column.column--4
+              %a.fancy-link{:href => read_book_url(book.url)}
+                = image_tag(book.name + '-0.jpg', style: "width: 100%; max-width: 300px")
+                %br
+                %h3.title.title--thin.title--white= book.name.capitalize
+
+    - else
+      %h1.title.title--thin.title--white Não há livros disponíveis para você neste momento...

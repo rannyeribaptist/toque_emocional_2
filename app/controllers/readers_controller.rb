@@ -1,5 +1,6 @@
 class ReadersController < ApplicationController
   before_action :set_reader, only: [:show, :edit, :update, :destroy]
+  before_action :set_reader_for_book_comments, only: [:update_book_comments]
 
   # GET /readers
   # GET /readers.json
@@ -15,6 +16,8 @@ class ReadersController < ApplicationController
   # GET /readers/new
   def new
     @reader = Reader.new
+    @reader.build_book_list
+    @reader.book_comments.build
   end
 
   # GET /readers/1/edit
@@ -57,7 +60,47 @@ class ReadersController < ApplicationController
     @reader.destroy
     respond_to do |format|
       format.html { redirect_to readers_url, notice: 'Reader was successfully destroyed.' }
+      format.js { render 'books/update_comments'}
       format.json { head :no_content }
+    end
+  end
+
+  def update_book_comments
+    respond_to do |format|
+      if @reader.update(reader_params)
+        format.js { render 'books/update_comments', status: :ok, locals: {:book => @book} }
+      else
+        format.js { render 'books/update_comments', status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def delete_book_comments
+    @comment = BookComment.find(params[:id])
+    @book = Book.find(@comment.book_id)
+    @comment.destroy
+
+    respond_to do |format|
+      format.js { render 'books/update_comments', locals: {:book => @book} }
+    end
+  end
+
+  def validate_book_code
+  end
+
+  def add_book
+    if Guest.where(authenticated: false, code: params[:code]).present?
+      books = current_reader.book_list
+      guest = Guest.find_by_code(params[:code])
+      guest.authenticated = true
+
+      books.books += [guest.book_id]
+      books.save
+      guest.save
+
+      redirect_to "/livros", notice: "Sucesso!"
+    else
+      redirect_to validate_book_code_url, notice: "Este código é inválido!"
     end
   end
 
@@ -67,8 +110,13 @@ class ReadersController < ApplicationController
       @reader = Reader.find(params[:id])
     end
 
+    def set_reader_for_book_comments
+      @reader = Reader.find(params[:id])
+      @book = Book.find(params[:reader][:book_comments_attributes]["0"][:book_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def reader_params
-      params.require(:reader).permit(:name, :classy, :groupy, :birthday, :school_id)
+      params.require(:reader).permit(:name, :classy, :groupy, :birthday, :school_id, :book_list_attributes => [:id, :books => []], :book_comments_attributes => [:id, :_destroy, :comment, :book_id])
     end
 end

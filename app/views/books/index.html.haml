@@ -9,6 +9,7 @@
         %table.table
           %thead
             %tr
+              %th{style: "width: 20px"}
               %th Link
               %th Nome
               %th
@@ -18,11 +19,13 @@
           %tbody
             - @books.each do |book|
               %tr
+                %td
+                  %div{style: "background-color: #{School.find_by_id(book.school_id).color}; width: 20px; height: 20px;"}
                 %td= book.url
                 %td= book.name
                 %td{style: "text-align: center"}= link_to icon('fas', 'eye', 'Ver', class: "fancy-link fancy-link--blue2"), book, class: "fancy-link fancy-link--blue2"
                 %td{style: "text-align: center"}= link_to icon('fas', 'pen ', 'Editar', class: "fancy-link fancy-link--green"), edit_book_path(book), class: "fancy-link fancy-link--green"
-                %td{style: "text-align: center"}= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), book, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"                
+                %td{style: "text-align: center"}= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), book, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
 
         %br
 

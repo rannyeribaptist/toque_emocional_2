@@ -1,0 +1,4 @@
+// # add new comment to end of comments section
+$("#comments").addClass("fadeIn");
+$('#reader_book_comments_attributes_0_comment')[0].value = '';
+$("#comments").html("<%= escape_javascript(render 'books/book_comments', book: book) %>");

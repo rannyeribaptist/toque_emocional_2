@@ -1,6 +1,5 @@
 class GuestsController < ApplicationController
-  # before_action :ensure_account_presence
-  before_action :set_guest, only: [:edit, :update, :destroy]
+  before_action :set_guest, only: [:destroy]
 
   layout "users"
 
@@ -75,10 +74,6 @@ class GuestsController < ApplicationController
     def set_guest
       @guest = Guest.find(params[:id])
       @book = Book.find_by_id(@guest.book_id)
-    end
-
-    def ensure_account_presence
-      # redirect_to :home if not current_user.present or not current_guest.present
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

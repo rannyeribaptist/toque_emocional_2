@@ -1,0 +1,8 @@
+%table.table.table--transparent
+  %tbody
+    - current_reader.book_comments.where(book_id: book.id).each do |book_comment|
+      %tr.show{id: "show_comment_#{book_comment.id}"}
+        %td
+          %em= book_comment.comment
+        %td
+          = link_to icon('fas', 'trash', class: "fancy-link fancy-link--white"), delete_book_comment_url(book_comment), method: :delete, data: { confirm: 'Tem certeza?' }, remote: :true
