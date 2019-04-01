@@ -10,6 +10,7 @@
 
     %label{for: "code", style: "color: white"} Código de validação
     %input.fancy-form__input#code{type: "text", style: "background-color: transparent; border-color: white", name: "code"}
+    = csrf_meta_tag
 
     = button_to 'Adicionar', {:controller => "readers", :action => "add_book", :code => ""}, :method => :post, class: "button button--green fancy-link--white"
 

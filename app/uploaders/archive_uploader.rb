@@ -13,7 +13,7 @@ class ArchiveUploader < CarrierWave::Uploader::Base
   def convert_to_png
     @pdf = Magick::ImageList.new(path) do
       self.quality = 100
-      self.density = 600
+      self.density = 400
     end
 
     @pdf.write("vendor/uploads/books/#{model.name}.jpg")
