@@ -11,12 +11,14 @@ class ArchiveUploader < CarrierWave::Uploader::Base
   process :convert_to_png
 
   def convert_to_png
-    @pdf = Magick::ImageList.new(path) do
-      self.quality = 100
-      self.density = 400
-    end
+    if not Dir.glob("vendor/uploads/books/#{model.name}-0.jpg").present?
+      @pdf = Magick::ImageList.new(path) do
+        self.quality = 75
+        self.density = 400
+      end
 
-    @pdf.write("vendor/uploads/books/#{model.name}.jpg")
+      @pdf.write("vendor/uploads/books/#{model.name}.jpg")
+    end
   end
 
   # Override the directory where uploaded files will be stored.
