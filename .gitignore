@@ -8,6 +8,7 @@
 /.bundle
 
 /vendor/bundle/
+/vendor/uploads/books/*
 
 # Ignore all logfiles and tempfiles.
 /log/*
