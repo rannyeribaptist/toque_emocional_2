@@ -1,9 +1,9 @@
 - if not comment.comment == nil
   - if comment.user_id == 1
     .card.card--with-shadow{style: "background-color: #ffec48a3; position: relative; margin-bottom: 20px;width: 800px;max-width: 100%;"}
-      %div.card--yellow.card--with-bg{style: "position: absolute; background-image: url(#{asset_path('logo.png')}); left: 0; top: 0; height: 100%; width: 100%; z-index: -1;"}
+      %div.card--yellow.card--with-bg{style: "position: absolute; left: 0; top: 0; height: 100%; width: 100%; z-index: -1;"}
       %div{id: "ac_#{comment.id}_s"}
-        %h1.subtitle.title--thin{style: "margin-bottom: 0"}= comment.name.capitalize
+        %h1.subtitle.title--thin{style: "margin-bottom: 0"}= comment.name
         %small Evolução
         %br
         %p= comment.comment
@@ -29,7 +29,7 @@
   - else
     .appointment-card{style: "border-left-color: #{comment.user.school.color}; position: relative; margin-bottom: 20px"}
       %div{id: "ac_#{comment.id}_s"}
-        %h3.title.title--small= comment.name.capitalize
+        %h3.title.title--small= comment.name
         %p= comment.comment
         %small{style: "text-transformation: italic; float: right"}= l(comment.created_at)[0...-9]
         %br

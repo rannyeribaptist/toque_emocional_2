@@ -5,8 +5,8 @@
       .columns.columns--small{style: "justify-content: center; align-items: center"}
         .column--small.collumn--small--4{style: "text-align: right; width: 40%"}
           %div
-            %h3.subtitle.title--thin= "Escola: " + @appointment.school.name.capitalize
-            %h3.subtitle.title--thin= "Aluno: " + @appointment.appointment_student.name.capitalize
+            %h3.subtitle.title--thin= "Instituição: " + @appointment.school.name
+            %h3.subtitle.title--thin= "Aluno: " + @appointment.appointment_student.name + ' - ' + @appointment.appointment_student.classy + ' ' + @appointment.appointment_student.groupy
         .column--small.collumn--small--2{style: "margin: 0 10px"}
           %hr.vertical
         .column--small.collumn--small--4{style: "text-align: left; width: 40%"}
@@ -25,30 +25,25 @@
         %hr
         %br
 
-        %strong Descrição do atendimento:
-        %p{style: "text-align: justify"}= @appointment.description.present? ? @appointment.description : 'Ainda não há uma descrição desse atendimento'
-
       - if is_admin?
         %br
 
-        %button.button.button--blue2.fancy-link--white{onclick: "$('.form').toggle()", "data-turbolinks" => "false"} Editar descrição do atendimento
-        .form{style: "display: none"}
-          %br
-          %br
-          = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-            = f.input :description, label: "Preencha a descrição do atendimento"
-            = f.submit "Enviar", class: "button button--blue2 fancy-link--white"
-
-        %br
-        %br
-
-        %button.button.button--green.fancy-link--white{onclick: "$('.form-2').toggle()", "data-turbolinks" => "false"} Fazer Fechamento do caso
-        .form-2{style: "display: none"}
-          %br
-          %br
-          = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-            = f.input :closing, label: "Preencha o Parecer final do atendimento"
-            = f.submit "Enviar", class: "button button--blue2 fancy-link--white"
+        - if @appointment.closing.present?
+          %button.button.button--green.fancy-link--white{onclick: "$('.form-2').toggle()", "data-turbolinks" => "false"} Editar Fechamento do caso
+          .form-2{style: "display: none"}
+            %br
+            %br
+            = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+              = f.input :closing, label: "Preencha o Parecer final do atendimento"
+              = f.submit "Enviar", class: "button button--blue2 fancy-link--white"
+        - else
+          %button.button.button--green.fancy-link--white{onclick: "$('.form-2').toggle()", "data-turbolinks" => "false"} Fazer Fechamento do caso
+          .form-2{style: "display: none"}
+            %br
+            %br
+            = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+              = f.input :closing, label: "Preencha o Parecer final do atendimento"
+              = f.submit "Enviar", class: "button button--blue2 fancy-link--white"
 
     .action
 
@@ -58,12 +53,12 @@
           %strong Parecer final do fechamento do caso:
           %p{style: "text-align: justify"}=@appointment.closing
 
-        %h2.title.title--thin Comentários e Evoluções do Caso
+        %h2.title.title--thin Comentários e evoluções do caso
 
         %br
 
       - else
-        %h2.title.title--thin Comentários e Evoluções do Caso
+        %h2.title.title--thin Comentários e evoluções do caso
 
         %br
 
