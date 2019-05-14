@@ -12,6 +12,16 @@
     %meta{:content => "https://toqueemocional.com.br/logo.png", :property => "og:image"}/
     %meta{:content => "Descubra como aumentar o desempenho escolar dos seus filhos, melhorando a sua Motivação e Comportamento.", :property => "og:description"}/
 
+    - if Rails.env.production?
+      / Etiqueta global do site (gtag.js) - Google Analytics
+      %script{:async => "", :src => "https://www.googletagmanager.com/gtag/js?id=UA-120672362-1"}
+      :javascript
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-120672362-1');
+
     = csrf_meta_tags
     = csp_meta_tag
 

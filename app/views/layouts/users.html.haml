@@ -26,6 +26,15 @@
       :javascript
         window.bugsnagClient = bugsnag('69fe4545ff921c7343569e5c98b810a4')
 
+      / Etiqueta global do site (gtag.js) - Google Analytics
+      %script{:async => "", :src => "https://www.googletagmanager.com/gtag/js?id=UA-120672362-1"}
+      :javascript
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-120672362-1');
+
     = stylesheet_link_tag    'theme', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
