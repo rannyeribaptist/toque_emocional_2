@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :add_document]
   before_action :authenticate_user!
 
   layout "users"
@@ -80,6 +80,21 @@ class StudentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to students_url, flash: {:info => 'Estudante Excluído'} }
       format.json { head :no_content }
+    end
+  end
+
+  # PATCH/PUT /students/1/add_document
+  def add_document
+    respond_to do |format|
+      if is_admin? || student_params[:school_id].to_s == current_user.school_id.to_s
+        if @student.update(student_params)
+          format.html { redirect_to @student, flash: {:success => 'Estudante atualizado'} }
+          format.json { render :show, status: :ok, location: @student }
+        else
+          format.html { redirect_to @student, flash: {:danger => 'Todos os campos precisam ser preenchidos corretamente, verifique se o tipo do arquivo enviado corresponde com os tipos de arquivos permitidos'} }
+          format.json { render json: @student.errors, status: :unprocessable_entity }
+        end
+      end
     end
   end
 

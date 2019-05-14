@@ -31,7 +31,7 @@
                     = simple_form_for @student, defaults: { input_html: { class: "fancy-form__input" } } do |student|
                       = student.simple_fields_for :student_documents, sd do |f|
                         = f.input :name, label: "Nome do documento"
-                        = f.input :file, label: "Arquivo (apenas arquivos em pdf, png, jpg ou jpeg)"
+                        = f.input :file, label: "Arquivo"
                         %br
                         = f.submit "Enviar", class: "button button--green fancy-link--white"
                   %div{id: "sd_#{sd.id}_d", style: "display: none"}
@@ -55,7 +55,7 @@
         %br
         %br
 
-        = simple_form_for @student, defaults: { input_html: { class: "fancy-form__input" } } do |student|
+        = simple_form_for @student, :url => add_document_path, :method => :post, defaults: { input_html: { class: "fancy-form__input" } } do |student|
           = student.simple_fields_for :student_documents, @student.student_documents.new do |f|
             = f.input :name, label: "Nome do documento"
             = f.input :file, label: "Arquivo (apenas arquivos em pdf, png, jpg ou jpeg)"

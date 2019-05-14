@@ -54,4 +54,6 @@ Rails.application.routes.draw do
   # book personalized routes
   get "/livro/:url", to: "books#read", as: :read_book
   get "/livros", to: "books#list", as: :books_list
+
+  post "/students/:id/add_document", to: "students#add_document", as: :add_document
 end
