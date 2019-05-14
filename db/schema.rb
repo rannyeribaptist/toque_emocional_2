@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_28_034847) do
+ActiveRecord::Schema.define(version: 2019_05_14_193325) do
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2019_03_28_034847) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "invisible"
     t.index ["appointment_id"], name: "index_appointment_comments_on_appointment_id"
     t.index ["user_id"], name: "index_appointment_comments_on_user_id"
   end
