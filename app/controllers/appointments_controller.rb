@@ -11,6 +11,7 @@ class AppointmentsController < ApplicationController
       Appointment,
       params[:filterrific],
       select_options: {
+        with_school_id: School.all.collect {|a| [a.name, a.id]},
         sorted_by: Appointment.options_for_sorted_by
       }
     ) or return

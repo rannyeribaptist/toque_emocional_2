@@ -12,6 +12,11 @@
               placeholder: 'Buscar palavras chave...' |
             )                                            |
 
+        - if is_admin?
+          %div
+            Escola
+            \#{f.select( :with_school_id, @filterrific.select_options[:with_school_id], { include_blank: 'Todas' }, class: "fancy-form__input fancy-form__select" )}
+
         %div
           Estudante
           \#{f.text_field( :student, class: "fancy-form__input fancy-form__select", placeholder: 'Nome do estudante' )}

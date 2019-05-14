@@ -17,6 +17,7 @@ class Appointment < ApplicationRecord
       :sorted_by,
       :student,
       :search_query,
+      :with_school_id,
       :date
     ]
   )
@@ -26,6 +27,7 @@ class Appointment < ApplicationRecord
     Appointment.joins(:appointment_student).where('name LIKE ?', "%#{query}%")
   }
 
+  scope :with_school_id, lambda { |school_id| where(:school_id => school_id) }
   scope :date, lambda { |query|
     Appointment.where('extract(month from appointment_date) = ?', query)
   }
