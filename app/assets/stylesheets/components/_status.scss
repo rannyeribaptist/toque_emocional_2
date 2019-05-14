@@ -1,0 +1,11 @@
+@import 'variables';
+
+.status {
+  padding: 5px;
+  color: white;
+  width: fit-content;
+  font-size: 13px;
+  font-weight: bold;
+
+  @include colors("background-color");
+}

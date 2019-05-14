@@ -7,6 +7,7 @@
           %th Estudante
           %th Motivo
           %th Data
+          %th Status
           %th
           %th
           %th
@@ -19,6 +20,16 @@
               %td= appointment.appointment_student.name
               %td= appointment.reason.first(100) + "..."
               %td= l(appointment.appointment_date)
+              %td
+                - if appointment.appointment_comments.any? && !appointment.closing.present?
+                  .status.status--blue2
+                    Em processo
+                - elsif appointment.closing.present?
+                  .status.status--green
+                    Encerrado
+                - else
+                  .status.status--dark-yellow
+                    Aberto
               %td{style: "text-align: center"}= link_to icon('fas', 'eye', 'Ver', class: "fancy-link fancy-link--blue2"), appointment, class: "fancy-link fancy-link--blue2"
               %td{style: "text-align: center"}= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_appointment_path(appointment), class: "fancy-link fancy-link--green"
               %td{style: "text-align: center"}= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), appointment, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
