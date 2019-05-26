@@ -51,6 +51,8 @@ class AppointmentsController < ApplicationController
         format.html { redirect_to @appointment, flash: {:success => 'Atendimento agendado'} }
         format.json { render :show, status: :created, location: @appointment }
       else
+        puts 'AAAAAAAAAAAAAAAAAAaa'
+        puts @appointment.errors.to_yaml
         format.html { render :new }
         format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end

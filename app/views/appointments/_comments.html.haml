@@ -7,7 +7,7 @@
           %h1.subtitle.title--thin{style: "margin-bottom: 0"}= comment.name
           %small Evolução
           %br
-          %p= comment.comment
+          %p= comment.comment.html_safe
           %br
           %small{style: "text-transformation: italic; float: right"}= l(comment.created_at)[0...-9]
           %br
@@ -16,7 +16,7 @@
           = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
             = f.simple_fields_for :appointment_comments, comment do |g|
               = g.input :name, label: "Nome completo"
-              = g.input :comment, label: "Comentário"
+              = g.input :comment, label: "Comentário", input_html: { class: "fancy-form__input formatable" }
               = g.submit "Enviar", class: "button button--green fancy-link--white"
 
         %div{id: "ac_#{comment.id}_d", style: "display: none"}
@@ -36,7 +36,7 @@
       .appointment-card{style: "border-left-color: #{comment.user.school.color}; position: relative; margin-bottom: 20px"}
         %div{id: "ac_#{comment.id}_s"}
           %h3.title.title--small= comment.name
-          %p= comment.comment
+          %p= comment.comment.html_safe
           %small{style: "text-transformation: italic; float: right"}= l(comment.created_at)[0...-9]
           %br
 
@@ -44,7 +44,7 @@
           = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
             = f.simple_fields_for :appointment_comments, comment do |g|
               = g.input :name, label: "Nome completo"
-              = g.input :comment, label: "Comentário"
+              = g.input :comment, label: "Comentário", input_html: { class: "fancy-form__input formatable" }
               = g.submit "Enviar", class: "button button--green fancy-link--white"
 
         %div{id: "ac_#{comment.id}_d", style: "display: none"}
@@ -58,6 +58,6 @@
               = link_to icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_path(@appointment, appointment: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "false" } } }), :method => :patch
             - else
               = link_to icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_path(@appointment, appointment: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "true" } } }), :method => :patch
-              
+
           %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 15px 40px", onclick: "$('#ac_#{comment.id}_s').toggle();$('#ac_#{comment.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--blue2")
           %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 15px", onclick: "if (confirm('Tem certeza que quer excluir esse comentário?')) { $('#delete_attribute_#{comment.id}').submit()};"}= icon('fas', 'trash', class: "fancy-link fancy-link--red")

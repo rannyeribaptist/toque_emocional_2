@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_14_193325) do
+ActiveRecord::Schema.define(version: 2019_05_26_005633) do
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.text "comment"
+    t.text "comment", limit: 4294967295
     t.bigint "appointment_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false

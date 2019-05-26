@@ -35,6 +35,18 @@
 
         gtag('config', 'UA-120672362-1');
 
+    -# Tiny.cloud API Key
+    %script{:src => "https://cloud.tinymce.com/5/tinymce.min.js?apiKey=la5crl899wu2ts6q2xcd82yob6ousrg163t4as4lt51so7xl"}
+    :javascript
+      tinymce.init({
+         selector: '.formatable',
+         plugins: 'a11ychecker advcode casechange formatpainter linkchecker lists checklist media mediaembed pageembed permanentpen powerpaste tinycomments tinydrive tinymcespellchecker',
+         toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter insertfile pageembed permanentpen',
+         toolbar_drawer: 'floating',
+         tinycomments_mode: 'embedded',
+         tinycomments_author: 'Lillyan'
+      });
+
     = stylesheet_link_tag    'theme', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
