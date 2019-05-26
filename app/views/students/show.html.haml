@@ -6,7 +6,7 @@
 
       .inline
         %h3.subtitle.title--thin= @student.school.name.capitalize
-        %h3.subtitle.title--thin{style: "margin-left: 30px"}= "Série/Turma: " + @student.classy + @student.groupy
+        %h3.subtitle.title--thin{style: "margin-left: 30px"}= "Série/Turma: " + @student.classy + ' ' + @student.groupy
 
       = link_to 'Editar', edit_student_path(@student), class: "fancy-link fancy-link--blue2"
 

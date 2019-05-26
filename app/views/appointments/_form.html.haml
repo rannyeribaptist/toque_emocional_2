@@ -13,7 +13,7 @@
       .column.column--small.column--small--4{style: "margin-right: 15px"}
         = g.input :name, label: "Nome completo", :url => autocomplete_student_name_appointments_path, :as => :autocomplete, :update_elements => {:classy => '.cid', :groupy => '.gid'}
       .column.column--small.column--small--2{style: "margin-right: 15px"}
-        = g.input :classy, label: "Ano", input_html: { class: "cid fancy-form__input" }
+        = g.input :classy, label: "Ano", input_html: { class: "cid fancy-form__input" }, as: :select, collection: classies()
       .column.column--small.column--small--4
         = g.input :groupy, label: "Turma", input_html: { class: "gid fancy-form__input" }
         -# = g.input :student_id, as: :hidden, input_html: { class: "sid" }

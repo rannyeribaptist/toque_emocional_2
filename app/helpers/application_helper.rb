@@ -67,6 +67,23 @@ module ApplicationHelper
     ]
   end
 
+  def classies
+    [
+      ["1º Ano - Fundamental 1", "1º Ano - Fundamental 1"],
+      ["2º Ano - Fundamental 1", "2º Ano - Fundamental 1"],
+      ["3º Ano - Fundamental 1", "3º Ano - Fundamental 1"],
+      ["4º Ano - Fundamental 1", "4º Ano - Fundamental 1"],
+      ["5º Ano - Fundamental 1", "5º Ano - Fundamental 1"],
+      ["6º Ano - Fundamental 2", "6º Ano - Fundamental 2"],
+      ["7º Ano - Fundamental 2", "7º Ano - Fundamental 2"],
+      ["8º Ano - Fundamental 2", "8º Ano - Fundamental 2"],
+      ["9º Ano - Fundamental 2", "9º Ano - Fundamental 2"],
+      ["1º Ano - Médio", "1º Ano - Médio"],
+      ["2º Ano - Médio", "2º Ano - Médio"],
+      ["3º Ano - Médio", "3º Ano - Médio"]
+    ]
+  end
+
   def human_boolean(boolean)
     boolean ? 'Sim' : 'Não'
   end

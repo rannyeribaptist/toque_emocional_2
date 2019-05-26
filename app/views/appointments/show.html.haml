@@ -5,13 +5,13 @@
       .columns.columns--small{style: "justify-content: center; align-items: center"}
         .column--small.collumn--small--4{style: "text-align: right; width: 40%"}
           %div
-            %h3.subtitle.title--thin= "Instituição: " + @appointment.school.name
-            %h3.subtitle.title--thin= "Aluno: " + @appointment.appointment_student.name + ' - ' + @appointment.appointment_student.classy + ' ' + @appointment.appointment_student.groupy
+            %h3.subtitle.title--thin= "Aluno: " + @appointment.appointment_student.name
+            %h3.subtitle.title--thin= "Série/Turma: " + @appointment.appointment_student.classy + ' ' + @appointment.appointment_student.groupy
         .column--small.collumn--small--2{style: "margin: 0 10px"}
           %hr.vertical
         .column--small.collumn--small--4{style: "text-align: left; width: 40%"}
-          %h3.subtitle.title--thin Data do atendimento:
-          %h3.subtitle.title--thin= l(@appointment.appointment_date) + " às " + @appointment.appointment_time
+          %h3.subtitle.title--thin= "Instituição: " + @appointment.school.name
+          %h3.subtitle.title--thin= " Data do atendimento:" + l(@appointment.appointment_date) + " às " + @appointment.appointment_time
 
       %br
       %br
