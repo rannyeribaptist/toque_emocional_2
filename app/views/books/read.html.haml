@@ -2,30 +2,33 @@
   .section__content
     %h1.title.title--thin.title--white.title--large= @book.name.capitalize
 
-- @pages.times do |i|
-  - if i == 0
-    .slide.slide--grey.slide--active{id: "#{i}", style: "padding: 2% 0; text-align: center; height: auto"}
-      .protection
-        .protection__layer
-        .content
-          = image_tag(@book.name + '-' + i.to_s + '.jpg', style: "width: 96%; max-width: 700px")
+  - @pages.times do |i|
+    - if i == 0
+      .slide.slide--grey.slide--active{id: "#{i}", style: "padding: 2% 0; text-align: center; height: auto"}
+        .protection
+          .protection__layer
+          .content
+            = image_tag(@book.name + '-' + i.to_s + '.jpg', style: "width: 96%; max-width: 700px")
 
-      %div{style: "padding: 0 2%; display: flex; justify-content: center; position: relative"}
-        .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "position: absolute; z-index: 9999"} PRÓXIMO
-        %br
+        %div{style: "padding: 0 2%; display: flex; justify-content: center; position: relative"}
+          .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "position: absolute; z-index: 9999"} PRÓXIMO
+          %br
 
-  - else
-    .slide.slide--grey{id: "#{i}", style: "padding: 5% 0; text-align: center; height: auto"}
-      .protection
-        .protection__layer
-        .content
-          = image_tag(@book.name + '-' + i.to_s + '.jpg', style: "width: 96%; max-width: 700px")
+    - else
+      .slide.slide--grey{id: "#{i}", style: "padding: 5% 0; text-align: center; height: auto"}
+        .protection
+          .protection__layer
+          .content
+            = image_tag(@book.name + '-' + i.to_s + '.jpg', style: "width: 96%; max-width: 700px")
 
-      %div{style: "padding: 0 2%; display: flex; flex-direction: colum; justify-content: center; position: relative"}
-        %div{style: "position: absolute; z-index: 9999; margin-top: 2%"}
-          .button.button--black.fancy-link--white.next-slide{href: "#", "data-target" => "#{i-1}", "data-turbolinks" => "false", style: "display: inline"} ANTERIOR
-          - if not i == (@pages.to_i - 1)
-            .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "display: inline"} PRÓXIMO
+        %div{style: "padding: 0 2%; display: flex; flex-direction: colum; justify-content: center; position: relative"}
+          %div{style: "position: absolute; z-index: 9999; margin-top: 2%"}
+            .button.button--black.fancy-link--white.next-slide{href: "#", "data-target" => "#{i-1}", "data-turbolinks" => "false", style: "display: inline"} ANTERIOR
+            - if not i == (@pages.to_i - 1)
+              .button.button--blue2.next-slide{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false", style: "display: inline"} PRÓXIMO
+
+  .percent-bar.percent-bar--grey
+    .percent-bar--inner.percent-bar--inner--green#percent
 
 .section.section--golden{style: "color: white"}
   .section__content
@@ -66,6 +69,8 @@
     $('.next-slide').click(function(){
       let element = $('#' + $(this).attr('data-target'));
 
+      updateBookPercentage($(this).attr('data-target'));
+
       $('.slide--active').removeClass('animated fadeIn slide--active');
       element.addClass('animated fadeIn slide--active');
     });
@@ -86,3 +91,17 @@
       $('#show_comment_' + comment_id).toggle();
       $('#edit_comment_' + comment_id).toggle();
     };
+
+    function updateBookPercentage(number) {
+      var current_page = (parseInt(number) + 1) * 100;
+      var total_pages = "#{@pages}";
+      var percent = String(current_page / total_pages) + "%";
+
+      console.log(document.getElementById('percent'));
+      console.log(percent);
+      document.getElementById('percent').style.width = percent;
+    }
+
+    $(document).ready(function() {
+      updateBookPercentage(0);
+    })

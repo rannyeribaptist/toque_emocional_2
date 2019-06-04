@@ -1,0 +1,12 @@
+@import "variables";
+
+.percent-bar {
+  @include colors("background-color");
+
+  &--inner {
+    height: 15px;
+    width: 2px;
+
+    @include colors("background-color");
+  }
+}
