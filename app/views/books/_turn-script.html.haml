@@ -1,0 +1,22 @@
+= javascript_include_tag "turn.min.js"
+= javascript_include_tag "jquery-ui-1.8.20.custom.min"
+= javascript_include_tag "modernizr.2.5.3.min"
+= javascript_include_tag "hash"
+
+:javascript
+  if (mobilecheck()) {
+    $("#flipbook").turn({
+      width: "100%",
+      height: "100vw",
+      autoCenter: true,
+      display: "single"
+    });
+  } else {
+    $("#flipbook").turn({
+      autoCenter: true
+    });
+  }
+
+  $("#flipbook").bind("turned", function(event, page, view) {
+    updateBookPercentage(page);
+  });

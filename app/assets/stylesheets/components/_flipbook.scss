@@ -1,0 +1,27 @@
+@import "variables";
+
+#flipbook{
+  width: 100%;
+  height: calc(100vw / 1.5);
+
+  -webkit-transition:margin-left 0.2s ease-in-out;
+  -moz-transition:margin-left 0.2s ease-in-out;
+  -o-transition:margin-left 0.2s ease-in-out;
+  -ms-transition:margin-left 0.2s ease-in-out;
+  transition:margin-left 0.2s ease-in-out;
+
+  .page-wrapper {
+     -webkit-perspective:2000px;
+     -moz-perspective: 2000px;
+     -ms-perspective: 2000px;
+     perspective: 2000px;
+  }
+
+  .shadow, #flipbook.shadow{
+    -webkit-box-shadow: 0 4px 10px #666;
+    -moz-box-shadow: 0 4px 10px #666;
+    -ms-box-shadow: 0 4px 10px #666;
+    -o-box-shadow: 0 4px 10px #666;
+    box-shadow: 0 4px 10px #666;
+  }
+}

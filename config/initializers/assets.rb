@@ -15,6 +15,21 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 Rails.application.config.assets.precompile += %w(
                                                 theme.scss
+
+                                                turn.js
+                                                turn.min.js
+                                                turn.html4.js
+                                                turn.html4.min.js
+                                                hash.js
+                                                scissor.js
+                                                scissor.min.js
+                                                zoom.js
+                                                zoom.min.js
+
+                                                jgestures.min.js
+                                                jquery-ui-1.8.20.custom.min.js
+                                                jquery.mousewheel.min.js
+                                                modernizr.2.5.3.min.js
                                                 )
 
 Rails.application.config.assets.precompile += %w(
