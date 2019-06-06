@@ -11,7 +11,7 @@
     = f.input :school_id, label: "Escola", as: :hidden, input_html: { value: School.find_by_id(current_user.school.id).id }
 
   = f.input :name, label: "Nome"
-  = f.input :classy, label: "Ano/Série", as: :select, collection: classies()
+  = f.input :classy, label: "Ano/Série", as: :select, collection: Classy.all.collect {|p| [ p.name, p.name ] }
   = f.input :groupy, label: "Turma"
 
   = f.submit "Salvar", class: "button button--green fancy-link--white"

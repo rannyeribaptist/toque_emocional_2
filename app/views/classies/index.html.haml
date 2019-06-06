@@ -1,0 +1,40 @@
+.animated.fadeIn
+  .section
+    .section__content
+
+      %h1.title.title--thin Turmas
+
+      %table.table
+        %thead
+          %tr
+            %th Nome da Turma
+            %th
+            %th
+
+        %tbody
+          - @classies.each do |classy|
+            %tr
+              %td{id: "show_#{classy.id}"}= classy.name
+              %td{id: "edit_#{classy.id}", style: "display: none"}
+                = simple_form_for(classy, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form", style: "display: flex;flex-direction: row;justify-content: space-around;align-items: center;" }) do |f|
+                  = f.input :name, label: "Nome da classe"
+
+                  = f.submit "Salvar classe", class: "button button--green fancy-link--white"
+              %td
+                %a.fancy-link.fancy-link--green{"data-turbolinks" => "disabled", onclick: "$('#edit_#{classy.id}').toggle();$('#show_#{classy.id}').toggle()", style: "cursor: pointer"}= icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green")
+              %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), classy, method: :delete, data: { confirm: 'Tem certeza?' }, class: "fancy-link fancy-link--red"
+
+        %br
+
+
+  .section
+    .section__content
+      %h3.title.title--thin Nova turma
+
+      .action{style: "text-align: left"}
+        = simple_form_for(@classy, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.error_notification
+          = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+          = f.input :name, label: "Nome da classe"
+
+          = f.submit "Salvar classe", class: "button button--green fancy-link--white"

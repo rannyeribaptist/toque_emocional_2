@@ -98,6 +98,8 @@
             - if is_admin?
               = link_to "Frases", phrases_path, class: "fancy-link"
               %br
+              = link_to "Turmas", classies_url, class: "fancy-link"
+              %br              	
             = link_to "Sair", destroy_user_session_path, method: :delete, class: "fancy-link"
           .plus__button
             %image{src: "https://icongr.am/clarity/plus.svg"}

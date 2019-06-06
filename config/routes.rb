@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     end
     resources :phrases
     resources :guests, except: [:show]
+    resources :classies
 
     resources :readers
     resources :books
