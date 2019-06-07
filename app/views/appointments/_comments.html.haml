@@ -1,5 +1,5 @@
-- if not comment.comment == nil
-  - if comment.invisible == false or is_admin?
+- if not comment.comment == nil # this avoids the database to return a ghost register
+  - if (comment.invisible and is_admin?) or not comment.invisible # this checks if the comment is not marked as hidden and shows to the admin even if it is
     - if comment.user_id == 1
       .card.card--with-shadow{style: "background-color: #ffec48a3; position: relative; margin-bottom: 20px;width: 800px;max-width: 100%;"}
         %div.card--yellow.card--with-bg{style: "position: absolute; left: 0; top: 0; height: 100%; width: 100%; z-index: -1;"}
