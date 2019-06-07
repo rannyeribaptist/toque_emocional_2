@@ -2,6 +2,8 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_reader!, only: [:read, :list]
 
+  protect_from_forgery except: [:update_current_page]
+
   layout "users"
 
   # GET /books
@@ -81,12 +83,29 @@ class BooksController < ApplicationController
   def read
     @book = Book.find_by_url(params[:url])
 
+    @current_page = current_page(@book.id)
+
+    puts "CURRENT PAGE OF THIS BOOK IS: " + @current_page
+
     if @book == nil
       redirect_to "/404"
     else
       @pages = Dir.glob("vendor/uploads/books/#{@book.name}-*").count
+      @current_page
 
       render layout: "book"
+    end
+  end
+
+  def update_current_page
+    @page_saver = ReaderBookPageSaver.find_or_create_by(book_id: params[:book_id], reader_id: params[:reader_id])
+    @page_saver.current_page = params[:current_page]
+    respond_to do |format|
+      if @page_saver.save
+        format.json { render json: @page_saver, status: :created }
+      else
+        format.json { render json: @page_saver.errors, status: :unprocessable_entity}
+      end
     end
   end
 

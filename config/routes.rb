@@ -57,4 +57,5 @@ Rails.application.routes.draw do
   get "/livros", to: "books#list", as: :books_list
 
   post "/students/:id/add_document", to: "students#add_document", as: :add_document
+  post "/update_book_page_saver", to: "books#update_current_page"
 end

@@ -7,6 +7,7 @@ class Reader < ApplicationRecord
   belongs_to :school
   has_one :book_list, dependent: :destroy
   has_many :book_comments, dependent: :destroy
+  has_many :reader_book_page_savers
 
   accepts_nested_attributes_for :book_list, allow_destroy: false
   accepts_nested_attributes_for :book_comments, allow_destroy: true, reject_if: :all_blank

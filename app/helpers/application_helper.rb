@@ -74,4 +74,9 @@ module ApplicationHelper
   def validate_permission
     redirect_to "/" if not is_admin?
   end
+
+  def current_page(book_id)
+    saver = ReaderBookPageSaver.find_or_create_by(reader_id: current_reader.id, book_id: book_id)
+    return saver.current_page.nil? ? "0" : saver.current_page
+  end
 end

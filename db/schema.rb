@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_06_172723) do
+ActiveRecord::Schema.define(version: 2019_06_07_183856) do
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -131,6 +131,16 @@ ActiveRecord::Schema.define(version: 2019_06_06_172723) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reader_book_page_savers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reader_id"
+    t.bigint "book_id"
+    t.string "current_page"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_reader_book_page_savers_on_book_id"
+    t.index ["reader_id"], name: "index_reader_book_page_savers_on_reader_id"
+  end
+
   create_table "readers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "classy"
@@ -208,6 +218,7 @@ ActiveRecord::Schema.define(version: 2019_06_06_172723) do
   add_foreign_key "occurrencies", "schools"
   add_foreign_key "occurrency_students", "occurrencies"
   add_foreign_key "occurrency_students", "students"
+  add_foreign_key "reader_book_page_savers", "readers"
   add_foreign_key "readers", "schools"
   add_foreign_key "student_documents", "students"
   add_foreign_key "students", "schools"

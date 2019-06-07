@@ -4,6 +4,10 @@
 = javascript_include_tag "hash"
 
 :javascript
+  $(document).ready(function() {
+    $("#flipbook").turn("page", "#{@current_page}");
+  });
+
   if (mobilecheck()) {
     $("#flipbook").turn({
       width: "100%",
@@ -19,4 +23,11 @@
 
   $("#flipbook").bind("turned", function(event, page, view) {
     updateBookPercentage(page);
+
+    $.ajax({
+      type: "POST",
+      url: "/update_book_page_saver",
+      data: { book_id: "#{@book.id}", reader_id: "#{current_reader.id}", current_page: page }
+      // success: function(data) { console.log(data); }
+    });
   });
