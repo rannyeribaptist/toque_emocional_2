@@ -1,0 +1,47 @@
+- if not appointments.empty?
+  .table{style: "height: 400px;overflow: scroll;"}
+    %table.table
+      %thead
+        %tr
+          %th{style: "width: 20px"}
+          %th Estudante
+          %th Série/ano
+          %th Turma
+          %th Motivo
+          %th Data
+          %th Status
+          %th
+          %th
+      %tbody#list
+        - appointments.each do |appointment|
+          %tr{id: "#{appointment.id}", class: "appointment #{ 'ongoing' if (appointment.appointment_comments.any? && !appointment.closing.present?)}#{ 'done' if appointment.closing.present?}#{ 'open' if not (appointment.appointment_comments.any?) and not (appointment.closing.present?) }"}
+            %td
+              %div{style: "background-color: #{appointment.school.color}; width: 20px; height: 20px;"}
+            %td= appointment.appointment_student.name
+            %td= appointment.appointment_student.classy
+            %td= appointment.appointment_student.groupy
+            %td= appointment.reason.first(100) + "..."
+            %td= l(appointment.appointment_date)
+            %td
+              - if appointment.appointment_comments.any? && !appointment.closing.present?
+                .status.status--blue2
+                  Em processo
+              - elsif appointment.closing.present?
+                .status.status--green
+                  Encerrado
+              - else
+                .status.status--dark-yellow
+                  Aberto
+            %td.add-button{style: "text-align: center"}
+              %text.fancy-link.fancy-link--green{style: "cursor: pointer", onclick: "addAppointment('#{appointment.id}')"}= icon('fas', 'plus', 'Adicionar', class: "fancy-link fancy-link--green")
+            %td{style: "text-align: center"}
+              %text.fancy-link.fancy-link--red{style: "cursor: pointer", onclick: "removeSelected('#{appointment.id}');$(this).closest('tr').remove()"}= icon('fas', 'times', 'Remover', class: "fancy-link fancy-link--red")
+
+  %br
+  %button.button.button--green.fancy-link.fancy-link--white{onclick: "addAllAppointments()"} Adicionar todos
+
+- else
+  %br
+  %br
+  = image_tag('brain.png', class: "logo-default logo-default--small")
+  %h1.title.title--grey Não há nada disso por aqui...

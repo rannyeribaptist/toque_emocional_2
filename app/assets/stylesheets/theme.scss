@@ -30,6 +30,7 @@
 @import "components/status";
 @import "components/percent-bar";
 @import "components/flipbook";
+@import "components/modal";
 
 body {
   margin: 0;
@@ -203,4 +204,11 @@ body {
 
 .tox {
   margin: 25px 0;
+}
+
+.filter-divider {
+  @include breakpoint("medium") {
+    display: flex;
+    justify-content: space-between;
+  }
 }

@@ -1,0 +1,142 @@
+.animated.fadeIn
+  .section
+    .section__content
+      %h1 Relatório de Atendimentos
+
+      %div{style: "text-align: left"}
+        %h3 Atendimentos Selecionados
+
+        .table
+          %table.table
+            %thead
+              %tr
+                %th{style: "width: 20px"}
+                %th Estudante
+                %th Série/ano
+                %th Turma
+                %th Motivo
+                %th Data
+                %th Status
+                %th
+            %tbody#selected
+
+
+        %div#start{style: "text-align: center"}
+          %br
+          %br
+          = image_tag('brain.png', class: "logo-default logo-default--small")
+          %h1.title.title--grey Ainda não há atendimentos selecionados
+
+
+      %br
+      %button.button.button--blue2.fancy-link.fancy-link--white{onclick: "$('#modal').addClass('modal--active')"} Adicionar Atendimentos
+      = link_to "Próximo", print_appointments_relatory_path(ids: ""), class: "button button--green fancy-link fancy-link--white", id: "next-button", style: "display: none"
+
+
+- content_for :modal do
+  .modal#modal
+    = icon('fas', 'times', onclick: "$('#modal').removeClass('modal--active')", class: "modal__close")
+    .modal__inner.animated
+      = form_for_filterrific @filterrific, html: { class: "fancy-form" }, remote: true do |f|
+        %div.filter-divider
+          %div
+            Buscar por palavra chave
+            = f.text_field(                                |
+                :search_query,                             |
+                class: 'filterrific-periodically-observed fancy-form__input', |
+                placeholder: 'Buscar palavras chave...' |
+              )                                            |
+
+          %div
+            Escola
+            \#{f.select( :with_school_id, @filterrific.select_options[:with_school_id], { include_blank: 'Todas' }, class: "filterrific-periodically-observed fancy-form__input fancy-form__select" )}
+          %div
+            Estudante
+            \#{f.text_field( :student, class: "filterrific-periodically-observed fancy-form__input fancy-form__select", placeholder: 'Nome do estudante' )}
+          %div
+            Série/ano
+            \#{f.select( :classy, Classy.all.map{|a| a.name}, { include_blank: 'Série/ano' }, class: "filterrific-periodically-observed fancy-form__input fancy-form__select" )}
+          %div
+            Turma
+            \#{f.text_field( :groupy, class: "filterrific-periodically-observed fancy-form__input fancy-form__select", placeholder: 'Ano' )}
+        %div.filter-divider
+          %div
+            Data a partir de
+            = f.date_field( :date_min, class: "filterrific-periodically-observed fancy-form__input fancy-form__select"  )
+          %div
+            Até a data
+            = f.date_field( :date_max, class: "filterrific-periodically-observed fancy-form__input fancy-form__select"  )
+          %div
+            Status
+            %select#with_status.fancy-form__input.fancy-form__select
+              %option{:value => "all"} Todos
+              %option{:value => "open"} Aberto
+              %option{:value => "ongoing"} Em processo
+              %option{:value => "done"} Encerrado
+          %div
+            Organizar por
+            = f.select( :sorted_by, @filterrific.select_options[:sorted_by], input_html: {class: "filterrific-periodically-observed"} )
+
+      = render_filterrific_spinner
+
+      #filterrific_results
+        = render(                           |
+            partial: 'relatories/appointments_list',       |
+            locals: { appointments: @appointments } |
+          )                                 |
+
+
+- content_for :javascript do
+  :javascript
+    var selected = [];
+
+    $(document).ajaxComplete(function() {
+      var status = $('#with_status').children("option:selected").attr('value');
+
+      if (status == "open") {
+        $('.done').remove();
+        $('.ongoing').remove();
+      } else if (status == "ongoing") {
+        $('.open').remove();
+        $('.done').remove();
+      } else  if (status == "done") {
+        $('.open').remove();
+        $('.ongoing').remove();
+      }
+
+      $.each(selected, function(key, value) {
+        if ($('#' + value)[0] !== undefined) {
+          $('#' + value).remove();
+        }
+      })
+    });
+
+    function addAppointment(id) {
+      selected = updateList(selected, id);
+
+      updateLink();
+      sendAppointment(id);
+    }
+
+    function addAllAppointments() {
+      $('#list').children('.appointment').each(function() {
+        var id = $(this)[0].id;
+        selected = updateList(selected, id);
+
+        updateLink();
+        sendAppointment(id);
+      });
+    }
+
+    function removeSelected(id) {
+      selected = jQuery.grep(selected, function(value) {
+        return value != id;
+      });
+
+      if (selected.length == 0) {
+        $('#start')[0].style.display = "block";
+        $('#next-button')[0].style.display = "none";
+      }
+
+      updateLink();
+    }

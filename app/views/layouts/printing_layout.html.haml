@@ -17,12 +17,16 @@
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
 
     = stylesheet_link_tag    'theme', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag    'print', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+    -# Tiny.cloud API Key
+    %script{:src => "https://cloud.tinymce.com/5/tinymce.min.js?apiKey=la5crl899wu2ts6q2xcd82yob6ousrg163t4as4lt51so7xl"}
 
   %body
     .section
       .section__content
-        = link_to icon('fas', 'arrow-left', "Voltar"), :back, class: "fancy-link", style: "float: left"
+        = link_to icon('fas', 'arrow-left', "Voltar"), :back, class: "fancy-link no-print", style: "float: left"
 
         %div{style: "margin-top: 50px"}
 

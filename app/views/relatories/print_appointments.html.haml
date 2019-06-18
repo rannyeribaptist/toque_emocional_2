@@ -1,0 +1,118 @@
+.print-only
+  = image_tag("logo.png", class: "bg");
+
+
+.cont
+  = image_tag("logo.png", class: "logo-default");
+  .relatory-header
+    .relatory-header__inner
+      %h1.title.title--thin Relatório de Atendimentos
+
+      %strong Preenchido por:
+      %input{type: "text"}
+
+      %br
+
+      %strong Data:
+      %input{type: "text"}
+
+      %br
+
+      %strong Local:
+      %input{type: "text"}
+
+      .print-only
+        %br
+        %br
+        #content
+
+      .no-print
+        .formatable
+        %button.button.button--blue2.fancy-link--white Terminei de escrever!
+
+
+  - if not @appointments.empty?
+    - @appointments.each do |appointment|
+      .card.card--light-grey{style: "text-align: left;page-break-inside: avoid;position: relative", id: "appointment_#{appointment.id}"}
+        %br
+
+        %a.fancy-link.show{style: "display: none", onclick: "setVisible(appointment_#{appointment.id},'visible')"}= icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
+        %a.fancy-link.hide{style: "display: unset", onclick: "setVisible(appointment_#{appointment.id},'invisible')"}= icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
+        %h3.subtitle{style: "margin-top: 0; display: inline-block"} Informações do Atendimento
+        - if appointment.appointment_comments.any? && !appointment.closing.present?
+          .status.status--blue2{style: "float: right; display: inline-block"}
+            Em processo
+        - elsif appointment.closing.present?
+          .status.status--green{style: "float: right; display: inline-block"}
+            Encerrado
+        - else
+          .status.status--dark-yellow{style: "float: right; display: inline-block"}
+            Aberto
+
+        %br
+
+        = 'Estudante: ' + appointment.appointment_student.name
+        %br
+        = 'Série: ' + appointment.appointment_student.classy
+        %br
+        = 'Turma: ' + appointment.appointment_student.groupy
+        %br
+        = 'Data do atendimento: ' + l(appointment.appointment_date)
+        %br
+        %br
+        = 'Motivo do encaminhamento: ' + appointment.reason
+
+        %br
+
+        %h3.subtitle Evoluções e comentários
+
+        - appointment.appointment_comments.each do |comment|
+          = render 'relatories/appointment_comments', comment: comment
+
+    %br
+    %button.button.button--green.fancy-link.fancy-link--white.no-print{onclick: "window.print();"}= icon('fas', 'print', 'Imprimir')
+    %br
+    %br
+    %br
+    %br    	
+
+  - else
+    %br
+    %br
+    = image_tag('brain.png', class: "logo-default logo-default--small")
+    %h1.title.title--grey Não há nada disso por aqui...
+
+:javascript
+  tinymce.init({
+     selector: '.formatable',
+     plugins: 'a11ychecker advcode casechange formatpainter linkchecker lists checklist media mediaembed pageembed permanentpen powerpaste tinycomments tinydrive tinymcespellchecker',
+     toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter insertfile pageembed permanentpen',
+     toolbar_drawer: 'floating',
+     tinycomments_mode: 'embedded',
+     tinycomments_author: 'Lillyan',
+     mode: 'specific_textareas',
+     init_instance_callback: function (editor) {
+       editor.on('KeyUp', function (e) {
+         // Get the HTML contents of the currently active editor
+         console.debug(tinyMCE.activeEditor.getContent());
+         //method2 getting the content by id of a particular textarea
+         var content = tinyMCE.activeEditor.getContent();
+         $('#content').empty();
+         $('#content').append(content);
+       });
+     }
+  });
+
+  function setVisible(element, op) {
+    if (op === "visible") {
+      $(element).removeClass('no-print');
+
+      $(element).find('.show')[0].style.display = 'none';
+      $(element).find('.hide')[0].style.display = 'unset';
+    } else {
+      $(element).addClass('no-print');
+
+      $(element).find('.show')[0].style.display = 'unset';
+      $(element).find('.hide')[0].style.display = 'none';
+    }
+  }

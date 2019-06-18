@@ -24,19 +24,20 @@ Rails.application.routes.draw do
 
   authenticated :user do
     root to: "application#dashboard"
+
     resources :appointments do
       get :autocomplete_student_name, :on => :collection
     end
-    resources :students
-    resources :users
-    resources :schools
     resources :occurrencies do
       get :autocomplete_student_name, :on => :collection
     end
+
+    resources :students
+    resources :users
+    resources :schools
     resources :phrases
     resources :guests, except: [:show]
     resources :classies
-
     resources :readers
     resources :books
   end
@@ -58,4 +59,9 @@ Rails.application.routes.draw do
 
   post "/students/:id/add_document", to: "students#add_document", as: :add_document
   post "/update_book_page_saver", to: "books#update_current_page"
+
+  # Relatories routes
+  get "/relatories", to: "relatories#index", as: :relatories
+  get "/relatories/appointments", to: "relatories#appointments", as: :appointments_relatory
+  get "/relatories/print_appointments/:ids", to: "relatories#print_appointments", as: :print_appointments_relatory
 end

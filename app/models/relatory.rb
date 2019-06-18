@@ -1,0 +1,2 @@
+class Relatory < ApplicationRecord
+end

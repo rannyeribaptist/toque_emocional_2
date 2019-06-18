@@ -16,9 +16,13 @@ class Appointment < ApplicationRecord
     available_filters: [
       :sorted_by,
       :student,
+      :classy,
+      :groupy,
       :search_query,
       :with_school_id,
-      :date
+      :date,
+      :date_min,
+      :date_max
     ]
   )
 
@@ -27,9 +31,24 @@ class Appointment < ApplicationRecord
     Appointment.joins(:appointment_student).where('name LIKE ?', "%#{query}%")
   }
 
+  scope :classy, lambda { |query|
+    Appointment.joins(:appointment_student).where('classy LIKE ?', "%#{query}%")
+  }
+
+  scope :groupy, lambda { |query|
+    Appointment.joins(:appointment_student).where('groupy LIKE ?', "%#{query}%")
+  }
+
   scope :with_school_id, lambda { |school_id| where(:school_id => school_id) }
   scope :date, lambda { |query|
     Appointment.where('extract(month from appointment_date) = ?', query)
+  }
+
+  scope :date_min, lambda { |query|
+    Appointment.where('appointment_date >= ?', query)
+  }
+  scope :date_max, lambda { |query|
+    Appointment.where('appointment_date <= ?', query)
   }
 
   scope :sorted_by, lambda { |sort_option|

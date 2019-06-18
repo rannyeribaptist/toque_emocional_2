@@ -54,6 +54,7 @@
       :javascript
         window.location.replace("http://www.toqueemocional.com.br");
     - else
+      = yield(:modal)
       .columns
         .column.column--2
           .navbar.navbar--yellow.navbar--vertical
@@ -74,6 +75,9 @@
                 %a.fancy-link{:href => books_path}
                   .button.button
                     LIVROS
+                %a.fancy-link{:href => relatories_path}
+                  .button.button
+                    RELATÓRIOS
 
               %a.fancy-link{:href => soon_path}
                 .button.button
@@ -99,7 +103,7 @@
               = link_to "Frases", phrases_path, class: "fancy-link"
               %br
               = link_to "Turmas", classies_url, class: "fancy-link"
-              %br              	
+              %br
             = link_to "Sair", destroy_user_session_path, method: :delete, class: "fancy-link"
           .plus__button
             %image{src: "https://icongr.am/clarity/plus.svg"}

@@ -1,0 +1,33 @@
+- if not comment.comment == nil # this avoids the database to return a ghost register
+  - if comment.user_id == 1
+    %div{class: "#{ 'no-print' if comment.invisible} card card--with-shadow", style: "background-color: #ffec48a3; position: relative; margin-bottom: 20px;max-width: 100%;", id: "comment_#{comment.id}"}
+      %div.card--yellow.card--with-bg{style: "position: absolute; left: 0; top: 0; height: 100%; width: 100%; z-index: -1;"}
+      %div{id: "ac_#{comment.id}_s"}
+        %h1.subtitle.title--thin{style: "margin-bottom: 0"}= comment.name
+        %small Evolução
+        %br
+        %p= comment.comment.html_safe
+        %br
+        %small{style: "text-transformation: italic; float: right"}= l(comment.created_at)[0...-9]
+        %br
+        .no-print
+          - if comment.invisible == true
+            %a.fancy-link.show{style: "display: unset", onclick: "setVisible(comment_#{comment.id},'visible')"}= icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
+            %a.fancy-link.hide{style: "display: none", onclick: "setVisible(comment_#{comment.id},'invisible')"}= icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
+          - else
+            %a.fancy-link.show{style: "display: none", onclick: "setVisible(comment_#{comment.id},'visible')"}= icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
+            %a.fancy-link.hide{style: "display: unset", onclick: "setVisible(comment_#{comment.id},'invisible')"}= icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
+  - else
+    %div{class: "appointment-card #{ 'no-print' if comment.invisible}", style: "border-left-color: #{comment.user.school.color}; position: relative; margin-bottom: 20px;background-color: white;width:unset", id: "comment_#{comment.id}"}
+      %div{id: "ac_#{comment.id}_s"}
+        %h3.title.title--small= comment.name
+        %p= comment.comment.html_safe
+        %small{style: "text-transformation: italic; float: right"}= l(comment.created_at)[0...-9]
+        %br
+        .no-print
+          - if comment.invisible == true
+            %a.fancy-link.show{style: "display: unset", onclick: "setVisible(comment_#{comment.id},'visible')"}= icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
+            %a.fancy-link.hide{style: "display: none", onclick: "setVisible(comment_#{comment.id},'invisible')"}= icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
+          - else
+            %a.fancy-link.show{style: "display: none", onclick: "setVisible(comment_#{comment.id},'visible')"}= icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
+            %a.fancy-link.hide{style: "display: unset", onclick: "setVisible(comment_#{comment.id},'invisible')"}= icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
