@@ -43,6 +43,7 @@ class BooksController < ApplicationController
         format.html { redirect_to @book, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
+        puts 'aaaaaaaaaaaaaaaa' + @book.errors.to_yaml.to_s
         format.html { render :new }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end

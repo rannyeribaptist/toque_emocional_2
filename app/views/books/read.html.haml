@@ -12,6 +12,10 @@
           %div
             = image_tag(@book.name + '-' + i.to_s + '.jpg', :height => "100%", :width => "100%")
 
+  %div{style: "display:flex;max-width: 400px;margin: 0 auto;align-items: baseline"}
+    %input#pageToTurn.fancy-form__input{placeholder: "Ir para a página de número...", style:"margin-right: 15px"}
+    %button.button.button--blue.fancy-link--white{onclick: "turnToPage($('#pageToTurn')[0].value)"} Ir
+
   .percent-bar.percent-bar--grey
     .percent-bar--inner.percent-bar--inner--green#percent
 
