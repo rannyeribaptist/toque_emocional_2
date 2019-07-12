@@ -43,7 +43,6 @@ class BooksController < ApplicationController
         format.html { redirect_to @book, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
-        puts 'aaaaaaaaaaaaaaaa' + @book.errors.to_yaml.to_s
         format.html { render :new }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
@@ -83,10 +82,7 @@ class BooksController < ApplicationController
 
   def read
     @book = Book.find_by_url(params[:url])
-
-    @current_page = current_page(@book.id)
-
-    puts "CURRENT PAGE OF THIS BOOK IS: " + @current_page
+    @current_page = current_page(@book.id)  
 
     if @book == nil
       redirect_to "/404"
@@ -103,7 +99,7 @@ class BooksController < ApplicationController
     @page_saver.current_page = params[:current_page]
     respond_to do |format|
       if @page_saver.save
-        format.json { render json: @page_saver, status: :created }
+        format.js { render 'books/update_comments', status: :ok, locals: {:book => Book.find_by_id(params[:book_id]), :current_page => params[:current_page]} }
       else
         format.json { render json: @page_saver.errors, status: :unprocessable_entity}
       end

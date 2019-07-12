@@ -1,6 +1,6 @@
 class ReadersController < ApplicationController
   before_action :set_reader, only: [:show, :edit, :update, :destroy]
-  before_action :set_reader_for_book_comments, only: [:update_book_comments]
+  before_action :set_reader_for_book_comments, only: [:update_book_comments, :update_comments_list]
 
   # GET /readers
   # GET /readers.json
@@ -68,7 +68,7 @@ class ReadersController < ApplicationController
   def update_book_comments
     respond_to do |format|
       if @reader.update(reader_params)
-        format.js { render 'books/update_comments', status: :ok, locals: {:book => @book} }
+        format.js { render 'books/update_comments', status: :ok, locals: {:book => @book, :current_page => params["reader"]["book_comments_attributes"]["0"]["page"]} }
       else
         format.js { render 'books/update_comments', status: :unprocessable_entity }
       end
@@ -117,6 +117,6 @@ class ReadersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reader_params
-      params.require(:reader).permit(:name, :classy, :groupy, :birthday, :school_id, :book_list_attributes => [:id, :books => []], :book_comments_attributes => [:id, :_destroy, :comment, :book_id])
+      params.require(:reader).permit(:name, :classy, :groupy, :birthday, :school_id, :book_list_attributes => [:id, :books => []], :book_comments_attributes => [:id, :_destroy, :comment, :book_id, :page])
     end
 end

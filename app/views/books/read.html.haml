@@ -44,6 +44,7 @@
               .column.column--7
                 = g.input :comment, label: "Adicionar anotação", required: false
                 = g.input :book_id, as: :hidden, input_html: { value: @book.id }
+                = g.input :page, as: :hidden, input_html: { value: @current_page }
               .column.column--3{style: "text-align: center"}
                 = g.submit "Salvar anotação", class: "button button--green fancy-link--white submit", disabled: "disabled", id: "submit"
 

@@ -23,6 +23,7 @@
 
   $("#flipbook").bind("turned", function(event, page, view) {
     updateBookPercentage(page);
+    $('#reader_book_comments_attributes_0_page').attr('value', page);
 
     $.ajax({
       type: "POST",

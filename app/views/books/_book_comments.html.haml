@@ -1,7 +1,7 @@
 %table.table.table--transparent
   %tbody
     - current_reader.book_comments.where(book_id: book.id).each do |book_comment|
-      %tr.show{id: "show_comment_#{book_comment.id}"}
+      %tr.show.comment{id: "show_comment_#{book_comment.id}", "data-page-number" => "#{book_comment.page}"}
         %td
           %em= book_comment.comment
         %td

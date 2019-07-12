@@ -2,3 +2,11 @@
 $("#comments").addClass("fadeIn");
 $('#reader_book_comments_attributes_0_comment')[0].value = '';
 $("#comments").html("<%= escape_javascript(render 'books/book_comments', book: book) %>");
+
+var view = $("#flipbook").turn("view").join(" and ");
+
+$('.comment').each(function() {
+  if (!view.includes($(this).attr("data-page-number"))) {
+    $(this)[0].style.display = "none";
+  }
+});
