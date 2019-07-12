@@ -31,6 +31,7 @@
 @import "components/percent-bar";
 @import "components/flipbook";
 @import "components/modal";
+@import "components/sidebar";
 
 body {
   margin: 0;
@@ -211,4 +212,20 @@ body {
     display: flex;
     justify-content: space-between;
   }
+}
+
+.goToPage {
+  display:flex;
+  max-width: 400px;
+  margin: 0 auto;
+  align-items: baseline;
+}
+
+.gtp {
+  background-color: transparent;
+  border-color: black;
+}
+
+.gtp::placeholder {
+  color: black;
 }

@@ -1,7 +1,9 @@
 @import "variables";
 
 .percent-bar {
-  @include colors("background-color");
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 
   &--inner {
     height: 15px;
@@ -15,4 +17,6 @@
 
     @include colors("background-color");
   }
+
+  @include colors("background-color");
 }

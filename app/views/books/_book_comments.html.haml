@@ -5,4 +5,4 @@
         %td
           %em= book_comment.comment
         %td
-          = link_to icon('fas', 'trash', class: "fancy-link fancy-link--white"), delete_book_comment_url(book_comment), method: :delete, data: { confirm: 'Tem certeza?' }, remote: :true
+          = link_to icon('fas', 'trash', class: "fancy-link fancy-link--red"), delete_book_comment_url(book_comment), method: :delete, data: { confirm: 'Tem certeza?' }, remote: :true

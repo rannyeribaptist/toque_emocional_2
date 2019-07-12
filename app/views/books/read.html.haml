@@ -1,6 +1,9 @@
-.section.section--grey
+.section.section--grey{style: "height: 100vh"}
   .section__content
-    %h1.title.title--thin.title--white.title--large= @book.name.capitalize
+    %a.fancy-link.fancy-link--white.toggleSideBar{onclick: "toggleSideBar()"}= icon('fas', 'bars')
+
+    %br
+    %br
 
     / Thumbnails
     .thumbnails#flipbook
@@ -12,47 +15,50 @@
           %div
             = image_tag(@book.name + '-' + i.to_s + '.jpg', :height => "100%", :width => "100%")
 
-  %div{style: "display:flex;max-width: 400px;margin: 0 auto;align-items: baseline"}
-    %input#pageToTurn.fancy-form__input{placeholder: "Ir para a página de número...", style:"margin-right: 15px"}
-    %button.button.button--blue.fancy-link--white{onclick: "turnToPage($('#pageToTurn')[0].value)"} Ir
-
   .percent-bar.percent-bar--grey
     .percent-bar--inner.percent-bar--inner--green#percent
 
-.section.section--golden{style: "color: white"}
-  .section__content
+- content_for :sidebar do
+  %h1.title= @book.name.capitalize
 
-    .columns
-      .column.column--5
-        %h1.title.title--thin.title--large Material Complementar
+  %br
+  %br
 
-        %br
+  .goToPage
+    %input.gtp#pageToTurn.fancy-form__input{placeholder: "Ir para a página de número...", style:"margin-right: 15px"}
+    %button.button.button--blue2.fancy-link--white{onclick: "turnToPage()"} Ir
 
-        %div{style: "text-align: left"}
-          - @book.complements.each do |c|
-            %h3.subtitle.title--thin= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--white"), c.file.to_s, class: "fancy-link fancy-link--white", target: "_blank"
+  %br
+  %br
 
-      .column.column--5
-        %h1.title.title--thin.title--large Suas Anotações
+  %h2.subtitle.title--thin Anotações desta página
 
-        %br
+  = simple_form_for current_reader, :url => edit_book_comment_url(current_reader.id), defaults: { input_html: { class: "fancy-form__input gtp", style: "background-color: transparent; border-color: black;" } }, remote: true do |f|
+    = f.simple_fields_for :book_comments, current_reader.book_comments.new do |g|
+      = g.input :book_id, as: :hidden, input_html: { value: @book.id }
+      = g.input :comment, label: false, required: false, placeholder: "Adicionar Anotação"
+      = g.input :book_id, as: :hidden, input_html: { value: @book.id }
+      = g.input :page, as: :hidden, input_html: { value: @current_page }
+      = g.submit "Salvar anotação", class: "button button--green fancy-link--white submit", disabled: "disabled", id: "submit"
 
-        = simple_form_for current_reader, :url => edit_book_comment_url(current_reader.id), defaults: { input_html: { class: "fancy-form__input", style: "background-color: transparent; border-color: white; color: white" } }, remote: true do |f|
-          = f.simple_fields_for :book_comments, current_reader.book_comments.new do |g|
-            = g.input :book_id, as: :hidden, input_html: { value: @book.id }
-            .columns{style: "text-align: left"}
-              .column.column--7
-                = g.input :comment, label: "Adicionar anotação", required: false
-                = g.input :book_id, as: :hidden, input_html: { value: @book.id }
-                = g.input :page, as: :hidden, input_html: { value: @current_page }
-              .column.column--3{style: "text-align: center"}
-                = g.submit "Salvar anotação", class: "button button--green fancy-link--white submit", disabled: "disabled", id: "submit"
+  %br
+  %br
 
-        %br
-        %br
+  #comments.animated.fadeIn
+    = render "books/book_comments", book: @book, current_reader: current_reader
 
-        #comments.animated.fadeIn
-          = render "books/book_comments", book: @book, current_reader: current_reader
+  %br
+  %br
+
+  - if @book.complements.any?
+
+    %h2.subtitle.title--thin Material Complementar
+
+    %br
+
+    %div{style: "text-align: left"}
+      - @book.complements.each do |c|
+        %h3.subtitle.title--thin= link_to icon('fas', 'download', "#{c.name.capitalize}", class: "fancy-link fancy-link--black"), c.file.to_s, class: "fancy-link fancy-link--black", target: "_blank"
 
 - content_for :javascript do
   :javascript

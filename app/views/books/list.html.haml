@@ -1,5 +1,9 @@
 .section.section--grey{style: "min-height: 100vh"}
-  .section__content
+  .section__content        
+    %a.fancy-link.fancy-link--white.toggleSideBar{onclick: "toggleSideBar()"}= icon('fas', 'bars')
+
+    %br
+    %br
     = image_tag('logo-white.png', class: 'logo-default', style: "margin-bottom: 50px")
     - if not @books.empty?
       - @books.each_slice(3) do |books|

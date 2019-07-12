@@ -1,0 +1,49 @@
+@import "variables";
+
+.sidebar {
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  width: 0;
+  z-index: 99999;
+
+  &__content {
+    display: none;
+    padding: 25px;
+    text-align: center;
+  }
+
+  &--active {
+    width: 100%;
+  }
+
+  @include breakpoint("medium") {
+    position: fixed;
+    width: 0;
+    right: 0;
+
+    &--active {
+      width: 30%;
+    }
+  }
+
+  @include colors("background-color");
+
+  webkit-transition: width 0.3s ease-in-out;
+  -moz-transition: width 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+}
+
+.toggleSideBar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 25px;
+  font-size: 25px;
+}
+
+.closeSideBar {
+  float: right;
+  font-size: 25px;
+}

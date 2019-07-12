@@ -64,3 +64,19 @@ function updateList(list, id) {
 
   return list;
 }
+
+function toggleSideBar() {
+  if ($('.sidebar').hasClass("sidebar--active")) {
+    $('.sidebar').removeClass('sidebar--active');
+  } else {
+    $('.sidebar').addClass('sidebar--active');
+  }
+
+  $('.sidebar__content').toggle();
+}
+
+function turnToPage() {
+  $("#flipbook").turn("page", $('#pageToTurn')[0].value);
+  $('#pageToTurn')[0].value = "";
+  toggleSideBar();
+}
