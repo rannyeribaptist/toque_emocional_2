@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_11_195740) do
+ActiveRecord::Schema.define(version: 2019_07_25_054007) do
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -92,6 +92,21 @@ ActiveRecord::Schema.define(version: 2019_07_11_195740) do
     t.index ["book_id"], name: "index_complements_on_book_id"
   end
 
+  create_table "emotions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "feelings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "emotion_id"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["emotion_id"], name: "index_feelings_on_emotion_id"
+  end
+
   create_table "guests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "code"
     t.boolean "authenticated"
@@ -109,7 +124,18 @@ ActiveRecord::Schema.define(version: 2019_07_11_195740) do
     t.bigint "school_id"
     t.timestamp "deleted_at"
     t.string "emotional_sphere"
+    t.boolean "finished"
     t.index ["school_id"], name: "index_occurrencies_on_school_id"
+  end
+
+  create_table "occurrency_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "occurrency_id"
+    t.string "emotions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["occurrency_id"], name: "index_occurrency_histories_on_occurrency_id"
+    t.index ["student_id"], name: "index_occurrency_histories_on_student_id"
   end
 
   create_table "occurrency_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -220,8 +246,11 @@ ActiveRecord::Schema.define(version: 2019_07_11_195740) do
   add_foreign_key "book_lists", "readers"
   add_foreign_key "books", "schools"
   add_foreign_key "complements", "books"
+  add_foreign_key "feelings", "emotions"
   add_foreign_key "guests", "books"
   add_foreign_key "occurrencies", "schools"
+  add_foreign_key "occurrency_histories", "occurrencies"
+  add_foreign_key "occurrency_histories", "students"
   add_foreign_key "occurrency_students", "occurrencies"
   add_foreign_key "occurrency_students", "students"
   add_foreign_key "reader_book_page_savers", "readers"

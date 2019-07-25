@@ -12,7 +12,11 @@
     border-radius: 5px;
   }
 
-  &--with-shadow { box-shadow: 1px 1px 20px 3px #00000038 }
+  &--with-shadow {
+    filter: drop-shadow(0 0 7px #00000017);
+    background-color: white;
+    border: 1px solid #8080801a;
+  }
 
   &--with-bg {
     background-repeat: no-repeat;

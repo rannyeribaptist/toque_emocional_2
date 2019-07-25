@@ -102,7 +102,9 @@
             - if is_admin?
               = link_to "Frases", phrases_path, class: "fancy-link"
               %br
-              = link_to "Turmas", classies_url, class: "fancy-link"
+              = link_to "Séries", classies_url, class: "fancy-link"
+              %br
+              = link_to "Emoções", emotions_path, class: "fancy-link"
               %br
             = link_to "Sair", destroy_user_session_path, method: :delete, class: "fancy-link"
           .plus__button

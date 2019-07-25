@@ -31,3 +31,9 @@
     }
   }
 }
+
+.button:disabled,
+.button[disabled]{
+  background-color: #8e8e8e;
+  color: #c5c5c5;
+}

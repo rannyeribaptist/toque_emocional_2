@@ -1,0 +1,29 @@
+.animated.fadeIn
+  .section
+    .section__content
+      %h1.title.title--thin.title--large Emoções das ocorrências
+
+      - if not @emotions.empty?
+        %table.table
+          %thead
+            %tr
+              %th Emoção
+              %th
+              %th
+              %th
+
+          %tbody
+            - @emotions.each do |emotion|
+              %tr
+                %td= emotion.name
+                %td= link_to icon('fas', 'eye', 'Ver', class: "fancy-link fancy-link--blue2"), emotion, class: "fancy-link fancy-link--blue2"
+                %td= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_emotion_path(emotion), class: "fancy-link fancy-link--green"
+                %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), emotion, method: :delete, data: { confirm: 'Tem certeza?' }, class: "fancy-link fancy-link--red"
+
+      - else
+        = image_tag('brain.png', class: "logo-default logo-default--small")
+        %h1.title.title--grey Não há nada disso por aqui...
+
+      %br
+
+      = link_to '+ Adicionar', new_emotion_path, class: "fancy-link--blue2"

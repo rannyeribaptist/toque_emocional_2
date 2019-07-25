@@ -3,7 +3,7 @@
     .section__content
       %h1.title.title--thin.title--large Frases do Menu
 
-      %div
+      - if not @phrases.empty?
         %table.table
           %thead
             %tr
@@ -18,8 +18,12 @@
                 %td= phrase.content
                 %td= phrase.author
                 %td= link_to icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green"), edit_phrase_path(phrase), class: "fancy-link fancy-link--green"
-                %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), phrase, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"
+                %td= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), phrase, method: :delete, data: { confirm: 'Tem certeza?' }, class: "fancy-link fancy-link--red"
 
-        %br
+      - else
+        = image_tag('brain.png', class: "logo-default logo-default--small")
+        %h1.title.title--grey Não há nada disso por aqui...
 
-        = link_to '+ Adicionar teste', new_phrase_path, class: "fancy-link--blue2"
+      %br
+
+        = link_to '+ Adicionar', new_phrase_path, class: "fancy-link--blue2"

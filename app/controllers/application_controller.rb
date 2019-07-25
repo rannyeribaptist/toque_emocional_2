@@ -21,6 +21,12 @@ class ApplicationController < ActionController::Base
   def soon
   end
 
+  def review_occurrency
+    @occurrency = Occurrency.find(params[:occurrency_id])
+    @students = @occurrency.occurrency_students
+    @histories = @occurrency.occurrency_histories
+  end
+
   protected
 
     def configure_permitted_parameters

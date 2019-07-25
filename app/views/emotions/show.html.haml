@@ -1,0 +1,52 @@
+.animated.fadeIn
+  .section
+    .section__content
+      %h1.title.title--thin.title--large= @emotion.name.capitalize
+
+      .action
+        %p= @emotion.description
+
+        = link_to icon('fas', 'pen', ' Editar', class: "fancy-link fancy-link--blue2"), edit_emotion_path(@emotion), class: "fancy-link fancy-link--blue2"
+
+      %h2.subtitle.title--thin Sentimentos
+
+      %table.table
+        %thead
+          %tr
+            %th Sentimento
+            %th
+            %th
+
+        %tbody
+          - @emotion.feelings.each do |feeling|
+            %tr{id: "feeling_#{feeling.id}_s"}
+              %td= feeling.description
+              %td
+                %a.fancy-link.fancy-link--green{style: "cursor: pointer", onclick: "$('#feeling_#{feeling.id}_s').toggle();$('#feeling_#{feeling.id}_e').toggle()"}= icon('fas', 'pen', 'Editar', class: "fancy-link fancy-link--green")
+              %td
+                %a.fancy-link.fancy-link--red{style: "cursor: pointer", onclick: "if (confirm('Tem certeza?')) { $('#delete_attribute_#{feeling.id}').children().first().submit()};"}= icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red")
+
+            %tr{id: "feeling_#{feeling.id}_e", style: "display: none"}
+              = simple_form_for(@emotion, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+                = f.simple_fields_for :feelings, feeling do |g|
+                  %td= g.input :description
+                  %td= f.submit "Salvar", class: "button button--green fancy-link fancy-link--white"
+                  %td
+
+            %div{id: "delete_attribute_#{feeling.id}", style: "display:none"}
+              = simple_form_for(@emotion) do |f|
+                = f.simple_fields_for :feelings, feeling do |g|
+                  = g.input :_destroy, input_html: { value: true }
+
+      %br
+      %br
+
+      %h3.subtitle.title--thin Adicionar Sentimento
+
+      = simple_form_for(@emotion, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+        = f.simple_fields_for :feelings, Feeling.new do |g|
+          .columns.columns--small
+            .column--small.column--small--9
+              = g.input :description, placeholder: "Descrição do sentimento", label: false
+            .column--small.column--small--1
+              = f.submit "Adicionar", class: "button button--green fancy-link fancy-link--white"

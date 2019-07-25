@@ -1,0 +1,15 @@
+-# frozen_string_literal: true
+= simple_form_for(@emotion, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :name, label: "Nome da Emoção"
+    = f.input :description, label: "Descrição (o que é, o que causa...)"
+
+  %h3.subtitle.title--thin Sentimentos (Opções)
+  = f.simple_fields_for :feelings do |g|
+    = g.input :description, label: "Descrição do sentimento"
+
+  .form-actions
+    = f.submit "Salvar", class: "button button--green fancy-link--white"

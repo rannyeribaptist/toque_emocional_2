@@ -1,0 +1,38 @@
+= simple_form_for(@occurrency, html: { class: "remote-form" }, remote: true) do |f|
+  = f.simple_fields_for :occurrency_histories do |g|
+    .modal{id: "modal_#{g.object.id}"}
+      = icon('fas', 'times', onclick: "$('#modal_#{g.object.id}').removeClass('modal--active')", class: "modal__close")
+      .modal__inner.animated{style: "max-width: 1000px"}
+        %h2.subtitle.title--thin Descreva como você se sentiu... Quais das opções abaixo você acha que se encaixa melhor no que pode ter causado o ocorrido
+        %br
+        %br
+        %div{style: "width:fit-content; text-align:left; margin: 0 auto;"}
+          - Emotion.all.each do |emotion|
+            - emotion.feelings.each do |feeling|
+              - if not feeling.description.empty?
+                = g.check_box :emotions, { multiple: true }, feeling.id, false
+                %label{for: "occurrency[occurrency_histories_attributes][0][emotions][]"}= feeling.description
+                %br
+        %br
+        %br
+        %button.button.button--blue.fancy-link--white{onclick: "fadeForm('#{g.object.id}')"} Pronto
+
+:javascript
+  var count = 0;
+  function fadeForm(id) {
+    $('#modal_' + id).removeClass('modal--active');
+    $('#card_' + id).fadeOut();
+    console.log('in the function');
+    console.log('count = ', count);
+    console.log('modals = ', $('.modal').length);
+
+    count = count + 1;
+
+    if (count === $('.modal').length) {
+      console.log('true');
+      setTimeout(function() {
+        $('#thinking').fadeIn();
+        $('.finish-form').submit();
+      }, 300);
+    }
+  }

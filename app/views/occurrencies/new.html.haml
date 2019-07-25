@@ -3,106 +3,45 @@
   %strong= f.error_notification
   %p= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
-  .slide.slide--white.animated.fadeIn.slide--active#1
+  .slide.slide--white.slide--active#1
     .slide__content
       .slide__group
-        = image_tag('brain.png', class: "logo-default logo-default--small", style: "margin: 20px 0")
-        %h1.title.title--thin.title--grey Antes de começarmos...
+        %h1.title.title--thin.title--large Passo 1: Registrar o ocorrido
+        %br
+        %h2.subtitle.title--thin Descreva em detalhes o que aconteceu
+        %br
+        %br
 
-        %h1.title.title--small.title--thin.title--grey É preciso ressaltar algumas coisas para que o ocorrido não torne as coisas mais difíceis de serem resolvidas, ou até mesmo traumatizem algum dos envolvidos
-
-      .float-right{style: "margin-top: 10px"}
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "2", "data-turbolinks" => "false"} PRÓXIMO
-
-  .slide.slide--white#2
-    .slide__content
-      .slide__group
-        = image_tag('brain.png', class: "logo-default logo-default--small", style: "margin: 20px 0")
-        %h1.title.title--thin.title--grey Todo comportamento está ligado à alguma emoção
-
-        %h1.title.title--small.title--thin.title--grey
-          Nós podemos classificar essas emoções através de
-          %strong Atmosferas Emocionais
-
-      .advanced-inline{style: "margin-top: 10px"}
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "1", "data-turbolinks" => "false"} VOLTAR
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "3", "data-turbolinks" => "false"} PRÓXIMO
-
-  .slide.slide--white#3
-    .slide__content
-      .slide__group
-        = image_tag('brain.png', class: "logo-default logo-default--small", style: "margin: 20px 0")
-        %h1.title.title--thin.title--grey Identifique se o comportamento dos envolvidos está ligado à uma das opções abaixo, e selecione a que melhor se encaixa...
-
-        .columns{style: "text-align: left; justify-content: center"}
-          .column.column--2
-            %h2.subtitle.title--thin.title--grey 1- Atmosfera Raivosa
-            %p Pergunte se o aluno se sentiu interferido e se sim, pelo quê. No fundo podemos nos sentir responsáveis pelo que nos interfere também. Tente não julgar o aluno pelas suas atitudes e sentimentos.
-            %button.button.button--blue2.button--small.fancy-link--white.set-field{"data-value" => "Atmosfera Raivosa", type: "button"} Selecionar
-
-          .column.column--middle.column--2
-            %h2.subtitle.title--thin.title--grey 2- Atmosfera Amedrontada
-            %p Pergunte ao aluno se ele se sentiu ameaçado. Se sim, pergunte qual era o perigo que ele acha que o levou a fazer o que ele fez. Tente não julgar o aluno pelas suas atitudes e sentimentos.
-            %button.button.button--blue2.button--small.fancy-link--white.set-field{"data-value" => "Atmosfera Amedrontada", type: "button"} Selecionar
-
-          .column.column--2
-            %h2.subtitle.title--thin.title--grey 3- Atmosfera do Desprezo
-            %p Pergunte ao aluno se ele sentiu que alguém tentou o diminuir ou se ele sentiu-se diminuído. Se sim pergunte se ele não se sente incomodado com o fato de ter se sentido menor. Tente não julgar o aluno pelas suas atitudes e sentimentos.
-            %button.button.button--blue2.button--small.fancy-link--white.set-field{"data-value" => "Atmosfera do Desprezo", type: "button"} Selecionar
-
-          .column.column--2
-            %h2.subtitle.title--thin.title--grey 4- Outra
-            %p Digite aqui qual emoção você acha que está ligada ao que aconteceu
-            = f.input :emotional_sphere, label: false
-
-      .advanced-inline{style: "margin-top: 10px"}
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "2", "data-turbolinks" => "false"} VOLTAR
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "4", "data-turbolinks" => "false"} PRÓXIMO
-
-  .slide.slide--white#4
-    .slide__content
-      .slide__group
-        = image_tag('brain.png', class: "logo-default logo-default--small", style: "margin: 20px 0")
-        %h1.title.title--thin.title--grey Descreva em detalhes o que aconteceu
+        - if is_admin?
+          = f.input :school_id, as: :select, collection: School.all.drop(1), label: "Escola", input_html: { class: "fancy-form__input fancy-form__select" }
+        - else
+          = f.input :school_id, as: :hidden, input_html: { value: School.find_by_id(current_user.school.id).id }
 
         = f.input :description, label: "Tente buscar o ponto de vista de todos os envolvidos", as: :text, required: false
 
       .advanced-inline{style: "margin-top: 10px"}
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "3", "data-turbolinks" => "false"} VOLTAR
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "5", "data-turbolinks" => "false"} PRÓXIMO
+        %h2.next-slide.fancy-link.title.title--thin.title--small{href: "#", "data-target" => "2", "data-turbolinks" => "false"} Próximo
 
-  .slide.slide--white#5
+  .slide.slide--white#2
     .slide__content
       .slide__group
-        = image_tag('brain.png', class: "logo-default logo-default--small", style: "margin: 20px 0")
-        %h1.title.title--thin.title--grey Quais foram os envolvidos?
-
+        %h1.title.title--thin.title--large Passo 1: Registrar o ocorrido
+        %br
+        %h2.subtitle.title--thin Adicione todos os envolvidos
+        %br
         %br
 
         #tasks
           = f.simple_fields_for :occurrency_students do |g|
             = render "occurrency_students_fields", f: g
           .links
-            = link_to_add_association 'Adicionar Estudante', f, :occurrency_students, partial: "occurrency_students_fields", class: "button button--green fancy-link fancy-link--white"
+            = link_to_add_association 'Adicionar Estudante', f, :occurrency_students, partial: "occurrency_students_fields", class: "button button--green fancy-link fancy-link--white", onclick: "setTimeout(checkInputs, 200);"
 
         %br
 
       .advanced-inline{style: "margin-top: 10px"}
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "4", "data-turbolinks" => "false"} VOLTAR
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "6", "data-turbolinks" => "false"} PRÓXIMO
-
-  .slide.slide--white#6
-    .slide__content
-      .slide__group
-        = image_tag('brain.png', class: "logo-default logo-default--small", style: "margin: 20px 0")
-        %h1.title.title--thin.title--grey Seu nome completo:
-
-        = f.input :filled_by, label: false
-        = f.input :school_id, as: :hidden, input_html: { value: current_user.school_id }
-
-      .advanced-inline{style: "margin-top: 10px"}
-        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "5", "data-turbolinks" => "false"} VOLTAR
-        = f.submit "SALVAR", class: "button button--green fancy-link fancy-link--white title title--thin title--small"
+        %h2.next-slide.fancy-link.fancy-link--grey.title.title--thin.title--small{href: "#", "data-target" => "1", "data-turbolinks" => "false"} Voltar
+        = f.submit "Passo 2", class: "button button--green fancy-link fancy-link--white", disabled: "disabled", id: "submit"
 
 - content_for :javascript do
   :javascript
@@ -122,3 +61,25 @@
     });
 
     setTimeout(fields, 200);
+
+    function checkInputs() {
+      var check = true;
+
+      $('select, textarea, input.input').each(function(){
+        if (!$(this).val()) { check = false }
+      });
+
+      if (check == true) {
+        $('#submit').removeAttr('disabled');
+      } else {
+        $('#submit').attr('disabled', 'disabled');
+      }
+    }
+
+    $('select').on('change', function() {
+      checkInputs();
+    });
+
+    $('textarea').on('change', function() {
+      checkInputs();
+    });

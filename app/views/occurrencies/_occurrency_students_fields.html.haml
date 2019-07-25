@@ -1,6 +1,6 @@
 .nested-fields
-  = f.input :name, label: "Nome completo", :url => autocomplete_student_name_occurrencies_path, :as => :autocomplete, :update_elements => {:classy => '#', :groupy => '#', :id => "#"}
-  = f.input :classy, label: "Ano"
-  = f.input :groupy, label: "Turma"
-  = f.input :student_id, as: :hidden
-  = link_to_remove_association "Remover", f, class: "button button--red fancy-link fancy-link--white"
+  = f.input :name, label: "Nome completo", :url => autocomplete_student_name_occurrencies_path, :as => :autocomplete, :update_elements => {:classy => '#', :groupy => '#', :id => "#"}, input_html: { class: "fancy-form__input input", oninput: "checkInputs()", onchange: "checkInputs()" }
+  = f.input :classy, as: :select, label: "Ano", collection: Classy.all.collect {|p| [ p.name, p.name ] }, input_html: { class: "fancy-form__input fancy-form__select input", onchange: "checkInputs()" }
+  = f.input :groupy, label: "Turma", input_html: { class: "fancy-form__input input", oninput: "checkInputs()", onchange: "checkInputs()" }
+  = f.input :student_id, as: :hidden, input_html: { class: "fancy-form__input" }
+  = link_to_remove_association icon('fas', 'times', class: "fancy-link--red"), f, onclick: "setTimeout(checkInputs, 200);"

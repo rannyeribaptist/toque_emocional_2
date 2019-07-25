@@ -1,0 +1,25 @@
+%h1 Listing occurrency_histories
+
+%table
+  %thead
+    %tr
+      %th Student
+      %th Occurrency
+      %th Emotions
+      %th
+      %th
+      %th
+
+  %tbody
+    - @occurrency_histories.each do |occurrency_history|
+      %tr
+        %td= occurrency_history.student
+        %td= occurrency_history.occurrency
+        %td= occurrency_history.emotions
+        %td= link_to 'Show', occurrency_history
+        %td= link_to 'Edit', edit_occurrency_history_path(occurrency_history)
+        %td= link_to 'Destroy', occurrency_history, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Occurrency history', new_occurrency_history_path

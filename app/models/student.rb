@@ -2,6 +2,7 @@ class Student < ApplicationRecord
   belongs_to :school
   has_many :occurrency_students
   has_many :student_documents
+  has_many :occurrency_histories
 
   accepts_nested_attributes_for :student_documents, allow_destroy: true, reject_if: :all_blank
 

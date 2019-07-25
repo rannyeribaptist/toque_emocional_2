@@ -1,0 +1,39 @@
+- @histories.each_with_index do |history, i|
+  .slide.slide--white.animated.fadeIn{id: "#{i}"}
+    .slide__content
+      .slide__group{style: "padding-bottom: 0"}
+        = image_tag('brain.png', class: 'logo-default logo-default--small', style: "margin-bottom: 25px")
+
+        %h1.title.title--thin.title--grey.title--large= Student.find_by_id(history.student_id).name
+      .slide__group{style: "justify-content: center"}
+        %h2.subtitle.title--thin.title--grey= show_emotion_descriptions(history.emotions).html_safe
+
+        %br
+
+      .slide__group
+        - if i+1 == (@histories.count)
+          %div{style: "margin-top: 10px"}
+            %h2.next-slide.fancy-link--grey.fancy-link.title.title--thin.title--small{href: "#", "data-target" => "#{i-1}", "data-turbolinks" => "false", style: "float: left"} Voltar
+            = link_to occurrency_path(@occurrency) do
+              %h2fancy-link.fancy-link--grey.title.title--thin.title--small.float-right Concluído
+        - elsif i == 0
+          %div{style: "margin-top: 10px"}
+            %h2.next-slide.fancy-link--grey.fancy-link.title.title--thin.title--small.float-right{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false"} Próximo
+        - else
+          %div{style: "margin-top: 10px"}
+            %h2.next-slide.fancy-link--grey.fancy-link.title.title--thin.title--small{href: "#", "data-target" => "#{i-1}", "data-turbolinks" => "false", style: "float: left"} Voltar
+            %h2.next-slide.fancy-link--grey.fancy-link.title.title--thin.title--small.float-right{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false"} Próximo
+
+
+- content_for :javascript do
+  :javascript
+    $(document).ready(function() {
+      $('.slide').first().addClass('slide--active');
+    });
+
+    $('.next-slide').click(function(){
+      let element = $('#' + $(this).attr('data-target'));
+
+      $('.slide--active').removeClass('animated fadeIn slide--active');
+      element.addClass('animated fadeIn slide--active');
+    })

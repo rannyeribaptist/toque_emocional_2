@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Student:
+  = @occurrency_history.student
+%p
+  %b Occurrency:
+  = @occurrency_history.occurrency
+%p
+  %b Emotions:
+  = @occurrency_history.emotions
+
+= link_to 'Edit', edit_occurrency_history_path(@occurrency_history)
+\|
+= link_to 'Back', occurrency_histories_path

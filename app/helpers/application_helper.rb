@@ -79,4 +79,43 @@ module ApplicationHelper
     saver = ReaderBookPageSaver.find_or_create_by(reader_id: current_reader.id, book_id: book_id)
     return saver.current_page.nil? ? "0" : saver.current_page
   end
+
+  def show_emotions(ids)
+    list = ""
+    quantity = Emotion.where(id: ids).count
+    emotions = Emotion.where(id: ids)
+
+    emotions.each do |emotion|
+      if quantity == 1
+        list += emotion.name
+      elsif quantity == 2
+        list += emotion.name if emotion == emotions.first
+        list += ' e ' + emotion.name if emotion == emotions.last
+      else
+        list += emotion.name if emotion == emotions.first
+        list += ', ' + emotion.name if not (emotion == emotions.first) or not (emotion == emotions.last)
+        list += ' e ' + emotion.name if emotion == emotions.last
+      end
+    end
+
+    return "Estes sentimentos estão ligados à " + list
+  end
+
+  def show_emotion_descriptions(ids)
+    list = ""
+    quantity = Emotion.where(id: ids).count
+    emotions = Emotion.where(id: ids)
+
+    entries = ["Pode ser que você tenha sentido ", "Talvez você tenha sentido também ", "Também é correto dizer que você sentiu "]
+
+    emotions.each do |emotion|
+      if emotion == emotions.first
+        list += '<strong>' + emotion.name + '</strong>' + '. ' + emotion.description
+      else
+        list += '. <br><br>' + entries.sample + '<strong>' + emotion.name + '</strong>' + '. ' + emotion.description
+      end
+    end
+
+    return "É correto afirmar que você sentiu " + list
+  end
 end

@@ -1,0 +1,19 @@
+- @occurrency.occurrency_histories.each_slice(2) do |histories|
+  .columns.columns--small{style: "justify-content: center; margin-bottom: 25px"}
+    - histories.each do |history|
+      - if history.emotions.empty?
+        - if not (@occurrency.occurrency_histories.count % 2 == 0) and (history == @occurrency.occurrency_histories.last)
+          .card.card--with-shadow{id: "card_#{history.id}"}
+            %h1.title.title--thin= Student.find_by_id(history.student_id).name
+
+            %p Selecione os sentimentos que mais se adequam ao que você sentiu
+
+            %button.button.button--blue2.fancy-link--white{type: "button",onclick: "$('#modal_#{history.id}').addClass('modal--active')"} Ver sentimentos
+        - else
+          .column--small.column--small--5{id: "card_#{history.id}"}
+            .card.card--with-shadow
+              %h1.title.title--thin= Student.find_by_id(history.student_id).name
+
+              %p Selecione os sentimentos que mais se adequam ao que você sentiu
+
+              %button.button.button--blue2.fancy-link--white{type: "button",onclick: "$('#modal_#{history.id}').addClass('modal--active')"} Ver sentimentos

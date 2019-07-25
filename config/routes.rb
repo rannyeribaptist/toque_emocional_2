@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :occurrency_histories
+  resources :emotions
   devise_for :readers, path: 'reader', controllers: {
     sessions: 'readers/sessions',
     registrations: 'readers/registrations',
@@ -40,6 +42,8 @@ Rails.application.routes.draw do
     resources :classies
     resources :readers
     resources :books
+
+    get "/review_occurrency/:occurrency_id", to: "application#review_occurrency", as: :review_occurrency
   end
 
   root to: "application#index"

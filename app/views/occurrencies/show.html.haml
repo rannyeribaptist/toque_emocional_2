@@ -1,22 +1,85 @@
 .animated.fadeIn
   .section
-    .section__content
-      = image_tag('brain-black.png', class: 'logo-default logo-default--small')
-      %h1{style: "margin: 50px 0"}= @occurrency.emotional_sphere.upcase
+    .section__content{style: "max-width: 1000px"}
+      - if @occurrency.finished
+        = image_tag('brain.png', class: 'logo-default logo-default--small')
+        %h1.title.title--thin.title--grey.title--large{style: "margin: 50px 0"} Ocorrência
 
-      %h2.title.title--small.title--thin{style: "margin: 50px 0"}= @occurrency.description
+        %h2.title.title--small.title--thin{style: "margin: 50px 0"}= @occurrency.description
+        %i{style: "float: right"}= 'Registrada em: ' + l(@occurrency.created_at.strftime("%d.%m.%Y").to_date).to_s
 
-      .columns.columns--small
-        .column.column--small.column--small--5
-          %h1.title.title--thin.title--small Estudantes
-          - @occurrency.occurrency_students.each do |student|
-            %p{style: "display: inline"}= student.name.capitalize + ","
-            %p{style: "display: inline"}= student.classy
-            %p{style: "display: inline"}= student.groupy
-            %br
+        %br
+        %br
 
-        .column.column--small.column--small--5
-          %h1.title.title--thin.title--small Registrado por
-          = @occurrency.filled_by
-          %br
-          = l(@occurrency.created_at.strftime("%d.%m.%Y").to_date)
+        %h1.title.title--thin.title--small Envolvidos
+        %div{style: "text-align: left"}
+          - @occurrency.occurrency_histories.each_slice(2) do |histories|
+            .columns.columns{style: "justify-content: center"}
+              - histories.each do |history|
+                - if not (@occurrency.occurrency_histories.count % 2 == 0) and (history == @occurrency.occurrency_histories.last)
+                  .card.card--with-border
+                    %h3= Student.find_by_id(history.student_id).name
+                    = Student.find_by_id(history.student_id).classy + ' - ' + Student.find_by_id(history.student_id).groupy
+
+                    %br
+                    %br
+                    %hr
+
+                    %p= Student.find_by_id(history.student_id).name + " registrou os seguintes sentimentos:"
+                    - history.emotions.each do |emotion|
+                      %i= Feeling.find_by_id(emotion).description
+                      %br
+
+                    %br
+
+                    = show_emotions(history.emotions)
+
+                    %br
+
+                    %small.float-right{style: "margin: 15px 0 0 0"}= link_to "Ver parecer do sistema", review_occurrency_path(@occurrency.id), class: "fancy-link fancy-link--blue"
+                    %br
+
+                - else
+
+                  .column.column.column--5
+                    .card.card--with-border{style: "padding-bottom: 25px"}
+                      %h3= Student.find_by_id(history.student_id).name
+                      = Student.find_by_id(history.student_id).classy + ' - ' + Student.find_by_id(history.student_id).groupy
+
+                      %br
+                      %br
+                      %hr
+
+                      %p= Student.find_by_id(history.student_id).name + " registrou os seguintes sentimentos:"
+                      - history.emotions.each do |emotion|
+                        %i= Feeling.find_by_id(emotion).description
+                        %br
+
+                      %br
+
+                      = show_emotions(history.emotions)
+
+                      %br
+
+                      %small.float-right{style: "margin: 15px 0 15px 0"}= link_to "Ver parecer do sistema", review_occurrency_path(@occurrency.id), class: "fancy-link fancy-link--blue"
+                      %br
+
+
+      - else
+        %h1.title.title--thin.title--large Passo 2: Esclarecer os sentimentos
+        %br
+        %h2.subtitle.title--thin Cada indivíduo deve descrever como se sentiu quando o fato aconteceu...
+        %br
+        %br
+
+        = render "show_feelings"
+
+        #thinking{style: "display: none"}
+          %h2.subtitle Pensando...
+
+        = simple_form_for(@occurrency, html: { class: "finish-form" }) do |f|
+          = f.input :finished, input_html: { value: "true" }, as: :hidden
+
+        - content_for(:modal) do
+          #modals
+            = render "modals"
