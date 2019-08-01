@@ -119,7 +119,7 @@ module ApplicationHelper
     return "É correto afirmar que você sentiu " + list
   end
 
-  def translate(kind)
+  def translate(kind, param2)
     return "para a Família" if kind == "family"
     return "em Grupo" if kind == "group"
     return "Individual" if kind == "individual"
