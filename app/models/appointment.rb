@@ -8,7 +8,7 @@ class Appointment < ApplicationRecord
   accepts_nested_attributes_for :appointment_comments, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :appointment_guests, reject_if: :all_blank, allow_destroy: true
 
-  validates_presence_of :school_id, :appointment_date, :appointment_time, :reason
+  validates_presence_of :school_id, :appointment_date, :appointment_time, :reason, :kind
 
   # has_trash
   self.per_page = 10
