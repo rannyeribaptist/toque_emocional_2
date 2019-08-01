@@ -1,7 +1,7 @@
 .animated.fadeIn
   .section
     .section__content
-      %h1.title.title--large= "Atendimento " + translate(@appointment.kind)
+      %h1.title.title--large= "Atendimento " + show_appointment_kind(@appointment.kind)
       %h3.subtitle.title--thin= "Instituição: " + @appointment.school.name
       %h3.subtitle.title--thin= " Data do atendimento: " + l(@appointment.appointment_date) + " às " + @appointment.appointment_time
 
@@ -46,7 +46,7 @@
             = student.name + ' - ' + student.classy + ' ' + student.groupy
             %br
 
-        %br        	
+        %br
         %hr
         %br
 
