@@ -33,6 +33,24 @@ function fields() {
   name.attr('data-update-elements', '{"classy":"#occurrency_occurrency_students_attributes_' + number + '_classy","groupy":"#occurrency_occurrency_students_attributes_' + number + '_groupy","id":"#occurrency_occurrency_students_attributes_' + number + '_student_id"}');
 }
 
+function guestsFields() {
+  let fields = $('#guests > .nested-fields').last();
+  let name = fields.children().first().children().first().children().last();
+  let number = name.attr('id');
+
+  number = number.replace('appointment_appointment_guests_attributes_', '').replace('_name', '');
+  name.attr('data-update-elements', '{"description":"#appointment_appointment_guests_attributes_' + number + '_description","school_id":"#appointment_appointment_guests_attributes_' + number + '_school_id"}');
+}
+
+function appointmentStudentsFields() {
+  let fields = $('#students > .nested-fields').last();
+  let name = fields.children().first().children().first().children().last();
+  let number = name.attr('id');
+
+  number = number.replace('appointment_appointment_students_attributes_', '').replace('_name', '');
+  name.attr('data-update-elements', '{"id":"#appointment_appointment_students_attributes_' + number + '_student_id","classy":"#appointment_appointment_students_attributes_' + number + '_classy","groupy":"#appointment_appointment_students_attributes_' + number + '_groupy"}');
+}
+
 $(document).ready(function(){
   $(".date").mask("00/00/0000");
 });
@@ -79,4 +97,25 @@ function turnToPage() {
   $("#flipbook").turn("page", $('#pageToTurn')[0].value);
   $('#pageToTurn')[0].value = "";
   toggleSideBar();
+}
+
+function setAppointment(element) {
+  element.addClass('appointment-title--selected');
+
+  element.removeClass('appointment-title--3');
+  element.removeClass('appointment-title--2');
+  element.removeClass('appointment-title--1');
+
+  element.addClass('appointment-title--2');
+
+  $('#appointment_kind').attr('value', element.attr('id'));
+  $('#main-title').fadeOut();
+
+  $('.appointment-title').each(function() { if ($(this).attr('id') != element.attr('id')) { $(this).fadeOut(); } });
+
+  setTimeout(function() { element[0].style.top = "0"; }, 1200);
+  setTimeout(function() {
+    $('.appointment-form').fadeIn();
+    $('.' + element.attr('id')).fadeIn();
+  }, 1400);
 }

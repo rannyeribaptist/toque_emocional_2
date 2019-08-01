@@ -1,6 +1,7 @@
 class Student < ApplicationRecord
   belongs_to :school
   has_many :occurrency_students
+  has_many :appointment_students
   has_many :student_documents
   has_many :occurrency_histories
 

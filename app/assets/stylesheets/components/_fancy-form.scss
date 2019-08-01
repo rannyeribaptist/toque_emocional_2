@@ -42,7 +42,6 @@
 .checkbox {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
 }
 
 #filterrific_sorted_by {
@@ -66,5 +65,11 @@
     align-items: center;
     text-align: left;
     justify-content: space-evenly;
-  }
+  }  
+}
+
+input[type="checkbox"] {
+  width: unset;
+  margin: 0;
+  margin-right: 5px;
 }

@@ -4,3 +4,9 @@
       %h1.title.title--thin Editar agendamento
 
       = render 'form'
+
+- content_for :javascript do
+  :javascript
+    $(document).ready(function() {
+      $('.#{@appointment.kind}').fadeIn();
+    })

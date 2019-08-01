@@ -1,6 +1,8 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+
   autocomplete :student, :name, :extra_data => [:classy, :groupy], :display_value => :funky_method
+  autocomplete :appointment_guest, :name, :extra_data => [:description, :school_id]
 
   layout "users"
 
@@ -32,8 +34,9 @@ class AppointmentsController < ApplicationController
   # GET /appointments/new
   def new
     @appointment = Appointment.new
-    @appointment.build_appointment_student
+    @appointment.appointment_students.build
     @appointment.appointment_comments.build
+    @appointment.appointment_guests.build
   end
 
   # GET /appointments/1/edit
@@ -44,7 +47,8 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-    create_student(@appointment.appointment_student, params[:appointment][:school_id])
+    create_students(params[:appointment][:appointment_students_attributes], @appointment) if params[:appointment][:appointment_students_attributes].present?
+    create_guests(@appointment.appointment_guests, @appointment) if @appointment.appointment_guests.any?
 
     respond_to do |format|
       if @appointment.save
@@ -60,7 +64,8 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
-    create_student(@appointment.appointment_student, params[:appointment][:school_id])
+    create_students(params[:appointment][:appointment_students_attributes], @appointment) if params[:appointment][:appointment_students_attributes].present?
+    create_guests(@appointment.appointment_guests, @appointment) if @appointment.appointment_guests.any?
 
     respond_to do |format|
       if @appointment.update(appointment_params)
@@ -90,8 +95,24 @@ class AppointmentsController < ApplicationController
     render :json => students.map { |student| {:id => student.id, :label => student.name, :value => student.name, :classy => student.classy, :groupy => student.groupy} }
   end
 
-  def create_student(student, school)
-    a = Student.find_or_create_by(name: student.name, classy: student.classy, groupy: student.groupy, school_id: school)
+  def autocomplete_guest_name
+    term = params[:term]
+    guests = AppointmentGuest.where('name LIKE ?', "%#{term}%").order(:name).all
+    guests = guests.where(school_id: current_user.school_id) if not is_admin?
+    render :json => guests.map { |guest| {:id => guest.id, :label => guest.name, :value => guest.name, :description => guest.description, school_id: guest.school_id} }
+  end
+
+  def create_guests(guests, appointment)
+    guests.each do |guest|
+      guest.school_id = appointment.school_id if guest.school_id == nil
+    end
+  end
+
+  def create_students(students, appointment)
+    students.each do |student|
+      st = Student.find_or_create_by(name: student[1]["name"], classy: student[1]["classy"], groupy: student[1]["groupy"], school_id: appointment.school_id)
+      student[1]["student_id"] = st.id
+    end
   end
 
   private
@@ -102,6 +123,10 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params.require(:appointment).permit(:closing, :school_id, :appointment_date, :appointment_time, :description, :reason, appointment_student_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy], appointment_comments_attributes: [:id, :name, :comment, :_destroy, :user_id, :invisible])
+      params.require(:appointment).permit(:kind, :spontaneous, :observations, :action_call, :referral, :redirecting, :closing, :school_id, :appointment_date, :appointment_time, :description, :reason,
+        appointment_student_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy],
+        appointment_comments_attributes: [:id, :name, :comment, :_destroy, :user_id, :invisible],
+        appointment_guests_attributes: [:id, :name, :description, :school_id, :_destroy],
+        appointment_students_attributes: [:name, :classy, :groupy, :_destroy, :id, :student_id])
     end
 end

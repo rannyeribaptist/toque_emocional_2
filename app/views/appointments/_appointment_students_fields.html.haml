@@ -1,0 +1,9 @@
+.nested-fields
+  .width--30
+    = f.input :name, label: "Nome completo", :url => autocomplete_student_name_appointments_path, :as => :autocomplete, :update_elements => {:classy => '#', :groupy => '#', :id => "#"}
+  .width--30
+    = f.input :classy, as: :select, label: "Ano", collection: Classy.all.collect {|p| [ p.name, p.name ] }
+  .width--30
+    = f.input :groupy, label: "Turma"
+  = f.input :student_id, as: :hidden
+  = link_to_remove_association icon('fas', 'times', class: "fancy-link--red"), f

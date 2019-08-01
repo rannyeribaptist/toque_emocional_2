@@ -1,6 +1,13 @@
 .animated.fadeIn
   .section
     .section__content
-      %h1.title.title--thin Agendar atendimento
+      .appointment-selection
+        %h1.title.title--thin#main-title{style: "position: absolute; top: 0"} Agendar atendimento
+        %h1.title.title--large.appointment-title.appointment-title--1#group{onclick: "setAppointment($(this))"} Coletivo
+        %h1.title.title--large.appointment-title.appointment-title--2#individual{onclick: "setAppointment($(this))"} Individual
+        %h1.title.title--large.appointment-title.appointment-title--3#family{onclick: "setAppointment($(this))"} Familiar
 
-      = render 'form'
+        %br
+
+        .appointment-form
+          = render "form"

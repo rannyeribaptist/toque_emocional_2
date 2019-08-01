@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
     resources :appointments do
       get :autocomplete_student_name, :on => :collection
+      get :autocomplete_guest_name, :on => :collection
     end
     resources :occurrencies do
       get :autocomplete_student_name, :on => :collection

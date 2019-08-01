@@ -1,0 +1,7 @@
+.nested-fields
+  .width--40
+    = f.input :name, label: "Nome completo", :url => autocomplete_guest_name_appointments_path, :as => :autocomplete, :update_elements => {:description => '#', :school_id => '#', :id => "#"}
+  .width--40
+    = f.input :description, label: "Parentesco/Descrição", placeholder: "ex.: funcionário, mãe, professor.."
+  = f.input :school_id, as: :hidden
+  = link_to_remove_association icon('fas', 'times', class: "fancy-link--red"), f

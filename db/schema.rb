@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_25_054007) do
+ActiveRecord::Schema.define(version: 2019_07_31_223009) do
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 2019_07_25_054007) do
     t.index ["user_id"], name: "index_appointment_comments_on_user_id"
   end
 
+  create_table "appointment_guests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "school_id"
+    t.bigint "appointment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_appointment_guests_on_appointment_id"
+  end
+
   create_table "appointment_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "appointment_id"
     t.string "name"
@@ -32,7 +42,9 @@ ActiveRecord::Schema.define(version: 2019_07_25_054007) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.timestamp "deleted_at"
+    t.bigint "student_id"
     t.index ["appointment_id"], name: "index_appointment_students_on_appointment_id"
+    t.index ["student_id"], name: "index_appointment_students_on_student_id"
   end
 
   create_table "appointments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -45,6 +57,12 @@ ActiveRecord::Schema.define(version: 2019_07_25_054007) do
     t.datetime "updated_at", null: false
     t.timestamp "deleted_at"
     t.text "closing"
+    t.string "kind"
+    t.string "referral"
+    t.string "redirecting"
+    t.string "action_call"
+    t.string "observations"
+    t.boolean "spontaneous"
     t.index ["school_id"], name: "index_appointments_on_school_id"
   end
 
@@ -239,7 +257,9 @@ ActiveRecord::Schema.define(version: 2019_07_25_054007) do
 
   add_foreign_key "appointment_comments", "appointments"
   add_foreign_key "appointment_comments", "users"
+  add_foreign_key "appointment_guests", "appointments"
   add_foreign_key "appointment_students", "appointments"
+  add_foreign_key "appointment_students", "students"
   add_foreign_key "appointments", "schools"
   add_foreign_key "book_comments", "books"
   add_foreign_key "book_comments", "readers"

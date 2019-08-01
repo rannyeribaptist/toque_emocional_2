@@ -229,3 +229,35 @@ body {
 .gtp::placeholder {
   color: black;
 }
+
+.appointment-selection {
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  position: relative;
+
+  @include breakpoint("medium") {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+.appointment-form {
+  display: none;
+  position: absolute;
+  top: 20%;
+  right: 0;
+  left: 0;
+
+  @include breakpoint("medium") {
+    right: 10%;
+    left: 10%;
+  }
+}
+
+@include breakpoint("medium") {
+  .width {
+    &--30 { width: 30% }    
+    &--40 { width: 40% }
+  }
+}

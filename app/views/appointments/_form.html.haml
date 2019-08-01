@@ -1,34 +1,73 @@
 -# frozen_string_literal: true
-= simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+= simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
-  - if is_admin?
-    = f.input :school_id, as: :select, collection: School.all.drop(1), label: "Escola", input_html: { class: "fancy-form__input fancy-form__select" }
-  - else
-    = f.input :school_id, as: :hidden, input_html: { value: School.find_by_id(current_user.school.id).id }
+  .group.individual{style: "display: none"}
+    .action--clean
+      = f.input :spontaneous, label: "Espontâneo"
 
-  .columns.columns--small
-    = f.simple_fields_for :appointment_student do |g|
-      .column.column--small.column--small--4{style: "margin-right: 15px"}
-        = g.input :name, label: "Nome completo", :url => autocomplete_student_name_appointments_path, :as => :autocomplete, :update_elements => {:classy => '.cid', :groupy => '.gid'}
-      .column.column--small.column--small--2{style: "margin-right: 15px"}
-        = g.input :classy, label: "Ano", input_html: { class: "cid fancy-form__input" }, as: :select, collection: Classy.all.collect {|p| [ p.name, p.name ] }
-      .column.column--small.column--small--4
-        = g.input :groupy, label: "Turma", input_html: { class: "gid fancy-form__input" }
-        -# = g.input :student_id, as: :hidden, input_html: { class: "sid" }
+  .family.group.individual{style: "display: none"}
+    - if is_admin?
+      = f.input :school_id, as: :select, collection: School.all.drop(1), label: "Escola", input_html: { class: "fancy-form__input fancy-form__select" } if not action_name == 'edit'
+      = f.input :school_id, as: :select, collection: School.all.drop(1), label: "Escola", input_html: { class: "fancy-form__input fancy-form__select", value: @appointment.school_id } if action_name == 'edit'
+    - else
+      = f.input :school_id, as: :hidden, input_html: { value: School.find_by_id(current_user.school.id).id }
 
-  .columns.columns--small
-    .column.column--small.column--small--5{style: "margin-right: 15px"}
-      = f.input :appointment_date, as: :string, label: "Data", input_html: {id: "date-picker", class: "string required fancy-form__input date"} if not action_name == 'edit'
-      = f.input :appointment_date, as: :string, label: "Data", input_html: {id: "date-picker", class: "string required fancy-form__input date", value: l(@appointment.appointment_date)} if action_name == 'edit'
-    .column.column--small.column--small--5
-      = f.input :appointment_time, label: "Hora", input_html: {id: "time-picker"}
+    .columns.columns--small
+      .column.column--small.column--small--5{style: "margin-right: 15px"}
+        = f.input :appointment_date, as: :string, label: "Data", input_html: {id: "date-picker", class: "string required fancy-form__input date"} if not action_name == 'edit'
+        = f.input :appointment_date, as: :string, label: "Data", input_html: {id: "date-picker", class: "string required fancy-form__input date", value: l(@appointment.appointment_date)} if action_name == 'edit'
+      .column.column--small.column--small--5
+        = f.input :appointment_time, label: "Hora", input_html: {id: "time-picker"}
 
-  = f.input :reason, label: "Motivo da solicitação", as: :text
+    = f.input :reason, label: "Queixa", as: :text
+    = f.input :action_call, label: "Chamada de ação"
+    = f.input :redirecting, label: "Direcionamento aos Educadores/Coordenação"
+    = f.input :observations, label: "Observações"
 
-  .text-center
-    = f.submit "Agendar", class: "button button--green fancy-link--white"
+  .individual.group{style: "display: none"}
+    = f.input :referral, label: "Encaminhamento"
+
+  .family.group{style: "display: none"}
+    #guests
+      %h2 Parentes/Convidados
+
+      = f.simple_fields_for :appointment_guests do |g|
+        = render "appointment_guests_fields", f: g
+      .links
+        %br
+        = link_to_add_association 'Adicionar', f, :appointment_guests, partial: "appointment_guests_fields", class: "button button--blue2 fancy-link fancy-link--white"
+
+  .group{style: "display: none"}
+    #students
+      %h2 Estudantes
+
+      = f.simple_fields_for :appointment_students do |h|
+        = render "appointment_students_fields", f: h
+      .links
+        %br
+        = link_to_add_association 'Adicionar', f, :appointment_students, partial: "appointment_students_fields", class: "button button--blue2 fancy-link fancy-link--white add_fields_2"
+
+  .individual{style: "display: none"}
+    %h2 Estudante
+
+    = f.simple_fields_for :appointment_students do |h|
+      .columns{style: "justify-content: center"}
+        .column.column--3
+          = h.input :name, label: "Nome completo", :url => autocomplete_student_name_appointments_path, :as => :autocomplete, :update_elements => {:classy => '#', :groupy => '#', :id => "#"}
+        .column.column--3
+          = h.input :classy, as: :select, label: "Ano", collection: Classy.all.collect {|p| [ p.name, p.name ] }
+        .column.column--3
+          = h.input :groupy, label: "Turma"
+
+  .family.group.individual{style: "display: none"}
+    .text-center
+      %br
+      %br
+      = f.submit "Agendar", class: "button button--green fancy-link--white"
+      %br
+      %br
 
 - content_for :javascript do
   :javascript
@@ -44,3 +83,14 @@
       'scrollDefault': 'now',
       'timeFormat': 'H:i'
     });
+
+    $('.add_fields').click(function(){
+      setTimeout(guestsFields, 200);
+    });
+
+    $('.add_fields_2').click(function(){
+      setTimeout(appointmentStudentsFields, 200);
+    });
+
+    setTimeout(guestsFields, 200);
+    setTimeout(appointmentStudentsFields, 200);
