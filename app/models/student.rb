@@ -1,9 +1,9 @@
 class Student < ApplicationRecord
   belongs_to :school
-  has_many :occurrency_students
-  has_many :appointment_students
-  has_many :student_documents
-  has_many :occurrency_histories
+  has_many :occurrency_students, dependent: :destroy
+  has_many :appointment_students, dependent: :destroy
+  has_many :student_documents, dependent: :destroy
+  has_many :occurrency_histories, dependent: :destroy
 
   accepts_nested_attributes_for :student_documents, allow_destroy: true, reject_if: :all_blank
 
