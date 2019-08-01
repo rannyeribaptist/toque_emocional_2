@@ -84,8 +84,9 @@ module ApplicationHelper
     list = ""
     quantity = Emotion.where(id: ids).count
     emotions = Emotion.where(id: ids)
+    passed = []
 
-    emotions.each do |emotion|
+    emotions.each_with_index do |emotion, i|
       if quantity == 1
         list += emotion.name
       elsif quantity == 2
@@ -93,9 +94,9 @@ module ApplicationHelper
         list += ' e ' + emotion.name if emotion == emotions.last
       else
         list += emotion.name if emotion == emotions.first
-        list += ', ' + emotion.name if not (emotion == emotions.first) or not (emotion == emotions.last)
+        list += ', ' + emotion.name if (emotion != emotions.first) and (emotion != emotions.last)
         list += ' e ' + emotion.name if emotion == emotions.last
-      end
+      end      
     end
 
     return "Estes sentimentos estão ligados à " + list

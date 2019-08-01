@@ -10,7 +10,7 @@
           - Emotion.all.each do |emotion|
             - emotion.feelings.each do |feeling|
               - if not feeling.description.empty?
-                = g.check_box :emotions, { multiple: true }, feeling.id, false
+                = g.check_box :emotions, { multiple: true }, feeling.emotion_id, false
                 %label{for: "occurrency[occurrency_histories_attributes][0][emotions][]"}= feeling.description
                 %br
         %br
