@@ -6,30 +6,35 @@
         %h2.subtitle.title--thin Descreva como você se sentiu... Quais das opções abaixo você acha que se encaixa melhor no que pode ter causado o ocorrido
         %br
         %br
-        %div{style: "width:fit-content; text-align:left; margin: 0 auto;"}
+        %div{style: "width:fit-content; text-align:left; margin: 0 auto;", id: "inputs_#{g.object.id}"}
           - Emotion.all.each do |emotion|
             - emotion.feelings.each do |feeling|
               - if not feeling.description.empty?
-                = g.check_box :emotions, { multiple: true }, feeling.emotion_id, false
-                %label{for: "occurrency[occurrency_histories_attributes][0][emotions][]"}= feeling.description
+                = g.check_box :emotions, { multiple: true, onclick: "enableSubmit(#{g.object.id})" }, feeling.emotion_id, false
+                %label= feeling.description
                 %br
         %br
         %br
-        %button.button.button--blue.fancy-link--white{onclick: "fadeForm('#{g.object.id}')"} Pronto
+        %button.button.button--blue.fancy-link--white{id: "done_#{g.object.id}",onclick: "fadeForm('#{g.object.id}')", disabled: "disabled"} Pronto
 
 :javascript
-  var count = 0;
+  $(document).ready(function() {
+    count = 0;
+    total = $('.card').filter(function() { return $(this).css('display') !== 'none'; }).length;
+
+  })
+
+  function enableSubmit(id) {
+    $('#inputs_' + id).children('input:checked').length > 0 ? $('#done_' + id).attr('disabled', false) : $('#done_' + id).attr('disabled', 'disabled');
+  }
+
   function fadeForm(id) {
     $('#modal_' + id).removeClass('modal--active');
     $('#card_' + id).fadeOut();
-    console.log('in the function');
-    console.log('count = ', count);
-    console.log('modals = ', $('.modal').length);
 
     count = count + 1;
 
-    if (count === $('.modal').length) {
-      console.log('true');
+    if (count === total) {
       setTimeout(function() {
         $('#thinking').fadeIn();
         $('.finish-form').submit();

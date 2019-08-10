@@ -40,8 +40,7 @@
                     %br
 
                 - else
-
-                  .column.column.column--5
+                  .column.column--5
                     .card.card--with-border{style: "padding-bottom: 25px"}
                       %h3= Student.find_by_id(history.student_id).name
                       = Student.find_by_id(history.student_id).classy + ' - ' + Student.find_by_id(history.student_id).groupy

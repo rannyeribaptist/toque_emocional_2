@@ -119,3 +119,17 @@ function setAppointment(element) {
     $('.' + element.attr('id')).fadeIn();
   }, 1400);
 }
+
+function checkInputs() {
+  var check = true;
+
+  $('select, textarea, input.input').each(function(){
+    if (!$(this).val()) { check = false }
+  });
+
+  if (check == true) {
+    $('#submit').removeAttr('disabled');
+  } else {
+    $('#submit').attr('disabled', 'disabled');
+  }
+}

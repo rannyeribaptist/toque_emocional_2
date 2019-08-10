@@ -60,21 +60,7 @@
       $('#occurrency_emotional_sphere').attr('value', $(this).attr("data-value"));
     });
 
-    setTimeout(fields, 200);
-
-    function checkInputs() {
-      var check = true;
-
-      $('select, textarea, input.input').each(function(){
-        if (!$(this).val()) { check = false }
-      });
-
-      if (check == true) {
-        $('#submit').removeAttr('disabled');
-      } else {
-        $('#submit').attr('disabled', 'disabled');
-      }
-    }
+    setTimeout(fields, 200);    
 
     $('select').on('change', function() {
       checkInputs();

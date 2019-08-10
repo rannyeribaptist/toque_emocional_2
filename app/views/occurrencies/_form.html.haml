@@ -3,19 +3,28 @@
   %strong= f.error_notification
   %p= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
-  = f.input :description, label: "Descrição do ocorrido"
-  = f.input :filled_by, label: "Preenchido por"
-  = f.input :emotional_sphere, label: "Atmosfera Emocional"
+  %h2.subtitle.title--thin Passo 1: Registrar o ocorrido
+  %h2.subtitle.title--thin Descreva em detalhes o que aconteceu
+  %br
 
-  %div{style: "text-align: center"}
-    %h2.title.title--thin.title--small Estudantes
-    %br
+  .action
+    - if is_admin?
+      = f.input :school_id, as: :select, collection: School.all.drop(1), label: "Escola", input_html: { class: "fancy-form__input fancy-form__select" }
+    - else
+      = f.input :school_id, as: :hidden, input_html: { value: School.find_by_id(current_user.school.id).id }
 
-    = f.simple_fields_for :occurrency_students do |g|
-      = render "occurrency_students_fields", f: g
-    .links
-      %br
-      = link_to_add_association 'Adicionar Estudante', f, :occurrency_students, partial: "occurrency_students_fields", class: "button button--green fancy-link fancy-link--white"
+    = f.input :description, label: "Tente buscar o ponto de vista de todos os envolvidos", as: :text, required: false
+
+  %br
+
+  %h2.subtitle.title--thin Adicione Todos os envolvidos
+
+  .action{style: "text-align: center"}
+    #tasks
+      = f.simple_fields_for :occurrency_students do |g|
+        = render "occurrency_students_fields", f: g
+      .links
+        = link_to_add_association 'Adicionar Estudante', f, :occurrency_students, partial: "occurrency_students_fields", class: "button button--green fancy-link fancy-link--white", onclick: "setTimeout(checkInputs, 200);"
 
   %br
   %br
