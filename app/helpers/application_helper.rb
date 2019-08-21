@@ -96,7 +96,7 @@ module ApplicationHelper
         list += emotion.name if emotion == emotions.first
         list += ', ' + emotion.name if (emotion != emotions.first) and (emotion != emotions.last)
         list += ' e ' + emotion.name if emotion == emotions.last
-      end      
+      end
     end
 
     return "Estes sentimentos estão ligados à " + list
@@ -125,4 +125,19 @@ module ApplicationHelper
     return "em Grupo" if ap_kind == "group"
     return "Individual" if ap_kind == "individual"
   end
+
+  def show_students(students)
+    list = ""
+    quantity = students.count
+
+    students.each do |student|
+      if student == students.first
+        list += student.name.split(' ').first.capitalize
+      else
+        list +=  ', ' + student.name.split(' ').first.capitalize
+      end
+    end
+    return list
+  end
+  
 end

@@ -23,22 +23,6 @@
 
     = f.input :reason, label: "Queixa", as: :text
     = f.input :kind, as: :hidden
-    = f.input :action_call, label: "Chamada de ação"
-    = f.input :redirecting, label: "Direcionamento aos Educadores/Coordenação"
-    = f.input :observations, label: "Observações"
-
-  .individual.group{style: "display: none"}
-    = f.input :referral, label: "Encaminhamento"
-
-  .family.group{style: "display: none"}
-    #guests
-      %h2 Parentes/Convidados
-
-      = f.simple_fields_for :appointment_guests do |g|
-        = render "appointment_guests_fields", f: g
-      .links
-        %br
-        = link_to_add_association 'Adicionar', f, :appointment_guests, partial: "appointment_guests_fields", class: "button button--blue2 fancy-link fancy-link--white"
 
   .group{style: "display: none"}
     #students
@@ -61,6 +45,16 @@
           = h.input :classy, as: :select, label: "Ano", collection: Classy.all.collect {|p| [ p.name, p.name ] }
         .column.column--3
           = h.input :groupy, label: "Turma"
+
+  .family.group{style: "display: none"}
+    #guests
+      %h2 Parentes/Convidados
+
+      = f.simple_fields_for :appointment_guests do |g|
+        = render "appointment_guests_fields", f: g
+      .links
+        %br
+        = link_to_add_association 'Adicionar', f, :appointment_guests, partial: "appointment_guests_fields", class: "button button--blue2 fancy-link fancy-link--white"
 
   .family.group.individual{style: "display: none"}
     .text-center
