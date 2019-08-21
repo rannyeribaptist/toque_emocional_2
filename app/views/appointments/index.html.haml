@@ -5,7 +5,7 @@
 
       = form_for_filterrific @filterrific, html: { class: "fancy-form fancy-form--inline" } do |f|
         %div
-          Buscar por palavra chave
+          BUSCAR POR PALAVRA CHAVE
           = f.text_field(                                |
               :search_query,                             |
               class: 'filterrific-periodically-observed fancy-form__input', |
@@ -14,17 +14,17 @@
 
         - if is_admin?
           %div
-            Escola
+            ESCOLA
             \#{f.select( :with_school_id, @filterrific.select_options[:with_school_id], { include_blank: 'Todas' }, class: "fancy-form__input fancy-form__select" )}
 
         %div
-          Estudante
+          ESTUDANTE
           \#{f.text_field( :student, class: "fancy-form__input fancy-form__select", placeholder: 'Nome do estudante' )}
         %div
-          Organizar por
+          ORGANIZAR POR
           = f.select( :sorted_by, @filterrific.select_options[:sorted_by] )
         %div
-          Data
+          DATA
           = f.select( :date, months(), { include_blank: 'Escolha um mês' }, class: "fancy-form__input fancy-form__select"  )
 
         %div

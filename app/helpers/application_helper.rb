@@ -121,9 +121,9 @@ module ApplicationHelper
   end
 
   def show_appointment_kind(ap_kind)
-    return "para a Família" if ap_kind == "family"
-    return "em Grupo" if ap_kind == "group"
-    return "Individual" if ap_kind == "individual"
+    return "EM FAMÍLIA" if ap_kind == "family"
+    return "EM GRUPO" if ap_kind == "group"
+    return "INDIVIDUAL" if ap_kind == "individual"
   end
 
   def show_students(students)
@@ -132,12 +132,12 @@ module ApplicationHelper
 
     students.each do |student|
       if student == students.first
-        list += student.name.split(' ').first.capitalize
+        list += '<strong>' + student.name.split(' ').first.capitalize + ' ' + student.name.split(' ').last.capitalize + '</strong> - ' + student.classy + ' ' + student.groupy
       else
-        list +=  ', ' + student.name.split(' ').first.capitalize
+        list +=  '<br> <strong>' + student.name.split(' ').first.capitalize + ' ' + student.name.split(' ').last.capitalize + '</strong> - ' + student.classy + ' ' + student.groupy
       end
     end
     return list
   end
-  
+
 end
