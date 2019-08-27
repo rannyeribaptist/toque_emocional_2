@@ -1,5 +1,9 @@
 // Colors
 $yellow: #FFEC48;
+$yellow-1: scale-color(#FFEC48, $lightness: 10%);
+$yellow-2: darken(#FFEC48, 15%);
+$yellow-3: darken(#FFEC48, 20%);
+$yellow-4: darken(#FFEC48, 25%);
 $dark-yellow: #ffca0c;
 $cyan: #09b7d4;
 $green: #07b107;
@@ -69,9 +73,13 @@ $golden: #7F7A4A;
 
   @else if $attribute == background-color {
     &--dark-yellow { background-color: $dark-yellow };
+    &--yellow { background-color: $yellow };
+    &--yellow-1 { background-color: $yellow-1 };
+    &--yellow-2 { background-color: $yellow-2 };
+    &--yellow-3 { background-color: $yellow-3 };
+    &--yellow-4 { background-color: $yellow-4 };
     &--cyan { background-color: $cyan };
     &--green { background-color: $green };
-    &--yellow { background-color: $yellow };
     &--blue { background-color: $blue };
     &--blue2 { background-color: $blue2 };
     &--grey { background-color: $grey };

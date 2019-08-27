@@ -1,90 +1,45 @@
 - if is_admin?
   %br
 
-  - if @appointment.closing.present?
-    %button.button.button--blue2.fancy-link--white{style: "margin-bottom: 5px", onclick: "$('#closing').toggle()", "data-turbolinks" => "false"} Editar fechamento do caso
-    #closing{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :closing, label: "Preencha o Parecer final do atendimento"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
-  - else
-    %button.button.button--blue2.fancy-link--white{style: "margin-bottom: 5px", onclick: "$('#closing').toggle()", "data-turbolinks" => "false"} Fazer fechamento do caso
-    #closing{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :closing, label: "Preencha o Parecer final do atendimento"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
+  %button.button.button--yellow-1.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#closing').toggle()", "data-turbolinks" => "false"}= show_button_title('closing', @appointment)
+  #closing{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :closing, label: "Preencha o Parecer final do atendimento"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
 
-  - if @appointment.referral.present?
-    %button.button.button--blue.fancy-link--white{style: "margin-bottom: 5px", onclick: "$('#referral').toggle()", "data-turbolinks" => "false"} Editar encaminhamento
-    #referral{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :referral, label: "Encaminhamento"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
-  - else
-    %button.button.button--blue.fancy-link--white{style: "margin-bottom: 5px", onclick: "$('#referral').toggle()", "data-turbolinks" => "false"} Fazer encaminhamento
-    #referral{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :referral, label: "Encaminhamento"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
+  %button.button.button--yellow.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#referral').toggle()", "data-turbolinks" => "false"}= show_button_title('referral', @appointment)
+  #referral{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :referral, label: "Encaminhamento"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
 
-  - if @appointment.action_call.present?
-    %button.button.button--dark-yellow.fancy-link--white{style: "margin-bottom: 5px", onclick: "$('#action_call').toggle()", "data-turbolinks" => "false"} Editar chamada de ação
-    #action_call{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :action_call, label: "Chamada de ação"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
-  - else
-    %button.button.button--dark-yellow.fancy-link--white{style: "margin-bottom: 5px", onclick: "$('#action_call').toggle()", "data-turbolinks" => "false"} Fazer chamada de ação
-    #action_call{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :action_call, label: "Chamada de ação"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
+  %button.button.button--yellow-2.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#action_call').toggle()", "data-turbolinks" => "false"}= show_button_title('action_call', @appointment)
+  #action_call{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :action_call, label: "Chamada de ação"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
 
-  - if @appointment.redirecting.present?
-    %button.button.button--grey.fancy-link--white{style: "margin-bottom: 5px", onclick: "$('#redirecting').toggle()", "data-turbolinks" => "false"} Editar direcionamento aos educadores/coordenação
-    #redirecting{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :redirecting, label: "Direcionamento aos Educadores/Coordenação"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
-  - else
-    %button.button.button--grey.fancy-link--white{style: "margin-bottom: 5px", onclick: "$('#redirecting').toggle()", "data-turbolinks" => "false"} Fazer direcionamento aos educadores/coordenação
-    #redirecting{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :redirecting, label: "Direcionamento aos Educadores/Coordenação"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
+  %button.button.button--yellow-3.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#redirecting').toggle()", "data-turbolinks" => "false"}= show_button_title('redirecting', @appointment)
+  #redirecting{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :redirecting, label: "Direcionamento aos Educadores/Coordenação"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
 
-  - if @appointment.observations.present?
-    %button.button.button--light-grey.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#observations').toggle()", "data-turbolinks" => "false"} Editar observações
-    #observations{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :observations, label: "Observações"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
-  - else
-    %button.button.button--light-grey.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#observations').toggle()", "data-turbolinks" => "false"} Fazer observações
-    #observations{style: "display: none"}
-      %br
-      %br
-      = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-        = f.input :observations, label: "Observações"
-        = f.submit "Enviar", class: "button button--green fancy-link--white"
+  %button.button.button--yellow-4.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#observations').toggle()", "data-turbolinks" => "false"}= show_button_title('observations', @appointment)
+  #observations{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :observations, label: "Observações"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
 
 .action
 

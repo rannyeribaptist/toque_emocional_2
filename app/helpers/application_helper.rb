@@ -117,7 +117,7 @@ module ApplicationHelper
       end
     end
 
-    return "É correto afirmar que você sentiu " + list
+    return "É correto afirmar que você sentiu " + list + "?"
   end
 
   def show_appointment_kind(ap_kind)
@@ -140,4 +140,18 @@ module ApplicationHelper
     return list
   end
 
+  def show_button_title(type, appointment)
+    case type
+      when "closing"
+        return appointment.closing.present? ? "Editar fechamento do caso" : "Fazer fechamento do caso"
+      when "referral"
+        return appointment.closing.present? ? "Editar encaminhamento" : "Fazer encaminhamento"
+      when "action_call"
+        return appointment.closing.present? ? "Editar chamada de ação" : "Fazer chamada de ação"
+      when "redirecting"
+        return appointment.closing.present? ? "Editar direcionamento" : "Fazer direcionamento"
+      when "observations"
+        return appointment.closing.present? ? "Editar observações" : "Fazer observações"
+      end
+  end
 end
