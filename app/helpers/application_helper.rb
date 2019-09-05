@@ -142,16 +142,35 @@ module ApplicationHelper
 
   def show_button_title(type, appointment)
     case type
-      when "closing"
-        return appointment.closing.present? ? "Editar fechamento do caso" : "Fazer fechamento do caso"
-      when "referral"
-        return appointment.closing.present? ? "Editar encaminhamento" : "Fazer encaminhamento"
-      when "action_call"
-        return appointment.closing.present? ? "Editar chamada de ação" : "Fazer chamada de ação"
-      when "redirecting"
-        return appointment.closing.present? ? "Editar direcionamento" : "Fazer direcionamento"
-      when "observations"
-        return appointment.closing.present? ? "Editar observações" : "Fazer observações"
+    when "closing"
+      return appointment.closing.present? ? "Editar fechamento do caso" : "Fazer fechamento do caso"
+    when "referral"
+      return appointment.referral.present? ? "Editar encaminhamento" : "Fazer encaminhamento"
+    when "action_call"
+      return appointment.action_call.present? ? "Editar chamada de ação" : "Fazer chamada de ação"
+    when "redirecting"
+      return appointment.redirecting.present? ? "Editar direcionamento" : "Fazer direcionamento"
+    when "observations"
+      return appointment.observations.present? ? "Editar observações" : "Fazer observações"    
+    end
+  end
+
+  def show_appointment_comment_form_title
+    return is_admin? ? "Registrar evolução" : "Fazer um comentário"
+  end
+
+  def show_appointment_comment_form(appointment)
+    case appointment.appointment_comments.count
+    when 0
+      return true
+    when 1
+      if (is_admin?) and (not appointment.appointment_comments.where(user_id: 1).present?)
+        return true
+      elsif (not is_admin?) and (appointment.appointment_comments.where(user_id: 1).present?)
+         return true
       end
+    when 2
+      return false
+    end
   end
 end

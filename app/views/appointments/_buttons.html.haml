@@ -1,0 +1,51 @@
+- if is_admin?
+  %br
+
+  %button.button.button--yellow-1.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#referral').toggle()", "data-turbolinks" => "false"}= show_button_title('referral', @appointment)
+  #referral{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :referral, label: "Encaminhamento"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
+
+  %button.button.button--yellow-2.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#action_call').toggle()", "data-turbolinks" => "false"}= show_button_title('action_call', @appointment)
+  #action_call{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :action_call, label: "Chamada de ação"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
+
+  %button.button.button--yellow.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#redirecting').toggle()", "data-turbolinks" => "false"}= show_button_title('redirecting', @appointment)
+  #redirecting{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :redirecting, label: "Direcionamento aos Educadores/Coordenação"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
+
+  %br
+
+  %button.button.button--yellow-3.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#observations').toggle()", "data-turbolinks" => "false"}= show_button_title('observations', @appointment)
+  #observations{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :observations, label: "Observações"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
+
+  %button.button.button--yellow-4.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#closing').toggle()", "data-turbolinks" => "false"}= show_button_title('closing', @appointment)
+  #closing{style: "display: none"}
+    %br
+    %br
+    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :closing, label: "Preencha o Parecer final do atendimento"
+      = f.submit "Enviar", class: "button button--green fancy-link--white"
+
+  - if show_appointment_comment_form(@appointment)
+    %button.button.button--yellow-5.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#comment_form').toggle()", "data-turbolinks" => "false"} Registrar evolução
+
+- else
+  - if show_appointment_comment_form(@appointment)
+    %button.button.button--yellow-5.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#comment_form').toggle()", "data-turbolinks" => "false"} Fazer comentário

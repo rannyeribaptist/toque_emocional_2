@@ -1,9 +1,10 @@
 // Colors
 $yellow: #FFEC48;
 $yellow-1: scale-color(#FFEC48, $lightness: 10%);
-$yellow-2: darken(#FFEC48, 15%);
-$yellow-3: darken(#FFEC48, 20%);
-$yellow-4: darken(#FFEC48, 25%);
+$yellow-2: scale-color(#FFEC48, $lightness: 5%);
+$yellow-3: darken(#FFEC48, 5%);
+$yellow-4: darken(#FFEC48, 10%);
+$yellow-5: darken(#FFEC48, 15%);
 $dark-yellow: #ffca0c;
 $cyan: #09b7d4;
 $green: #07b107;
@@ -78,6 +79,7 @@ $golden: #7F7A4A;
     &--yellow-2 { background-color: $yellow-2 };
     &--yellow-3 { background-color: $yellow-3 };
     &--yellow-4 { background-color: $yellow-4 };
+    &--yellow-5 { background-color: $yellow-5 };
     &--cyan { background-color: $cyan };
     &--green { background-color: $green };
     &--blue { background-color: $blue };

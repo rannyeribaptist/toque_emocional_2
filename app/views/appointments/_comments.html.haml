@@ -25,12 +25,13 @@
               = g.check_box '_destroy', checked: 'checked'
 
         - if is_admin?
+          %a.fancy-link.fancy-link--grey{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 15px 40px", onclick: "$('#ac_#{comment.id}_s').toggle();$('#ac_#{comment.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--grey")
+          %a.fancy-link.fancy-link--grey{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 15px", onclick: "if (confirm('Tem certeza que quer excluir esse comentário?')) { $('#delete_attribute_#{comment.id}').submit()};"}= icon('fas', 'trash', class: "fancy-link fancy-link--grey")
+          
           - if comment.invisible == true
             = link_to icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_path(@appointment, appointment: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "false" } } }), :method => :patch
           - else
             = link_to icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_path(@appointment, appointment: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "true" } } }), :method => :patch
-        %a.fancy-link.fancy-link--grey{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 15px 40px", onclick: "$('#ac_#{comment.id}_s').toggle();$('#ac_#{comment.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--grey")
-        %a.fancy-link.fancy-link--grey{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 15px", onclick: "if (confirm('Tem certeza que quer excluir esse comentário?')) { $('#delete_attribute_#{comment.id}').submit()};"}= icon('fas', 'trash', class: "fancy-link fancy-link--grey")
 
     - else
       .appointment-card{style: "border-left-color: #{comment.user.school.color}; position: relative; margin-bottom: 20px"}
