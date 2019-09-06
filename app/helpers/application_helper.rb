@@ -102,22 +102,50 @@ module ApplicationHelper
     return "Estes sentimentos estão ligados à " + list
   end
 
-  def show_emotion_descriptions(ids)
-    list = ""
-    quantity = Emotion.where(id: ids).count
-    emotions = Emotion.where(id: ids)
+  def show_students_in_occurrencies(histories, emotion)
+    list = []
+    counter = 0
+    students = ""
 
-    entries = ["Pode ser que você tenha sentido ", "Talvez você tenha sentido também ", "Também é correto dizer que você sentiu "]
-
-    emotions.each do |emotion|
-      if emotion == emotions.first
-        list += '<strong>' + emotion.name + '</strong>' + '. ' + emotion.description
-      else
-        list += '. <br><br>' + entries.sample + '<strong>' + emotion.name + '</strong>' + '. ' + emotion.description
+    histories.each_with_index do |history|
+      if history.emotions.include?(emotion.id.to_s)
+        list[counter] = Student.find_by_id(history.student_id).name.split(' ').first + ' ' + Student.find_by_id(history.student_id).name.split(' ')[1] if Student.find_by_id(history.student_id).name.split(' ').length > 1
+        list[counter] = Student.find_by_id(history.student_id).name.split(' ').first if Student.find_by_id(history.student_id).name.split(' ').length == 1
+        counter += 1
       end
     end
 
-    return "É correto afirmar que você sentiu " + list + "?"
+    list.each do |student|
+      if counter == 1
+        students = student
+      elsif counter == 2
+        students += student if student == list.first
+        students += ' e ' + student if student == list.last
+      else
+        students += student if student == list.first
+        students += ', ' + student if (student != list.first) and (student != list.last)
+        students += ' e ' + student if student == list.last
+      end
+    end
+
+    return "<strong>" + students + ".</strong> " + emotion.description
+  end
+
+  def pick_emotions(histories)
+    emotions = Emotion.all
+    ids = []
+    counter = 0
+
+    histories.each do |history|
+      history.emotions.each do |emotion|
+        if not ids.include?(emotion)
+          ids[counter] = emotion.to_i
+          counter += 1
+        end
+      end
+    end
+
+    return Emotion.where(id: ids)
   end
 
   def show_appointment_kind(ap_kind)
@@ -151,7 +179,7 @@ module ApplicationHelper
     when "redirecting"
       return appointment.redirecting.present? ? "Editar direcionamento" : "Fazer direcionamento"
     when "observations"
-      return appointment.observations.present? ? "Editar observações" : "Fazer observações"    
+      return appointment.observations.present? ? "Editar observações" : "Fazer observações"
     end
   end
 

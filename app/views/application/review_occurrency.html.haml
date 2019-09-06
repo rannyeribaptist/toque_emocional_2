@@ -1,27 +1,25 @@
-- @histories.each_with_index do |history, i|
+- pick_emotions(@histories).each_with_index do |emotion, i|
   .slide.slide--white.animated.fadeIn{id: "#{i}"}
     .slide__content
       .slide__group{style: "padding-bottom: 0"}
         = image_tag('brain.png', class: 'logo-default logo-default--small', style: "margin-bottom: 25px")
 
-        %h1.title.title--thin.title--grey.title--large= Student.find_by_id(history.student_id).name
+        %h1.title.title--thin.title--grey.title--large= emotion.name
+
       .slide__group{style: "justify-content: center"}
-        %h2.subtitle.title--thin.title--grey= show_emotion_descriptions(history.emotions).html_safe
+        %h2.subtitle.title--thin.title--grey= show_students_in_occurrencies(@histories, emotion).html_safe
 
         %br
 
       .slide__group
-        - if i+1 == (@histories.count)
+        - if i + 1 == pick_emotions(@histories).count
+          = link_to occurrency_path(@occurrency) do
+            %h2fancy-link.fancy-link--grey.title.title--thin.title--small.float-right Concluído
+        - if not i == 0
           %div{style: "margin-top: 10px"}
             %h2.next-slide.fancy-link--grey.fancy-link.title.title--thin.title--small{href: "#", "data-target" => "#{i-1}", "data-turbolinks" => "false", style: "float: left"} Voltar
-            = link_to occurrency_path(@occurrency) do
-              %h2fancy-link.fancy-link--grey.title.title--thin.title--small.float-right Concluído
-        - elsif i == 0
+        - if not i + 1 == pick_emotions(@histories).count
           %div{style: "margin-top: 10px"}
-            %h2.next-slide.fancy-link--grey.fancy-link.title.title--thin.title--small.float-right{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false"} Próximo
-        - else
-          %div{style: "margin-top: 10px"}
-            %h2.next-slide.fancy-link--grey.fancy-link.title.title--thin.title--small{href: "#", "data-target" => "#{i-1}", "data-turbolinks" => "false", style: "float: left"} Voltar
             %h2.next-slide.fancy-link--grey.fancy-link.title.title--thin.title--small.float-right{href: "#", "data-target" => "#{i+1}", "data-turbolinks" => "false"} Próximo
 
 
