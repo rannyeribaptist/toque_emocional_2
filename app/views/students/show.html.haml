@@ -13,44 +13,70 @@
       %br
       %br
 
-      %h2.title.title--thin Documentos e arquivos
-
       - if @student.student_documents.any?
-        - @student.student_documents.each_slice(4) do |sds|
-          .columns{style: "justify-content: center; align-items: center"}
-            - sds.each do |sd|
-              .column.column--3
-                %div.card.card--with-border{style: "text-align: left; max-width: 200px; position: relative"}
-                  %div{id: "sd_#{sd.id}_s"}
-                    %strong= sd.name
-                    %br
-                    %br
-                    %a.fancy-link.fancy-link--blue{href: "#{sd.file}", target: "_blank"}= icon('fas', 'eye', "Visualizar arquivo")
+        %h2 Documentos e Arquivos
 
-                  %div{id: "sd_#{sd.id}_e", style: "display: none"}
-                    = simple_form_for @student, defaults: { input_html: { class: "fancy-form__input" } } do |student|
-                      = student.simple_fields_for :student_documents, sd do |f|
-                        = f.input :name, label: "Nome do documento"
-                        = f.input :file, label: "Arquivo"
-                        %br
-                        = f.submit "Enviar", class: "button button--green fancy-link--white"
-                  %div{id: "sd_#{sd.id}_d", style: "display: none"}
-                    = simple_form_for(@student, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form", id: "delete_attribute_#{sd.id}" }) do |f|
-                      = f.simple_fields_for :student_documents, sd do |g|
-                        = g.check_box '_destroy', checked: 'checked'
+        .slider{style: "width: 100%; overflow: hidden"}
+          .slider__content{style: "overflow-x:scroll; display: -webkit-inline-box; width: -webkit-fill-available;"}
+            - @student.student_documents.each do |sd|
+              .card.card--with-border{style: "width: 250px; text-align: left; position: relative"}
+                %div{id: "sd_#{sd.id}_s"}
+                  %strong= sd.name
+                  %br
+                  %br
+                  %a.fancy-link.fancy-link--blue{href: "#{sd.file}", target: "_blank"}= icon('fas', 'eye', "Visualizar arquivo")
 
-                  %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 10px 30px", onclick: "$('#sd_#{sd.id}_s').toggle();$('#sd_#{sd.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--blue2")
-                  %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 10px", onclick: "if (confirm('Tem certeza que quer excluir esse comentário?')) { $('#delete_attribute_#{sd.id}').submit()};"}= icon('fas', 'trash', class: "fancy-link fancy-link--red")
+                %div{id: "sd_#{sd.id}_d", style: "display: none"}
+                  = simple_form_for(@student, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form", id: "delete_attribute_#{sd.id}" }) do |f|
+                    = f.simple_fields_for :student_documents, sd do |g|
+                      = g.check_box '_destroy', checked: 'checked'
 
-        %br
+                %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 10px", onclick: "if (confirm('Tem certeza que quer excluir esse comentário?')) { $('#delete_attribute_#{sd.id}').submit()};"}= icon('fas', 'trash', class: "fancy-link fancy-link--red")
         %br
 
-      - else
-        = image_tag('brain.png', class: "logo-default logo-default--small")
-        %h1.title.title--grey Não há nenhum documento por enquanto...
+      - if @student.appointment_students.any?
+        %h2 Histórico de Atendimentos
+
+        .slider{style: "width: 100%; overflow: hidden"}
+          .slider__content{style: "overflow-x:scroll; display: -webkit-inline-box; width: -webkit-fill-available;"}
+            - @student.appointment_students.each do |as|
+              = link_to appointment_path(as.appointment), style: "color: unset; display: block; text-decoration: none;" do
+                .card.card--with-border{style: "width: 250px; position: relative; padding-bottom: 30px"}
+                  %strong= "ATENDIMENTO " + show_appointment_kind(as.appointment.kind)
+                  %br
+                  %br
+                  %div{style: "text-align: left"}
+                    = as.appointment.reason.first(100) + "..."
+                    %br
+                    %br
+                  %div{style: "right: 10px; bottom: 10px; position: absolute"}
+                    %em= l(as.appointment.appointment_date) + " às " + as.appointment.appointment_time
+
+        %br
+
+      - if @student.occurrency_students.any?
+        %h2 Histórico de Ocorrências
+
+        .slider{style: "width: 100%; overflow: hidden"}
+          .slider__content{style: "overflow-x:scroll; display: -webkit-inline-box; width: -webkit-fill-available;"}
+            - @student.occurrency_students.each do |os|
+              = link_to occurrency_path(os.occurrency), style: "color: unset; display: block; text-decoration: none;" do
+                .card.card--with-border{style: "width: 250px; position: relative; padding-bottom: 30px"}
+                  %strong OCORRÊNCIA
+                  %br
+                  %br
+                  %div{style: "text-align: left"}
+                    = os.occurrency.description.first(100) + "..."
+                    %br
+                    %br
+                  %div{style: "right: 10px; bottom: 10px; position: absolute"}
+                    %em= os.occurrency.created_at.strftime("%d/%m/%Y - %H:%m")
+
+        %br
+
 
       %div{style: "text-align: left"}
-        %strong Adicionar documento
+        %h3 Adicionar documento
 
         %br
         %br

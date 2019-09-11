@@ -106,6 +106,8 @@ group :development do
   gem 'guard'
   gem 'guard-zeus'
   gem 'rack-livereload'
+  # Database diagrams generator
+  gem 'rails-erd', group: :development
 end
 
 
