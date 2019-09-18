@@ -68,5 +68,7 @@ Rails.application.routes.draw do
   # Relatories routes
   get "/relatories", to: "relatories#index", as: :relatories
   get "/relatories/appointments", to: "relatories#appointments", as: :appointments_relatory
+  get "/relatories/occurrencies", to: "relatories#occurrencies", as: :occurrencies_relatory
   get "/relatories/print_appointments/:ids", to: "relatories#print_appointments", as: :print_appointments_relatory
+  get "/relatories/print_occurrencies/:ids", to: "relatories#print_occurrencies", as: :print_occurrencies_relatory
 end

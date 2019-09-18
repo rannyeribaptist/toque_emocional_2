@@ -1,0 +1,131 @@
+.animated.fadeIn
+  .section
+    .section__content
+      %h1 Relatório de Ocorrências
+
+      %div{style: "text-align: left"}
+        %h3 Ocorrências Selecionados
+
+        .table
+          %table.table
+            %thead
+              %tr
+                %th{style: "width: 20px"}
+                %th ESTUDANTES
+                %th DESCRIÇÃO
+                %th EMOÇÕES
+                %th DATA
+                %th STATUS
+                %th
+            %tbody#selected
+
+
+        %div#start{style: "text-align: center"}
+          %br
+          %br
+          = image_tag('brain.png', class: "logo-default logo-default--small")
+          %h1.title.title--grey Ainda não há atendimentos selecionados
+
+
+      %br
+      %button.button.button--blue2.fancy-link.fancy-link--white{onclick: "$('#modal').addClass('modal--active')"} Adicionar Ocorrências
+      = link_to "Próximo", print_occurrencies_relatory_path(ids: ""), class: "button button--green fancy-link fancy-link--white", id: "next-button", style: "display: none"
+
+
+- content_for :modal do
+  .modal#modal
+    = icon('fas', 'times', onclick: "$('#modal').removeClass('modal--active')", class: "modal__close")
+    .modal__inner.animated
+      = form_for_filterrific @filterrific, html: { class: "fancy-form" }, remote: true do |f|
+        %div.filter-divider
+          %div
+            Buscar por palavra chave
+            = f.text_field(                                |
+                :search_query,                             |
+                class: 'filterrific-periodically-observed fancy-form__input', |
+                placeholder: 'Buscar palavras chave...' |
+              )                                            |
+
+          - if is_admin?
+            %div
+              Escola
+              \#{f.select( :with_school_id, @filterrific.select_options[:with_school_id], { include_blank: 'Todas' }, class: "fancy-form__input fancy-form__select" )}
+          %div
+            ESTUDANTE
+            \#{f.text_field( :student, class: "fancy-form__input fancy-form__select", placeholder: 'Nome do estudante' )}
+          %div
+            EMOÇÃO
+            = f.select( :emotions, show_all_emotions(), { include_blank: 'Status' }, class: "fancy-form__input fancy-form__select"  )
+          %div
+            Organizar por
+            = f.select( :sorted_by, @filterrific.select_options[:sorted_by] )
+          %div
+            STATUS
+            %select#with_status.fancy-form__input.fancy-form__select
+              %option{:value => "all"} Todos
+              %option{:value => "ongoing"} Em processo
+              %option{:value => "done"} Concluído
+
+      = render_filterrific_spinner
+
+      #filterrific_results
+        = render(                           |
+            partial: 'relatories/occurrencies_list',       |
+            locals: { occurrencies: @occurrencies } |
+          )                                 |
+
+
+- content_for :javascript do
+  :javascript
+    var selected = [];
+
+    $(document).ajaxComplete(function() {
+      var status = $('#with_status').children("option:selected").attr('value');
+
+      if (status == "open") {
+        $('.done').remove();
+        $('.ongoing').remove();
+      } else if (status == "ongoing") {
+        $('.open').remove();
+        $('.done').remove();
+      } else  if (status == "done") {
+        $('.open').remove();
+        $('.ongoing').remove();
+      }
+
+      $.each(selected, function(key, value) {
+        if ($('#' + value)[0] !== undefined) {
+          $('#' + value).remove();
+        }
+      })
+    });
+
+    function addOccurrency(id) {
+      selected = updateList(selected, id);
+
+      $('#next-button').attr('href', '/relatories/print_occurrencies/' + String(selected).replace(/,/g, '%2F'));
+      sendAppointment(id);
+    }
+
+    function addAllOccurrencies() {
+      $('#list').children('.occurrency').each(function() {
+        var id = $(this)[0].id;
+        selected = updateList(selected, id);
+
+        $('#next-button').attr('href', '/relatories/print_occurrencies/' + String(selected).replace(/,/g, '%2F'));
+        sendAppointment(id);
+      });
+    }
+
+    function removeSelected(id) {
+      selected = jQuery.grep(selected, function(value) {
+        return value != id;
+      });
+
+      if (selected.length == 0) {
+        $('#start')[0].style.display = "block";
+        $('#next-button')[0].style.display = "none";
+      }
+
+      updateLink();
+    }

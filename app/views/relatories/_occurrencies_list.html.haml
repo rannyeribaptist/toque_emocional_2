@@ -1,0 +1,44 @@
+- if not occurrencies.empty?
+  .table{style: "height: 400px;overflow: scroll;"}
+    %table.table
+      %thead
+        %tr
+          %th{style: "width: 20px"}
+          %th ESTUDANTES
+          %th DESCRIÇÃO
+          %th EMOÇÕES
+          %th DATA
+          %th STATUS
+          %th
+          %th
+          %th
+      %tbody#list
+        - occurrencies.each do |occurrency|
+          %tr{id: "#{occurrency.id}", class: "occurrency #{ occurrency.finished ? 'done' : 'ongoing' }"}
+            %td
+              %div{style: "background-color: #{School.find_by_id(occurrency.school_id).color}; width: 20px; height: 20px;"}
+            %td{style: "text-align: justify"}= show_students(occurrency.occurrency_students).html_safe
+            %td= occurrency.description.first(100) + "..."
+            %td= show_emotions(pick_emotions(occurrency.occurrency_histories).map { |emotion| emotion.id })
+            %td= l(occurrency.created_at.strftime("%d.%m.%Y").to_date)
+            %td
+              - if occurrency.finished
+                .status.status--green
+                  Concluído
+              - else
+                .status.status--blue2
+                  Em processo
+            %td.add-button{style: "text-align: center"}
+              %text.fancy-link.fancy-link--green{style: "cursor: pointer", onclick: "addOccurrency('#{occurrency.id}')"}= icon('fas', 'plus', 'Adicionar', class: "fancy-link fancy-link--green")
+            %td{style: "text-align: center"}
+              %text.fancy-link.fancy-link--red{style: "cursor: pointer", onclick: "removeSelected('#{occurrency.id}');$(this).closest('tr').remove()"}= icon('fas', 'times', 'Remover', class: "fancy-link fancy-link--red")
+
+  %br
+  %button.button.button--yellow.fancy-link.fancy-link--black{onclick: "addAllOccurrencies()"} Adicionar todos
+  %button.button.button--green.fancy-link.fancy-link--white{onclick: "$('#modal').removeClass('modal--active')"} Concluído
+
+- else
+  %br
+  %br
+  = image_tag('brain.png', class: "logo-default logo-default--small")
+  %h1.title.title--grey Não há nada disso por aqui...
