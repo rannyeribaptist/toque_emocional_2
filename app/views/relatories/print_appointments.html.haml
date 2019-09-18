@@ -1,92 +1,117 @@
-.print-only
-  = image_tag("logo.png", class: "bg");
-
-
-.cont
+.no-print
   = image_tag("logo.png", class: "logo-default");
   .relatory-header
     .relatory-header__inner
-      %h1.title.title--thin Relatório de Atendimentos
-
-      %strong Preenchido por:
-      %input{type: "text"}
-
-      %br
-
-      %strong Data:
-      %input{type: "text"}
-
-      %br
-
-      %strong Local:
-      %input{type: "text"}
-
-      .print-only
-        %br
-        %br
-        #content
-
       .no-print
+        %h3 Considerações/Parecer do relatório:
+
         .formatable
-        %button.button.button--blue2.fancy-link--white Terminei de escrever!
+        -# %button.button.button--green.fancy-link.fancy-link--white.no-print{onclick: "window.print();"} Terminei de escrever!
+        %button.button.button--green.fancy-link.fancy-link--white.no-print{onclick: "window.print();"}= icon('fas', 'print', 'Imprimir')
 
+- if not @appointments.empty?
+  %table
+    %thead
+      %tr
+        %td
+          .header-space  
+    %tbody
+      %tr
+        %td
+          .card.card--with-border{style: "text-align: left; max-width: 90%; margin-bottom: 30px"}
+            %h1.title.title--thin Relatório de Atendimentos
+            %div{style: "display: flex; align-items: center"}
+              %strong{style: "min-width: 135px"} Preenchido por:
+              %input.fancy-form__input{type: "text", style: "margin: 0 0 0 15px"}
 
-  - if not @appointments.empty?
-    - @appointments.each do |appointment|
-      .card.card--light-grey{style: "text-align: left;page-break-inside: avoid;position: relative", id: "appointment_#{appointment.id}"}
-        %br
+            %div{style: "display: flex; align-items: center"}
+              %strong Data:
+              %input.fancy-form__input{type: "text", style: "margin: 0 0 0 15px"}
 
-        %a.fancy-link.show{style: "display: none", onclick: "setVisible(appointment_#{appointment.id},'visible')"}= icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
-        %a.fancy-link.hide{style: "display: unset", onclick: "setVisible(appointment_#{appointment.id},'invisible')"}= icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px")
-        %h3.subtitle{style: "margin-top: 0; display: inline-block"} Informações do Atendimento
-        - if appointment.appointment_comments.any? && !appointment.closing.present?
-          .status.status--blue2{style: "float: right; display: inline-block"}
-            Em processo
-        - elsif appointment.closing.present?
-          .status.status--green{style: "float: right; display: inline-block"}
-            Encerrado
-        - else
-          .status.status--dark-yellow{style: "float: right; display: inline-block"}
-            Aberto
+            %div{style: "display: flex; align-items: center"}
+              %strong Local:
+              %input.fancy-form__input{type: "text", style: "margin: 0 0 0 15px"}
 
-        %br
+            #content
 
-        = 'Estudante: ' + appointment.appointment_student.name
-        %br
-        = 'Série: ' + appointment.appointment_student.classy
-        %br
-        = 'Turma: ' + appointment.appointment_student.groupy
-        %br
-        = 'Data do atendimento: ' + l(appointment.appointment_date)
-        %br
-        %br
-        = 'Motivo do encaminhamento: ' + appointment.reason
+          %hr
 
-        %br
+          .content
+            - @appointments.each do |appointment|
+              = ("<strong>Instituição: </strong>").html_safe + appointment.school.name
+              %br
+              = ("<strong>Data do atendimento: </strong>").html_safe + l(appointment.appointment_date) + " às " + appointment.appointment_time
+              %br
+              %br
+              - if appointment.reason.present?
+                %strong Motivo da solicitação:
+                %text{style: "text-align: justify"}= appointment.reason
 
-        %h3.subtitle Evoluções e comentários
+              - if appointment.observations.present?
+                %strong Observações gerais:
+                %text{style: "text-align: justify"}= appointment.observations
 
-        - appointment.appointment_comments.each do |comment|
-          = render 'relatories/appointment_comments', comment: comment
+              - if appointment.action_call.present?
+                %strong Chamada de Ação:
+                %text{style: "text-align: justify"}= appointment.action_call
 
-    %br
-    %button.button.button--green.fancy-link.fancy-link--white.no-print{onclick: "window.print();"}= icon('fas', 'print', 'Imprimir')
-    %br
-    %br
-    %br
-    %br    	
+              - if appointment.redirecting.present?
+                %strong Direcionamento aos Educadores/Coordenação:
+                %text{style: "text-align: justify"}= appointment.redirecting
 
-  - else
-    %br
-    %br
-    = image_tag('brain.png', class: "logo-default logo-default--small")
-    %h1.title.title--grey Não há nada disso por aqui...
+              - if appointment.spontaneous.present?
+                %strong Atendimento Espontâneo?:
+                %text{style: "text-align: justify"}= human_boolean(appointment.spontaneous)
+
+              - if appointment.referral.present?
+                %strong Encaminhamento à Serviços:
+                %text{style: "text-align: justify"}= appointment.referral
+
+              %br
+              %br
+
+              - if appointment.appointment_guests.any?
+                %strong Convidados/Parentes Atendidos:
+
+                - appointment.appointment_guests.each do |guest|
+                  = guest.name + ' - ' + guest.description
+                  %br
+
+              - if appointment.appointment_students.any?
+                - if appointment.appointment_students.count > 1
+                  %strong Estudantes Atendidos:
+                - else
+                  %strong Estudante Atendido:
+
+                - appointment.appointment_students.each do |student|
+                  = student.name + ' - ' + student.classy + ' ' + student.groupy
+                  %br
+
+              %h3 Comentários e evoluções
+
+              = render "appointment_comments", appointment: appointment
+
+              %br
+              %hr
+              %br
+    %tfoot
+      %tr
+        %td
+          .footer-space  
+  .header{style: "background-image: url(#{asset_url('print-header')})"}
+  .footer{style: "background-image: url(#{asset_url('print-footer')})"}
+
+- else
+  %br
+  %br
+  = image_tag('brain.png', class: "logo-default logo-default--small")
+  %h1.title.title--grey Não há nada disso por aqui...
 
 :javascript
   tinymce.init({
      selector: '.formatable',
-     plugins: 'a11ychecker advcode casechange formatpainter linkchecker lists checklist media mediaembed pageembed permanentpen powerpaste tinycomments tinydrive tinymcespellchecker',
-     toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter insertfile pageembed permanentpen',
+     plugins: 'lists media tinydrive',
+     toolbar: 'addcomment showcomments code insertfile',
      toolbar_drawer: 'floating',
      tinycomments_mode: 'embedded',
      tinycomments_author: 'Lillyan',
