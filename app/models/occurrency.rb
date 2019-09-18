@@ -15,12 +15,22 @@ class Occurrency < ApplicationRecord
     available_filters: [
       :sorted_by,
       :search_query,
-      :with_school_id
+      :with_school_id,
+      :student,
+      :status,
+      :emotions
     ]
   )
 
-  scope :search_query, lambda { |query| where("description LIKE ? OR emotional_sphere LIKE ?", "%#{query}%", "%#{query}%") }
+  scope :search_query, lambda { |query| where("description LIKE ?", "%#{query}%") }
   scope :with_school_id, lambda { |school_id| where(:school_id => school_id) }
+  scope :status, lambda { |status| where(:finished => status) }
+  scope :student, lambda { |query|
+    Occurrency.joins(:occurrency_students).where('name LIKE ?', "%#{query}%")
+  }
+  scope :emotions, lambda { |query|
+    Occurrency.joins(:occurrency_histories).where('emotions LIKE ?', "%#{query}%").distinct    
+  }
 
   scope :sorted_by, lambda { |sort_option|
     direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'

@@ -19,8 +19,17 @@
             Escola
             \#{f.select( :with_school_id, @filterrific.select_options[:with_school_id], { include_blank: 'Todas' }, class: "fancy-form__input fancy-form__select" )}
         %div
+          ESTUDANTE
+          \#{f.text_field( :student, class: "fancy-form__input fancy-form__select", placeholder: 'Nome do estudante' )}
+        %div
+          EMOÇÃO
+          = f.select( :emotions, show_all_emotions(), { include_blank: 'Status' }, class: "fancy-form__input fancy-form__select"  )
+        %div
           Organizar por
           = f.select( :sorted_by, @filterrific.select_options[:sorted_by] )
+        %div
+          STATUS
+          = f.select( :status, [["Concluído", 1], ["Em processo", 0]], { include_blank: 'Status' }, class: "fancy-form__input fancy-form__select"  )
         %div
           = link_to(                 |
               'Resetar',       |

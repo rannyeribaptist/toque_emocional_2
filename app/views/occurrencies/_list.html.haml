@@ -9,8 +9,11 @@
         %thead
           %tr
             %th{style: "width: 20px"}
-            %th Descrição
-            %th Data de registro
+            %th ESTUDANTES
+            %th DESCRIÇÃO
+            %th EMOÇÕES
+            %th DATA
+            %th STATUS
             %th
             %th
             %th
@@ -20,8 +23,17 @@
             %tr
               %td
                 %div{style: "background-color: #{School.find_by_id(occurrency.school_id).color}; width: 20px; height: 20px;"}
+              %td{style: "text-align: justify"}= show_students(occurrency.occurrency_students).html_safe
               %td= occurrency.description.first(100) + "..."
+              %td= show_emotions(pick_emotions(occurrency.occurrency_histories).map { |emotion| emotion.id })
               %td= l(occurrency.created_at.strftime("%d.%m.%Y").to_date)
+              %td
+                - if occurrency.finished
+                  .status.status--green
+                    Concluído
+                - else
+                  .status.status--blue2
+                    Em processo
               %td{style: "text-align: center"}= link_to icon('fas', 'eye', 'Ver', class: "fancy-link fancy-link--blue2"), occurrency, class: "fancy-link fancy-link--blue2"
               %td{style: "text-align: center"}= link_to icon('fas', 'pen ', 'Editar', class: "fancy-link fancy-link--green"), edit_occurrency_path(occurrency), class: "fancy-link fancy-link--green"
               %td{style: "text-align: center"}= link_to icon('fas', 'trash', 'Excluir', class: "fancy-link fancy-link--red"), occurrency, method: :delete, data: { confirm: 'Are you sure?' }, class: "fancy-link fancy-link--red"

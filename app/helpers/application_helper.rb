@@ -107,7 +107,7 @@ module ApplicationHelper
       end
     end
 
-    return "Estes sentimentos estão ligados à " + list
+    return list
   end
 
   def show_students_in_occurrencies(histories, emotion)
@@ -208,5 +208,14 @@ module ApplicationHelper
     when 2
       return false
     end
+  end
+
+  def show_all_emotions
+    list = []
+    Emotion.all.each_with_index do |emotion, i|
+      list[i] = [emotion.name, emotion.id]
+    end
+
+    return list
   end
 end
