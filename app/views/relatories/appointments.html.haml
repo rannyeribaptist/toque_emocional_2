@@ -11,12 +11,11 @@
             %thead
               %tr
                 %th{style: "width: 20px"}
-                %th Estudante
-                %th Série/ano
-                %th Turma
-                %th Motivo
-                %th Data
-                %th Status
+                %th TIPO
+                %th ESTUDANTES
+                %th MOTIVO
+                %th DATA
+                %th STATUS
                 %th
             %tbody#selected
 
@@ -76,6 +75,9 @@
           %div
             Organizar por
             = f.select( :sorted_by, @filterrific.select_options[:sorted_by], input_html: {class: "filterrific-periodically-observed"} )
+          %div
+            TIPO
+            = f.select( :kind, appointment_kinds(), { include_blank: 'Escolha um tipo' }, class: "fancy-form__input fancy-form__select"  )
 
       = render_filterrific_spinner
 

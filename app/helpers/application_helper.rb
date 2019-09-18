@@ -67,6 +67,14 @@ module ApplicationHelper
     ]
   end
 
+  def appointment_kinds
+    [
+      ["EM GRUPO", "group"],
+      ["INDIVIDUAL", "individual"],
+      ["EM FAMÍLIA", "family"]
+    ]
+  end
+
   def human_boolean(boolean)
     boolean ? 'Sim' : 'Não'
   end

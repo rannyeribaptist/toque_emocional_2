@@ -4,12 +4,12 @@
       %thead
         %tr
           %th{style: "width: 20px"}
-          %th Estudante
-          %th Série/ano
-          %th Turma
-          %th Motivo
-          %th Data
-          %th Status
+          %th TIPO
+          %th ESTUDANTES
+          %th MOTIVO
+          %th DATA
+          %th STATUS
+          %th
           %th
           %th
       %tbody#list
@@ -17,9 +17,8 @@
           %tr{id: "#{appointment.id}", class: "appointment #{ 'ongoing' if (appointment.appointment_comments.any? && !appointment.closing.present?)}#{ 'done' if appointment.closing.present?}#{ 'open' if not (appointment.appointment_comments.any?) and not (appointment.closing.present?) }"}
             %td
               %div{style: "background-color: #{appointment.school.color}; width: 20px; height: 20px;"}
-            -# %td= appointment.appointment_student.name
-            -# %td= appointment.appointment_student.classy
-            -# %td= appointment.appointment_student.groupy
+            %td{style: "font-size: 13px"}= show_appointment_kind(appointment.kind)
+            %td{style: "text-align: justify"}= show_students(appointment.appointment_students).html_safe
             %td= appointment.reason.first(100) + "..."
             %td= l(appointment.appointment_date)
             %td
@@ -38,7 +37,8 @@
               %text.fancy-link.fancy-link--red{style: "cursor: pointer", onclick: "removeSelected('#{appointment.id}');$(this).closest('tr').remove()"}= icon('fas', 'times', 'Remover', class: "fancy-link fancy-link--red")
 
   %br
-  %button.button.button--green.fancy-link.fancy-link--white{onclick: "addAllAppointments()"} Adicionar todos
+  %button.button.button--yellow.fancy-link.fancy-link--black{onclick: "addAllAppointments()"} Adicionar todos
+  %button.button.button--green.fancy-link.fancy-link--white{onclick: "$('#modal').removeClass('modal--active')"} Concluído
 
 - else
   %br

@@ -24,13 +24,14 @@ class Appointment < ApplicationRecord
       :with_school_id,
       :date,
       :date_min,
-      :date_max
+      :date_max,
+      :kind
     ]
   )
 
   scope :search_query, lambda { |query| where("description LIKE ? OR reason LIKE ?", "%#{query}%", "%#{query}%") }
   scope :student, lambda { |query|
-    Appointment.joins(:appointment_student).where('name LIKE ?', "%#{query}%")
+    Appointment.joins(:appointment_students).where('name LIKE ?', "%#{query}%")
   }
 
   scope :classy, lambda { |query|
@@ -51,6 +52,9 @@ class Appointment < ApplicationRecord
   }
   scope :date_max, lambda { |query|
     Appointment.where('appointment_date <= ?', query)
+  }
+  scope :kind, lambda { |query|
+    Appointment.where('kind LIKE ?', "%#{query}%")
   }
 
   scope :sorted_by, lambda { |sort_option|
