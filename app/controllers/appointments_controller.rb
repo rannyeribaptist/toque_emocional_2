@@ -43,7 +43,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-    make_students(@appointment.appointment_students, @appointment) if params[:appointment][:appointment_students_attributes].present?
+    make_students(params[:appointment][:appointment_students_attributes], @appointment) if params[:appointment][:appointment_students_attributes].present?
     create_guests(@appointment.appointment_guests, @appointment) if @appointment.appointment_guests.any?
 
     respond_to do |format|
@@ -60,7 +60,7 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
-    make_students(@appointment.appointment_students, @appointment) if params[:appointment][:appointment_students_attributes].present?
+    make_students(params[:appointment][:appointment_students_attributes], @appointment) if params[:appointment][:appointment_students_attributes].present?
     create_guests(@appointment.appointment_guests, @appointment) if @appointment.appointment_guests.any?
 
     respond_to do |format|
@@ -106,17 +106,17 @@ class AppointmentsController < ApplicationController
 
   def make_students(students, appointment)
     students.each do |student|
-      if student.student_id.present?
-        st = Student.find_by_id(student.student_id)
-        st.name = student.name
-        st.classy = student.classy
-        st.groupy = student.groupy
-        st.save!
+      if student[1]["student_id"].present?
+        st = Student.find_by_id(student[1]["student_id"])
+        st.name = student[1]["name"]
+        st.classy = student[1]["classy"]
+        st.groupy = student[1]["groupy"]
+        st.save
       else
-        st = Student.new(name: student.name, classy: student.classy, groupy: student.groupy, school_id: appointment.school_id)
+        st = Student.new(name: student[1]["name"], classy: student[1]["classy"], groupy: student[1]["groupy"], school_id: appointment.school_id)
         st.save
       end
-      student.student_id = st.id
+      student[1]["student_id"] = st.id
     end
   end
 

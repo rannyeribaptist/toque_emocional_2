@@ -44,7 +44,7 @@ class OccurrenciesController < ApplicationController
   # POST /occurrencies.json
   def create
     @occurrency = Occurrency.new(occurrency_params)
-    make_students(0, @occurrency.occurrency_students, @occurrency) if params[:occurrency][:occurrency_students_attributes].present?
+    make_students(0, params[:occurrency][:occurrency_students_attributes], @occurrency) if params[:occurrency][:occurrency_students_attributes].present?
 
     respond_to do |format|
       if @occurrency.save
@@ -98,21 +98,17 @@ class OccurrenciesController < ApplicationController
 
   def make_students(total, students, occurrency)
     students.each do |student|
-      if student.student_id.present?
-        st = Student.find_by_id(student.student_id)
-        st.name = student.name
-        st.classy = student.classy
-        st.groupy = student.groupy
+      if student[1]["student_id"].present?
+        st = Student.find_by_id(student[1]["student_id"])
+        st.name = student[1]["name"]
+        st.classy = student[1]["classy"]
+        st.groupy = student[1]["groupy"]
         st.save!
       else
-        st = Student.new(name: student.name, classy: student.classy, groupy: student.groupy, school_id: occurrency.school_id)
+        st = Student.new(name: student[1]["name"], classy: student[1]["classy"], groupy: student[1]["groupy"], school_id: occurrency.school_id)
         st.save
       end
-      student.student_id = st.id
-
-      puts "AAAAAAAAAAAAA"
-      puts st.id
-      puts occurrency
+      student[1]["student_id"] = st.id
 
       history = OccurrencyHistory.find_or_create_by(student_id: st.id, occurrency_id: occurrency.id)
     end
@@ -121,18 +117,6 @@ class OccurrenciesController < ApplicationController
       occurrency.finished = false
     end
   end
-
-  # def update_students(total, students, occurrency)
-  #   students.each do |student|
-  #     st = Student.find_or_create_by(name: student[1]["name"], classy: student[1]["classy"], groupy: student[1]["groupy"], school_id: occurrency.school_id)
-  #     student[1]["student_id"] = st.id
-  #     history = OccurrencyHistory.find_or_create_by(student_id: st.id, occurrency_id: occurrency.id)
-  #   end
-  #
-  #   if total < @occurrency.occurrency_histories.count
-  #     occurrency.finished = false
-  #   end
-  # end
 
   def delete_histories(students, occurrency)
     students.each do |student|
