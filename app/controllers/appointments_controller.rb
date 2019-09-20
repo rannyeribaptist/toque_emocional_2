@@ -1,9 +1,5 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
-
-  autocomplete :student, :name, :extra_data => [:classy, :groupy], :display_value => :funky_method
-  autocomplete :appointment_guest, :name, :extra_data => [:description, :school_id]
-
   layout "users"
 
   # GET /appointments
@@ -47,7 +43,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-    create_students(@appointment.appointment_students, @appointment) if @appointment.appointment_students.present?
+    make_students(@appointment.appointment_students, @appointment) if params[:appointment][:appointment_students_attributes].present?
     create_guests(@appointment.appointment_guests, @appointment) if @appointment.appointment_guests.any?
 
     respond_to do |format|
@@ -64,7 +60,7 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
-    update_students(params[:appointment][:appointment_students_attributes], @appointment) if params[:appointment][:appointment_students_attributes].present?
+    make_students(@appointment.appointment_students, @appointment) if params[:appointment][:appointment_students_attributes].present?
     create_guests(@appointment.appointment_guests, @appointment) if @appointment.appointment_guests.any?
 
     respond_to do |format|
@@ -92,7 +88,7 @@ class AppointmentsController < ApplicationController
     term = params[:term]
     students = Student.where('name LIKE ?', "%#{term}%").order(:name).all
     students = students.where(school_id: current_user.school_id) if not is_admin?
-    render :json => students.map { |student| {:id => student.id, :label => student.name, :value => student.name, :classy => student.classy, :groupy => student.groupy} }
+    render :json => students.map { |student| {:id => student.id, :label => (student.name + ' - ' + student.classy + ' ' + student.groupy), :value => student.name, :classy => student.classy, :groupy => student.groupy} }
   end
 
   def autocomplete_guest_name
@@ -108,17 +104,19 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  def create_students(students, appointment)
+  def make_students(students, appointment)
     students.each do |student|
-      st = Student.find_or_create_by(name: student.name, classy: student.classy, groupy: student.groupy, school_id: appointment.school_id)
+      if student.student_id.present?
+        st = Student.find_by_id(student.student_id)
+        st.name = student.name
+        st.classy = student.classy
+        st.groupy = student.groupy
+        st.save!
+      else
+        st = Student.new(name: student.name, classy: student.classy, groupy: student.groupy, school_id: appointment.school_id)
+        st.save
+      end
       student.student_id = st.id
-    end
-  end
-
-  def update_students(students, appointment)
-    students.each do |student|
-      st = Student.find_or_create_by(name: student[1]["name"], classy: student[1]["classy"], groupy: student[1]["groupy"], school_id: appointment.school_id)
-      student[1]["student_id"] = st.id
     end
   end
 

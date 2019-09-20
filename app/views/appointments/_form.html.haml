@@ -34,13 +34,14 @@
         %br
         = link_to_add_association 'Adicionar', f, :appointment_students, partial: "appointment_students_fields", class: "button button--blue2 fancy-link fancy-link--white add_fields_2"
 
-  .individual{style: "display: none"}
+  .individual.family{style: "display: none"}
     %h2 Estudante
 
     = f.simple_fields_for :appointment_students do |h|
-      .columns{style: "justify-content: center"}
+      .columns#student{style: "justify-content: space-around"}
         .column.column--3
-          = h.input :name, label: "Nome completo", :url => autocomplete_student_name_appointments_path, :as => :autocomplete, :update_elements => {:classy => '#', :groupy => '#', :id => "#"}
+          = h.input :name, label: "Nome completo", :url => autocomplete_student_name_appointments_path, :as => :autocomplete, :update_elements => {:id => "#appointment_appointment_students_attributes_1_student_id", :classy => '#appointment_appointment_students_attributes_1_classy', :groupy => '#appointment_appointment_students_attributes_1_groupy'}
+          = h.input :student_id
         .column.column--3
           = h.input :classy, as: :select, label: "Ano", collection: Classy.all.collect {|p| [ p.name, p.name ] }
         .column.column--3
@@ -89,3 +90,7 @@
 
     setTimeout(guestsFields, 200);
     setTimeout(appointmentStudentsFields, 200);
+
+    $('.classy_field').change(function() {
+
+    });

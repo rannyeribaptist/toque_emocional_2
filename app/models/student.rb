@@ -53,8 +53,4 @@ class Student < ApplicationRecord
       ['Data de Registro (antigos primeiro)', 'created_at_asc']
     ]
   end
-
-  def funky_method
-    "#{self.name}, #{self.classy} #{self.groupy}"
-  end
 end
