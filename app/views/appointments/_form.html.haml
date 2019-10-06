@@ -41,7 +41,7 @@
       .columns#student{style: "justify-content: space-around"}
         .column.column--3
           = h.input :name, label: "Nome completo", :url => autocomplete_student_name_appointments_path, :as => :autocomplete, :update_elements => {:id => "#appointment_appointment_students_attributes_1_student_id", :classy => '#appointment_appointment_students_attributes_1_classy', :groupy => '#appointment_appointment_students_attributes_1_groupy'}
-          = h.input :student_id
+          = h.input :student_id, as: :hidden
         .column.column--3
           = h.input :classy, as: :select, label: "Ano", collection: Classy.all.collect {|p| [ p.name, p.name ] }
         .column.column--3
