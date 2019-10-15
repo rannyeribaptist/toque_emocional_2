@@ -1,0 +1,56 @@
+%div{style: "text-align: left"}
+  - if evolution.appointment_observation.observation.present?
+    %div{id: "obs_#{evolution.appointment_observation.id}_s"}
+      %strong Observações:
+      %p{style: "text-align: justify; margin-bottom: 5px"}= evolution.appointment_observation.observation
+
+    - if is_admin?
+      %div{id: "obs_#{evolution.appointment_observation.id}_e", style: "display: none"}
+        = simple_form_for(evolution, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.simple_fields_for :appointment_observation, evolution.appointment_observation do |g|
+            = g.input :observation, label: "Observação"
+            = g.submit "Enviar", class: "button button--green fancy-link--white"
+
+      %a.fancy-link.fancy-link--blue2{style: "cursor: pointer; font-size: 10px; font-weight: bold; margin-bottom: 20px", onclick: "$('#obs_#{evolution.appointment_observation.id}_s').toggle(); $('#obs_#{evolution.appointment_observation.id}_e').toggle()"}= icon('fas', 'pen', ' Editar', class: "fancy-link fancy-link--blue2")
+
+  - if evolution.action_call.action_call.present?
+    %div{id: "ac_#{evolution.action_call.id}_s"}
+      %strong Chamada de Ação:
+      %p{style: "text-align: justify; margin-bottom: 5px"}= evolution.action_call.action_call
+
+    - if is_admin?
+      %div{id: "ac_#{evolution.action_call.id}_e", style: "display: none"}
+        = simple_form_for(evolution, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.simple_fields_for :action_call, evolution.action_call do |g|
+            = g.input :action_call, label: "Observação"
+            = g.submit "Enviar", class: "button button--green fancy-link--white"
+
+      %a.fancy-link.fancy-link--blue2{style: "cursor: pointer; font-size: 10px; font-weight: bold; margin-bottom: 20px", onclick: "$('#ac_#{evolution.action_call.id}_s').toggle();$('#ac_#{evolution.action_call.id}_e').toggle()"}= icon('fas', 'pen', ' Editar', class: "fancy-link fancy-link--blue2")
+
+  - if evolution.appointment_redirecting.redirecting.present?
+    %div{id: "red_#{evolution.appointment_redirecting.id}_s"}
+      %strong Direcionamento aos Educadores/Coordenação:
+      %p{style: "text-align: justify; margin-bottom: 5px"}= evolution.appointment_redirecting.redirecting
+
+    - if is_admin?
+      %div{id: "red_#{evolution.appointment_redirecting.id}_e", style: "display: none"}
+        = simple_form_for(evolution, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.simple_fields_for :appointment_redirecting, evolution.appointment_redirecting do |g|
+            = g.input :redirecting, label: "Observação"
+            = g.submit "Enviar", class: "button button--green fancy-link--white"
+
+      %a.fancy-link.fancy-link--blue2{style: "cursor: pointer; font-size: 10px; font-weight: bold; margin-bottom: 20px", onclick: "$('#red_#{evolution.appointment_redirecting.id}_s').toggle();$('#red_#{evolution.appointment_redirecting.id}_e').toggle()"}= icon('fas', 'pen', ' Editar', class: "fancy-link fancy-link--blue2")
+
+  - if evolution.appointment_referral.referral.present?
+    %div{id: "ref_#{evolution.appointment_referral.id}_s"}
+      %strong Encaminhamento à Serviços:
+      %p{style: "text-align: justify; margin-bottom: 5px"}= evolution.appointment_referral.referral
+
+    - if is_admin?
+      %div{id: "ref_#{evolution.appointment_referral.id}_e", style: "display: none"}
+        = simple_form_for(evolution, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.simple_fields_for :appointment_referral, evolution.appointment_referral do |g|
+            = g.input :referral, label: "Observação"
+            = g.submit "Enviar", class: "button button--green fancy-link--white"
+
+      %a.fancy-link.fancy-link--blue2{style: "cursor: pointer; font-size: 10px; font-weight: bold; margin-bottom: 20px", onclick: "$('#ref_#{evolution.appointment_referral.id}_s').toggle();$('#ref_#{evolution.appointment_referral.id}_e').toggle()"}= icon('fas', 'pen', ' Editar', class: "fancy-link fancy-link--blue2")

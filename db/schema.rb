@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_31_223009) do
+ActiveRecord::Schema.define(version: 2019_10_12_151728) do
+
+  create_table "action_calls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "action_call"
+    t.bigint "appointment_evolution_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_evolution_id"], name: "index_action_calls_on_appointment_evolution_id"
+  end
 
   create_table "appointment_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -20,8 +28,17 @@ ActiveRecord::Schema.define(version: 2019_07_31_223009) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "invisible"
+    t.integer "appointment_evolution_id"
     t.index ["appointment_id"], name: "index_appointment_comments_on_appointment_id"
     t.index ["user_id"], name: "index_appointment_comments_on_user_id"
+  end
+
+  create_table "appointment_evolutions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "status"
+    t.bigint "appointment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_appointment_evolutions_on_appointment_id"
   end
 
   create_table "appointment_guests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -32,6 +49,30 @@ ActiveRecord::Schema.define(version: 2019_07_31_223009) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["appointment_id"], name: "index_appointment_guests_on_appointment_id"
+  end
+
+  create_table "appointment_observations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "observation"
+    t.bigint "appointment_evolution_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_evolution_id"], name: "index_appointment_observations_on_appointment_evolution_id"
+  end
+
+  create_table "appointment_redirectings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "redirecting"
+    t.bigint "appointment_evolution_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_evolution_id"], name: "index_appointment_redirectings_on_appointment_evolution_id"
+  end
+
+  create_table "appointment_referrals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "referral"
+    t.bigint "appointment_evolution_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_evolution_id"], name: "index_appointment_referrals_on_appointment_evolution_id"
   end
 
   create_table "appointment_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -255,9 +296,14 @@ ActiveRecord::Schema.define(version: 2019_07_31_223009) do
     t.index ["school_id"], name: "index_users_on_school_id"
   end
 
+  add_foreign_key "action_calls", "appointment_evolutions"
   add_foreign_key "appointment_comments", "appointments"
   add_foreign_key "appointment_comments", "users"
+  add_foreign_key "appointment_evolutions", "appointments"
   add_foreign_key "appointment_guests", "appointments"
+  add_foreign_key "appointment_observations", "appointment_evolutions"
+  add_foreign_key "appointment_redirectings", "appointment_evolutions"
+  add_foreign_key "appointment_referrals", "appointment_evolutions"
   add_foreign_key "appointment_students", "appointments"
   add_foreign_key "appointment_students", "students"
   add_foreign_key "appointments", "schools"

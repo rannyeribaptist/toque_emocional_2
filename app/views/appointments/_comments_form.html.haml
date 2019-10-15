@@ -1,29 +1,25 @@
-.action
-
 - if @appointment.closing.present?
   %div{style: "text-align: left"}
 
     %strong Parecer final do fechamento do caso:
     %p{style: "text-align: justify"}=@appointment.closing
 
-%h2.title.title--thin Comentários e evoluções do caso
-
-- if show_appointment_comment_form(@appointment)
-  %div#comment_form{style: "text-align: left; display: none"}
+- if evolution.status != "finished"
+  %div{style: "text-align: left; display: none", id: "comment_form_#{evolution.id}"}
     %strong= show_appointment_comment_form_title
     %br
     %br
-    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-      = f.simple_fields_for :appointment_comments, @appointment.appointment_comments.new do |g|
+    = simple_form_for(evolution, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+      = f.input :status, as: :hidden, input_html: { value: "finished" } if current_user.id == 1
+      = f.input :status, as: :hidden, input_html: { value: "ongoing" } if current_user.id != 1
+
+      = f.simple_fields_for :appointment_comments, evolution.appointment_comments.new do |g|
         = g.input :name, label: "Nome completo"
         = g.input :comment, label: "Comentário", input_html: { class: "formatable fancy-form__input" }
         = g.input :user_id, as: :hidden, input_html: { value: current_user.id }
 
         = g.submit "Enviar", class: "button button--green fancy-link--white"
 
-  %br
-  %br
-
 %div{style: "display: flex; align-items: center; flex-direction: column"}
-  - @appointment.appointment_comments.each do |appointment_comment|
-    = render 'appointments/comments', comment: appointment_comment
+  - evolution.appointment_comments.each do |appointment_comment|
+    = render 'appointments/comments', comment: appointment_comment, evolution: evolution

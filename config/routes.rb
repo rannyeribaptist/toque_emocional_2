@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get :autocomplete_student_name, :on => :collection
     end
 
+    resources :appointment_evolutions
     resources :students
     resources :users
     resources :schools
@@ -47,7 +48,8 @@ Rails.application.routes.draw do
     get "/review_occurrency/:occurrency_id", to: "application#review_occurrency", as: :review_occurrency
   end
 
-  root to: "application#index"
+  # root to: "application#index"
+  root to: "application#coming_soon"
 
   # Static pages of the application
   get "slides", to: "application#slides", as: :slide_show

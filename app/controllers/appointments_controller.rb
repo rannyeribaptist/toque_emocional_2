@@ -48,6 +48,7 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
+        create_evolution(@appointment)
         format.html { redirect_to @appointment, flash: {:success => 'Atendimento agendado'} }
         format.json { render :show, status: :created, location: @appointment }
       else
@@ -120,6 +121,15 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def create_evolution(appointment)
+    a = AppointmentEvolution.new(appointment_id: appointment.id, status: "undone")
+    a.build_action_call
+    a.build_appointment_observation
+    a.build_appointment_redirecting
+    a.build_appointment_referral
+    a.save
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment
@@ -132,6 +142,7 @@ class AppointmentsController < ApplicationController
         appointment_student_attributes: [:id, :student_id, :name, :classy, :groupy, :_destroy],
         appointment_comments_attributes: [:id, :name, :comment, :_destroy, :user_id, :invisible],
         appointment_guests_attributes: [:id, :name, :description, :school_id, :_destroy],
-        appointment_students_attributes: [:name, :classy, :groupy, :_destroy, :id, :student_id])
+        appointment_students_attributes: [:name, :classy, :groupy, :_destroy, :id, :student_id],
+        appointment_observations_attributes: [:observation, :appointment_evolution_id, :id, :appointment_id])
     end
 end

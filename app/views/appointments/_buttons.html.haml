@@ -1,42 +1,50 @@
 - if is_admin?
-  %br
+  - if not @appointment.closing.present?
+    %br
 
-  - if show_appointment_comment_form(@appointment)
-    %button.button.button--yellow.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#comment_form').toggle()", "data-turbolinks" => "false"} Registrar evolução
+    %button.button.button--yellow.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#comment_form_#{@appointment.appointment_evolutions.last.id}').toggle()", "data-turbolinks" => "false"} Registrar evolução
 
-  %button.button.button--yellow-1.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#observations').toggle()", "data-turbolinks" => "false"}= show_button_title('observations', @appointment)
-  #observations{style: "display: none"}
-    %br
-    %br
-    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-      = f.input :observations, label: "Observações"
-      = f.submit "Enviar", class: "button button--green fancy-link--white"
+    - if not @appointment.appointment_evolutions.last.appointment_observation.observation.present?
+      %button.button.button--yellow-1.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#observations').toggle()", "data-turbolinks" => "false"}= show_button_title('observations', @appointment)
+      #observations{style: "display: none"}
+        %br
+        %br
+        = simple_form_for(AppointmentEvolution.find_by_id(@appointment.appointment_evolutions.last.id), defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.simple_fields_for :appointment_observation do |g|
+            = g.input :observation, label: "Observações"
+            = g.submit "Enviar", class: "button button--green fancy-link--white"
 
-  %button.button.button--yellow-2.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#referral').toggle()", "data-turbolinks" => "false"}= show_button_title('referral', @appointment)
-  #referral{style: "display: none"}
-    %br
-    %br
-    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-      = f.input :referral, label: "Encaminhamento"
-      = f.submit "Enviar", class: "button button--green fancy-link--white"
+    - if not @appointment.appointment_evolutions.last.appointment_referral.referral.present?
+      %button.button.button--yellow-2.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#referral').toggle()", "data-turbolinks" => "false"}= show_button_title('referral', @appointment)
+      #referral{style: "display: none"}
+        %br
+        %br
+        = simple_form_for(AppointmentEvolution.find_by_id(@appointment.appointment_evolutions.last.id), defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.simple_fields_for :appointment_referral do |g|
+            = g.input :referral, label: "Encaminhamento"
+            = g.submit "Enviar", class: "button button--green fancy-link--white"
 
-  %br
+    %br
 
-  %button.button.button--yellow-3.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#action_call').toggle()", "data-turbolinks" => "false"}= show_button_title('action_call', @appointment)
-  #action_call{style: "display: none"}
-    %br
-    %br
-    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-      = f.input :action_call, label: "Chamada de ação"
-      = f.submit "Enviar", class: "button button--green fancy-link--white"
+    - if not @appointment.appointment_evolutions.last.action_call.action_call.present?
+      %button.button.button--yellow-3.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#action_call').toggle()", "data-turbolinks" => "false"}= show_button_title('action_call', @appointment)
+      #action_call{style: "display: none"}
+        %br
+        %br
+        = simple_form_for(AppointmentEvolution.find_by_id(@appointment.appointment_evolutions.last.id), defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.simple_fields_for :action_call do |g|
+            = g.input :action_call, label: "Chamada de ação"
+            = g.submit "Enviar", class: "button button--green fancy-link--white"
 
-  %button.button.button--yellow-4.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#redirecting').toggle()", "data-turbolinks" => "false"}= show_button_title('redirecting', @appointment)
-  #redirecting{style: "display: none"}
-    %br
-    %br
-    = simple_form_for(@appointment, defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
-      = f.input :redirecting, label: "Direcionamento aos Educadores/Coordenação"
-      = f.submit "Enviar", class: "button button--green fancy-link--white"
+    - if not @appointment.appointment_evolutions.last.appointment_redirecting.redirecting.present?
+      %button.button.button--yellow-4.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#redirecting').toggle()", "data-turbolinks" => "false"}= show_button_title('redirecting', @appointment)
+      #redirecting{style: "display: none"}
+        %br
+        %br
+        = simple_form_for(AppointmentEvolution.find_by_id(@appointment.appointment_evolutions.last.id), defaults: { input_html: { class: "fancy-form__input" } }, html: { class: "fancy-form" }) do |f|
+          = f.simple_fields_for :appointment_redirecting do |g|
+            = g.input :redirecting, label: "Direcionamento aos Educadores/Coordenação"
+            = g.submit "Enviar", class: "button button--green fancy-link--white"
 
   %button.button.button--yellow-5.fancy-link--black{style: "margin-bottom: 5px", onclick: "$('#closing').toggle()", "data-turbolinks" => "false"}= show_button_title('closing', @appointment)
   #closing{style: "display: none"}

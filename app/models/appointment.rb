@@ -4,6 +4,7 @@ class Appointment < ApplicationRecord
   has_many :appointment_students, dependent: :destroy
   has_many :appointment_comments, dependent: :destroy
   has_many :appointment_guests, dependent: :destroy
+  has_many :appointment_evolutions, dependent: :destroy
   accepts_nested_attributes_for :appointment_students, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :appointment_comments, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :appointment_guests, reject_if: :all_blank, allow_destroy: true

@@ -12,30 +12,10 @@
           %strong Motivo da solicitação:
           %p{style: "text-align: justify"}= @appointment.reason
 
-        - if @appointment.observations.present?
-          %hr
-          %strong Observações gerais:
-          %p{style: "text-align: justify"}= @appointment.observations
-
-        - if @appointment.action_call.present?
-          %hr
-          %strong Chamada de Ação:
-          %p{style: "text-align: justify"}= @appointment.action_call
-
-        - if @appointment.redirecting.present?
-          %hr
-          %strong Direcionamento aos Educadores/Coordenação:
-          %p{style: "text-align: justify"}= @appointment.redirecting
-
         - if @appointment.spontaneous.present?
           %hr
           %strong Atendimento Espontâneo?:
           %p{style: "text-align: justify"}= human_boolean(@appointment.spontaneous)
-
-        - if @appointment.referral.present?
-          %hr
-          %strong Encaminhamento à Serviços:
-          %p{style: "text-align: justify"}= @appointment.referral
 
         %hr
 
@@ -59,9 +39,11 @@
             = student.name + ' - ' + student.classy + ' ' + student.groupy
             %br
 
-        %br
-        %hr
-        %br
+      %h2.title.title--thin Comentários e evoluções do caso
+
+      - @appointment.appointment_evolutions.each do |evolution|
+        = render "evolution", evolution: evolution
+        - if evolution.status == "finished"
+          %hr
 
       = render "buttons"
-      = render "comments_form"

@@ -9,6 +9,9 @@ class ApplicationController < ActionController::Base
   def index
   end
 
+  def coming_soon
+  end
+
   def slides
   end
 
