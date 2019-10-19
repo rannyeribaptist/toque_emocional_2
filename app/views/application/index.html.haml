@@ -1,58 +1,32 @@
--# #particles-js
--# .section.particles-content.display-evenly--small{style: "color: white"}
--#   .section__content{style: "padding: 0"}
--#     = image_tag("logo-white.png", class: "logo-default")
--#
--#     .action
--#       %h1.title.title--small
--#         %strong Motivação e comportamento de alto desempenho escolar é nossa especialidade!
--#         %br
--#         %strong Se você quer isso para seus alunos e filhos
--#
--#     .action__clean
--#       .columns.columns--small{style: "justify-content: center"}
--#         .column--small--3
--#           %a.fancy-link{:href => about_page_url}
--#             %h2.title.title--small.title--thin Descubra quem nós somos
--#         .column--small--2
--#           %hr.vertical
--#         .column--small--3
--#           %a.fancy-link{:href => slide_show_url}
--#             %h2.title.title--small.title--thin Descubra as emoções e sentimentos
--#
--#     %br
--#     %br
--#     %br
--#
--#     .action__clean
--#       .columns.columns--small{style: "justify-content: center"}
--#         .column--small--2
--#           %a.fancy-link{:href => "/sign_in"} PLATAFORMA
--#         .column--small--2
--#           %a.fancy-link{:href => "reader/sign_in"} LIVRO
--#
--# -# particles.js
--# %script{:src => "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"}
--#
--# :javascript
--#   /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
--#   particlesJS.load('particles-js', '#{asset_path "particles.json"}');
+#particles-js
+.section.particles-content.display-evenly--small{style: "color: white"}
+  .section__content{style: "padding: 0"}
+    = image_tag("logo-white.png", class: "logo-default")
 
-%link{:href => "https://fonts.googleapis.com/css?family=Mansalva&display=swap", :rel => "stylesheet"}/
-.section.section--black.display-evenly--small{style: "min-height: 100vh; justify-content: center; color: white"}
+    %br
+    %br
 
-  %p{style: "font-family: 'Mansalva', cursive; font-size: 20px"} Em breve um
-  %h1.title{style: "margin: 0"} NOVO
-  %h1.title.title--large.title--yellow{style: "margin: 0"} TOQUE EMOCIONAL
-  %h1.title{style: "margin: 0"} PRA VOCÊ!
+    %link{:href => "https://fonts.googleapis.com/css?family=Mansalva&display=swap", :rel => "stylesheet"}/
 
-  %br
-  %br
-  %br
+    %p{style: "font-family: 'Mansalva', cursive; font-size: 20px"} Em breve um
+    %h1.title{style: "margin: 0"} NOVO
+    %h1.title.title--large.title--yellow{style: "margin: 0"} TOQUE EMOCIONAL
+    %h1.title{style: "margin: 0"} PRA VOCÊ!
 
+    %br
+    %br
+    %br
 
-  .columns.columns--small{style: "justify-content: space-evenly; width: 100%"}
-    .column--small--2
-      %a.fancy-link{:href => "/sign_in"} PLATAFORMA
-    .column--small--2
-      %a.fancy-link{:href => "reader/sign_in"} LIVRO
+    .action__clean
+      .columns.columns--small{style: "justify-content: center"}
+        .column--small--3
+          %a.fancy-link{:href => "/sign_in"} PLATAFORMA
+        .column--small--3
+          %a.fancy-link{:href => "reader/sign_in"} LIVRO
+
+-# particles.js
+%script{:src => "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"}
+
+:javascript
+  /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+  particlesJS.load('particles-js', '#{asset_path "particles.json"}');
