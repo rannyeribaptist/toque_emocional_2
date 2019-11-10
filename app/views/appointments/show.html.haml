@@ -22,9 +22,14 @@
         - if @appointment.appointment_guests.any?
           %strong Convidados/Parentes Atendidos
 
+          %br
+          %br
+
           - @appointment.appointment_guests.each do |guest|
             = guest.name + ' - ' + guest.description
             %br
+
+          %br
 
         - if @appointment.appointment_students.any?
           - if @appointment.appointment_students.count > 1
@@ -33,7 +38,7 @@
             %strong Estudante Atendido
 
           %br
-          %br
+          %br          	
 
           - @appointment.appointment_students.each do |student|
             = student.name + ' - ' + student.classy + ' ' + student.groupy
