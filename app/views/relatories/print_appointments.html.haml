@@ -6,7 +6,6 @@
         %h3 Considerações/Parecer do relatório:
 
         .formatable
-        -# %button.button.button--green.fancy-link.fancy-link--white.no-print{onclick: "window.print();"} Terminei de escrever!
         %button.button.button--green.fancy-link.fancy-link--white.no-print{onclick: "window.print();"}= icon('fas', 'print', 'Imprimir')
 
 - if not @appointments.empty?
@@ -38,6 +37,7 @@
 
           .content
             - @appointments.each do |appointment|
+              %h1.title.title--large= "ATENDIMENTO " + show_appointment_kind(appointment.kind)
               = ("<strong>Instituição: </strong>").html_safe + appointment.school.name
               %br
               = ("<strong>Data do atendimento: </strong>").html_safe + l(appointment.appointment_date) + " às " + appointment.appointment_time
@@ -89,7 +89,10 @@
 
               %h3 Comentários e evoluções
 
-              = render "appointment_comments", appointment: appointment
+              - appointment.appointment_evolutions.each do |evolution|
+                = render "evolution", evolution: evolution, appointment: appointment
+                - if evolution.status == "finished"
+                  %hr
 
               %br
               %hr

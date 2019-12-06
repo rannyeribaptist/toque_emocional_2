@@ -24,8 +24,8 @@ class RelatoriesController < ApplicationController
     end
   end
 
-  def print_occurrencies
-    @occurrencies = Occurrency.where(id: params[:ids].split('/'))
+  def print_appointments
+    @appointments = Appointment.where(id: params[:ids].split('/'))
     render layout: "printing_layout"
   end
 
