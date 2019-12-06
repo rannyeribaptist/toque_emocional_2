@@ -23,7 +23,7 @@
               %td= appointment.reason.first(100) + "..."
               %td= l(appointment.appointment_date)
               %td
-                - if appointment.appointment_comments.any? && !appointment.closing.present?
+                - if appointment.appointment_evolutions.count > 1 && !appointment.closing.present?
                   .status.status--blue2
                     Em processo
                 - elsif appointment.closing.present?
