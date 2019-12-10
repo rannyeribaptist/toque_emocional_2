@@ -9,7 +9,7 @@
           %br
           %p= comment.comment.html_safe
           %br
-          %small{style: "text-transformation: italic; float: right"}= l(comment.created_at)[0...-9]
+          %small{style: "text-transformation: italic; float: right"}= l(comment.created_at)[0...-9]          
           %br
 
         %div{id: "ac_#{comment.id}_e", style: "display: none"}
@@ -17,6 +17,7 @@
             = f.simple_fields_for :appointment_comments, comment do |g|
               = g.input :name, label: "Nome completo"
               = g.input :comment, label: "Comentário", input_html: { class: "fancy-form__input formatable" }
+              = g.input :created_at, label: "Data de criação"
               = g.submit "Enviar", class: "button button--green fancy-link--white"
 
         - if is_admin?
@@ -41,6 +42,7 @@
             = f.simple_fields_for :appointment_comments, comment do |g|
               = g.input :name, label: "Nome completo"
               = g.input :comment, label: "Comentário", input_html: { class: "fancy-form__input formatable" }
+              = g.input :created_at, label: "Data de criação" if is_admin?
               = g.submit "Enviar", class: "button button--green fancy-link--white"
 
         %a.fancy-link.fancy-link--blue2{style: "position: absolute; right: 0; top: 0; cursor: pointer; margin: 15px 40px", onclick: "$('#ac_#{comment.id}_s').toggle();$('#ac_#{comment.id}_e').toggle()"}= icon('fas', 'pen', class: "fancy-link fancy-link--blue2")
@@ -51,4 +53,4 @@
             - if comment.invisible == true
               = link_to icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_evolution_path(evolution, appointment_evolution: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "false" } } }), :method => :patch
             - else
-              = link_to icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_evolution_path(evolution, appointment_evolution: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "true" } } }), :method => :patch              
+              = link_to icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_evolution_path(evolution, appointment_evolution: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "true" } } }), :method => :patch

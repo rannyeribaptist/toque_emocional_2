@@ -41,6 +41,6 @@ class AppointmentEvolutionsController < ApplicationController
         action_call_attributes: [:action_call, :id, :appointment_evolution_id, :_destroy],
         appointment_referral_attributes: [:referral, :id, :appointment_evolution_id, :_destroy],
         appointment_redirecting_attributes: [:redirecting, :id, :appointment_evolution_id, :_destroy],
-        appointment_comments_attributes: [:name, :comment, :user_id, :id, :appointment_evolution_id, :invisible, :_destroy])
+        appointment_comments_attributes: [:name, :comment, :user_id, :id, :appointment_evolution_id, :invisible, :_destroy, :created_at])
     end
 end
