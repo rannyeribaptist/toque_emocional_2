@@ -4,7 +4,7 @@
     - if not comment.comment == nil # this avoids the database to return a ghost register
       - if (comment.invisible and is_admin?) or not comment.invisible # this checks if the comment is not marked as hidden and shows to the admin even if it is
         - if comment.user_id == 1
-          .card.card--yellow{style: "position: relative;width: 800px;max-width: 100%;height: fit-content"}
+          .card.card--yellow{style: "position: relative;width: 800px;max-width: 100%;height: fit-content", class: "#{ comment.invisible? ? 'no-print' : 'print' }"}
             %h1.subtitle.title--thin{style: "margin-bottom: 0"}= comment.name
             %small Evolução
             %br
@@ -13,7 +13,7 @@
             %small{style: "text-transformation: italic; float: right"}= l(comment.created_at)[0...-9]
             %br
 
-            - if is_admin?
+            -# - if is_admin?
 
               - if comment.invisible == true
                 = link_to icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_evolution_path(evolution, appointment_evolution: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "false" } } }), :method => :patch
@@ -21,14 +21,14 @@
                 = link_to icon('fas', 'eye', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_evolution_path(evolution, appointment_evolution: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "true" } } }), :method => :patch
 
         - else
-          .appointment-card{style: "border-left-color: #{comment.user.school.color}; position: relative"}
+          .appointment-card{style: "border-left-color: #{comment.user.school.color}; position: relative", class: "#{ comment.invisible? ? 'no-print' : 'print' }"}
             %div
               %h3.title.title--small= comment.name
               %p= comment.comment.html_safe
               %small{style: "text-transformation: italic; float: right"}= l(comment.created_at)[0...-9]
               %br
 
-            - if comment.user_id == current_user.id || is_admin?
+            -# - if comment.user_id == current_user.id || is_admin?
               - if is_admin?
                 - if comment.invisible == true
                   = link_to icon('fas', 'eye-slash', class: 'fancy-link fancy-link--grey', style: "position: absolute; left: 0; top: 0; cursor: pointer; margin: 15px"), appointment_evolution_path(evolution, appointment_evolution: { appointment_comments_attributes: {"0" => { id: comment.id, :invisible => "false" } } }), :method => :patch
