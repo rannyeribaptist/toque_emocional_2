@@ -38,7 +38,7 @@
             %strong Estudante Atendido
 
           %br
-          %br          	
+          %br
 
           - @appointment.appointment_students.each do |student|
             = student.name + ' - ' + student.classy + ' ' + student.groupy
@@ -50,5 +50,11 @@
         = render "evolution", evolution: evolution
         - if evolution.status == "finished"
           %hr
+
+      - if @appointment.closing.present?
+        %div{style: "text-align: left"}
+
+          %strong Parecer final do fechamento do caso:
+          %p{style: "text-align: justify"}=@appointment.closing
 
       = render "buttons"
