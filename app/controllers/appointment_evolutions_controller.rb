@@ -10,9 +10,11 @@ class AppointmentEvolutionsController < ApplicationController
       if @appointment_evolution.update(appointment_evolution_params)
         format.html { redirect_back(fallback_location: appointments_path, flash: {:success => 'Atendimento atualizado'}) }
         format.json { render :show, status: :ok, location: @appointment_evolution }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @appointment_evolution.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
