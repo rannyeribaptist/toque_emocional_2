@@ -48,7 +48,9 @@ Rails.application.routes.draw do
     get "/review_occurrency/:occurrency_id", to: "application#review_occurrency", as: :review_occurrency
   end
 
-  root to: "application#index"
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
   # root to: "application#coming_soon"
 
   # Static pages of the application
